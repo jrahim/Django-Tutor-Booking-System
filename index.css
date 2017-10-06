@@ -49,3 +49,12 @@ body {
 #signInInputPwd {
   width: 125px !important;
 }
+
+.tealHeading {
+  color:#004d40;
+}
+
+.signUpInput {
+  width:300px;
+  margin-bottom:5px !important;
+}
