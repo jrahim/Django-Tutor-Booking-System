@@ -43,11 +43,13 @@ body {
 }
 
 #signInInputEmail {
-  width: 175px !important;
+  width: 180px !important;
+  margin-right: 5px;
 }
 
 #signInInputPwd {
-  width: 125px !important;
+  width: 130px !important;
+  margin-right: 5px;
 }
 
 .tealHeading {
