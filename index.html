@@ -2,7 +2,7 @@
 
     <head>
 
-        <title>FlashCards App Admin</title>
+        <title>Tutoria</title>
 
         <meta charset="utf-8">
       	<meta name="HandheldFriendly" content="true" />
@@ -11,45 +11,10 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="index.css">
         <style type="text/css">
 
-            html {
-                height:100%;
-            }
 
-            body {
-                text-align: center;
-                background-color: lightblue;
-            }
-
-            .form {
-                margin-top: 5px;
-            }
-
-            .container {
-                width: 500px;
-            }
-
-            #mainContainer {
-                margin-top: 80px;
-            }
-
-            h1 {
-                font-size: 300%;
-                font-weight: bolder;
-                margin-top:10px;
-                margin-bottom:20px;
-            }
-
-            #btn2 {
-                width: 1000px;
-            }
-
-            #img {
-                width:250px;
-                height:250px;
-            }
 
         </style>
 
@@ -57,32 +22,40 @@
 
     <body>
 
-        <br><br>
-
-        <div class="container" id="mainContainer">
-
-        <h1>FlashCards App Admin Panel
-        <br></h1>
-
-        <form method="post"id="logInFields">
-
-            <div class="form-group" >
-
-            <input type="text" name="uname" placeholder="Admin Username" class="form form-control">
-
-            <input type="password" name="pwd" placeholder="Admin Password" class="form form-control">
-
-            <label class="form-check-label">
-            <input type="checkbox" name="stayLogIn" id="stayLoggedInLogIn" class="form form-check-input">
-            Stay Logged In?
-            </label>
-            <br>
-
-            <input type="submit" name="logIn" id="logIn" value="Log In" class="btn btn-primary form"><br><br>
-
+        <div class="" id="topBar">
+          <div class="container-fluid">
+            <div class="" style="float:left">
+              <h1 id="mainHeading">Tutoria</h1>
             </div>
 
-        </form>
+            <div class="" id="logInForm" style="float:right">
+              <form class="form-inline">
+                <input type="email" class="form-control" id="signInInputEmail" name="email" value="" placeholder="Email Address">
+                <input type="password" class="form-control" id="signInInputPwd" name="password" value="" placeholder="Password">
+                <input type="submit" class="form-control btn btn-info" name="login" value="Log In">
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="container-fluid" id="mainContainer">
+
+          <div style="float:left; width: 500px;">
+            <h1 style="color:#004d40;">Welcome to Tutoria!<br></h1>
+            <p>Tutoria is an awesome place where you can find just the person you want to teach you whatever you want to learn! So sign up or sign in! </p>
+
+            <form method="post"id="logInFields">
+
+                <div class="form-group" >
+                </div>
+
+            </form>
+          </div>
+
+          <div style="float:right; width:400px;">
+            HI
+          </div>
 
         </div>
 
@@ -93,7 +66,7 @@
 
         <script type="text/javascript">
 
-            if (window.innerWidth < 520) {
+            /*if (window.innerWidth < 520) {
                 $(".container").width("auto");
                 $("#mainContainer").css('margin-top', "0");
                 $("#img").css('width', "150");
@@ -122,7 +95,7 @@
                   	$("h1").css('font-size', "250%");
                 }
                 $(html).height("100%");
-            });
+            });*/
 
         </script>
 
