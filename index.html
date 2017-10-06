@@ -1,0 +1,133 @@
+<html>
+
+    <head>
+
+        <title>FlashCards App Admin</title>
+
+        <meta charset="utf-8">
+      	<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+        <style type="text/css">
+
+            html {
+                height:100%;
+            }
+
+            body {
+                text-align: center;
+                background-color: lightblue;
+            }
+
+            .form {
+                margin-top: 5px;
+            }
+
+            .container {
+                width: 500px;
+            }
+
+            #mainContainer {
+                margin-top: 80px;
+            }
+
+            h1 {
+                font-size: 300%;
+                font-weight: bolder;
+                margin-top:10px;
+                margin-bottom:20px;
+            }
+
+            #btn2 {
+                width: 1000px;
+            }
+
+            #img {
+                width:250px;
+                height:250px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <br><br>
+
+        <div class="container" id="mainContainer">
+
+        <h1>FlashCards App Admin Panel
+        <br></h1>
+
+        <form method="post"id="logInFields">
+
+            <div class="form-group" >
+
+            <input type="text" name="uname" placeholder="Admin Username" class="form form-control">
+
+            <input type="password" name="pwd" placeholder="Admin Password" class="form form-control">
+
+            <label class="form-check-label">
+            <input type="checkbox" name="stayLogIn" id="stayLoggedInLogIn" class="form form-check-input">
+            Stay Logged In?
+            </label>
+            <br>
+
+            <input type="submit" name="logIn" id="logIn" value="Log In" class="btn btn-primary form"><br><br>
+
+            </div>
+
+        </form>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+
+            if (window.innerWidth < 520) {
+                $(".container").width("auto");
+                $("#mainContainer").css('margin-top', "0");
+                $("#img").css('width', "150");
+                $("#img").css('height', "150");
+              	$("h1").css('font-size', "220%");
+            } else {
+                $(".container").width("500px");
+                $("#mainContainer").css('margin-top', "10px");
+                $("#img").css('width', "250");
+                $("#img").css('height', "250");
+              	$("h1").css('font-size', "250%");
+            }
+
+            $(window).resize(function () {
+                if (window.innerWidth < 520) {
+                    $(".container").width("auto");
+                    $("#mainContainer").css('margin-top', "0");
+                    $("#img").css('width', "150");
+                    $("#img").css('height', "150");
+                  	$("h1").css('font-size', "220%");
+                } else {
+                    $(".container").width("500px");
+                    $("#mainContainer").css('margin-top', "10px");
+                    $("#img").css('width', "250");
+                    $("#img").css('height', "250");
+                  	$("h1").css('font-size', "250%");
+                }
+                $(html).height("100%");
+            });
+
+        </script>
+
+    </body>
+
+
+
+</html>
