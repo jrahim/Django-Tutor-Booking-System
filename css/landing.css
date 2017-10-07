@@ -58,3 +58,18 @@ body {
   background-color: inherit;
   border: none;
 }
+
+form {
+  display: inline;
+  float: left;
+}
+
+#searchForm {
+  margin-top: 28px;
+  margin-left: 125px;
+  width: 500px;
+}
+
+#searchInput{
+  width:400px;
+}
