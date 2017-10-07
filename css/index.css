@@ -19,8 +19,9 @@ body {
 }
 
 #mainHeading {
+  font-size: 300%;
   position:relative;
-  top: 17px;
+  top: 18px;
   color: white !important
 }
 
