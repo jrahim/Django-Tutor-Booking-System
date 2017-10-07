@@ -1,0 +1,26 @@
+html {
+    height:100%;
+}
+
+body {
+    background-color: #e1f5fe;
+}
+
+.container-fluid {
+    width: 1000px !important;
+}
+
+#topBar {
+  background-color:#43a047;
+  height:75px;
+}
+
+#mainHeading {
+  position:relative;
+  top: 17px;
+  color: white !important
+}
+
+.tealHeading {
+  color:#004d40;
+}
