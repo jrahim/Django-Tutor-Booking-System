@@ -11,8 +11,9 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="css/book.css">
         <link rel="stylesheet" href="css/topBarWithSearch.css">
+        <link rel="stylesheet" href="css/common.css">
 
         <style type="text/css">
 
@@ -53,14 +54,60 @@
         </div>
       </div>
 
-      <h1>HELLO! THIS IS LANDING PAGE.</h1>
+      <div class="container-fluid centerAlign" style="margin-top: 130px;">
+
+        <table class="table table-sm table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>13:00-13:30</th>
+              <th>13:30-14:00</th>
+              <th>14:00-14:30</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Monday</th>
+              <td style="background-color:black;"></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">Tuesday</th>
+              <td></td>
+              <td style="background-color:black;"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">Wednesday</th>
+              <td></td>
+              <td></td>
+              <td style="background-color:black;"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <a href="confirmation.html"><button class="btn btn-info btn-lg">Confirm!</button></a>
+
+      </div>
+
+      <div id="bc" style="background-color:black; display:none"></div>
 
       <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
       <script type="text/javascript">
-
+      $('.table td').click(function() {
+        if ($(this).css('background-color')!=$('#bc').css('background-color')) {
+          $('.table td').each(function(i, obj) {
+              if ($(this).css('background-color')!=$('#bc').css('background-color')) {
+                $(this).css('background-color', 'inherit');
+              }
+          });
+          $(this).css('background-color', 'green');
+        }
+      });
           /*if (window.innerWidth < 520) {
               $(".container").width("auto");
               $("#mainContainer").css('margin-top', "0");

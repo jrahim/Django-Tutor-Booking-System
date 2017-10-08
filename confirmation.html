@@ -11,9 +11,9 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/search.css">
-        <link rel="stylesheet" href="css/topBarWithSearch.css">
         <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/topBarWithSearch.css">
+        <link rel="stylesheet" href="css/confirmation.css">
 
         <style type="text/css">
 
@@ -54,39 +54,28 @@
         </div>
       </div>
 
-      <div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
-        <div style="float:left;">
-        <h2 class="tealText">Your search returned 1 result:</h2>
-        </div>
-
-        <div class="form-inline form-row" style="float:right; margin-top:2px;">
-          <div class="col-4" style="margin-top:0px; font-size:120%">
-            Filter:
-          </div>
-          <select class="form-control form-control col-8" style="margin-top:0px;">
-            <option>Select</option>
-            <option>Cheapest to Most Expensive</option>
-            <option>Most Expensive to Cheapest</option>
-            <option>Highest Rated First</option>
-            <option>Most Reviewed First</option>
-          </select>
-        </div>
-
-
-      </div>
-
-      <div class="container-fluid" style="width:1000px;margin-top:0px">
-        <hr>
-
-        <img src="assets/img/zuko.png" alt="" class="tutorPic">
-
-        <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">Prince Zuko</a>
-
-        <div style="width:300px !important; display:inline-block; border:solid black 2px; margin-left:83px;position:relative; padding:5px">Zuko is a firebending master, born as a prince in the Fire Nation Royal Family.</div>
-
-        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> 250HKD </div>
-
-        <div style="display:inine-block; float:right; margin-top:3px;"><a href="book.html"><button class="btn btn-success btn-lg">Book!</button></a></div>
+      <div class="container-fluid" style="margin-top:115px; width:600px !important;">
+        <h3 class="centerAlign">Booking Confirmed!</h3>
+        <ul class="list-group" style="width:600px;">
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Tutor: </h5>
+            </div>
+            <p class="mb-1"><br><img src="assets/img/zuko.png" id="tutorPic" alt=""><span style="margin-left:20px;">Prince Zuko</span></p>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Timeslot:</h5>
+            </div>
+            <p class="mb-1">Moday: 13:30-14:00</p>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Session Charges:</h5>
+            </div>
+            <p class="mb-1">250HKD</p>
+          </li>
+        </ul>
       </div>
 
       <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
