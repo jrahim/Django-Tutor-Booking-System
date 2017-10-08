@@ -8,10 +8,12 @@
       	<meta name="HandheldFriendly" content="true" />
 		<meta name="MobileOptimized" content="320" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/search.css">
         <link rel="stylesheet" href="css/topBarWithSearch.css">
-        <link rel="stylesheet" href="css/landing.css">
+        <link rel="stylesheet" href="css/common.css">
 
         <style type="text/css">
 
@@ -52,14 +54,40 @@
         </div>
       </div>
 
-      <div class="container-fluid" style="margin-top:155px;">
-        <h1 class="tealHeading">This is the landing page</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+      <div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
+        <div style="float:left;">
+        <h2 class="tealText">Your search returned 1 result:</h2>
+        </div>
+
+        <div class="form-inline form-row" style="float:right; margin-top:2px;">
+          <div class="col-4" style="margin-top:0px;">
+            Filter:
+          </div>
+          <select class="form-control form-control col-8" style="margin-top:0px;">
+            <option>Select</option>
+            <option>Cheapest to Most Expensive</option>
+            <option>Most Expensive to Cheapest</option>
+            <option>Highest Rated First</option>
+            <option>Most Reviewed First</option>
+          </select>
+        </div>
+
 
       </div>
 
+      <div class="container-fluid" style="width:1000px;margin-top:0px">
+        <hr>
 
+        <img src="assets/img/zuko.png" alt="" class="tutorPic">
+
+        <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">Prince Zuko</a>
+
+        <div style="width:300px !important; display:inline-block; border:solid black 2px; margin-left:83px;position:relative; padding:5px">Zuko is a firebending master, born as a prince in the Fire Nation Royal Family.</div>
+
+        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> 250HKD </div>
+
+        <div style="display:inine-block; float:right;"><a href="#"><button class="btn btn-success btn-lg">Book!</button></a></div>
+      </div>
 
       <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

@@ -22,13 +22,32 @@
 
     <body>
 
-      <div class="" id="topBar">
-        <div class="container-fluid" >
+      <div class="navbar fixed-top" id="topBar">
+        <div class="container-fluid">
+
           <div class="" style="float:left;">
-            <a href="landing.html" id="tutoriaClick"><h1 id="mainHeading">Tutoria</h1></a>
+            <div class="" style="float:left;">
+              <h1 id="mainHeading">Tutoria</h1>
+            </div>
+            <form class="form-inline" id="searchForm" action="search.html">
+              <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+              <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+            </form>
           </div>
 
+
           <div class="" id="logInForm" style="float:right;">
+
+            <div class="dropdown">
+              <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="assets/img/aang.jpg" id="avatarPic">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="#">My Bookings</a>
+                <a class="dropdown-item" href="#">My Wallet</a>
+              </div>
+            </div>
 
           </div>
         </div>
