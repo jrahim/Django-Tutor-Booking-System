@@ -5,3 +5,7 @@
 .tealText {
   color:#004d40;
 }
+
+.list-group-item-action:hover {
+  cursor: pointer;
+}
