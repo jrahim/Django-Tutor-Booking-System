@@ -1,0 +1,4 @@
+Primary: #e1f5fe
+Dark: #afc2cb
+Light: #ffffff
+heading: #003171

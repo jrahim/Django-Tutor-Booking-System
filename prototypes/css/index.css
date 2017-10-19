@@ -1,0 +1,63 @@
+html {
+    height:100%;
+}
+
+body {
+    background-color: #e1f5fe;
+}
+
+.form {
+    margin-top: 5px;
+}
+
+.container-fluid {
+    width: 1000px !important;
+}
+
+#mainContainer {
+    margin-top: 80px;
+}
+
+#mainHeading {
+  font-size: 300%;
+  position:relative;
+  top: 18px;
+  color: white !important
+}
+
+#btn2 {
+    width: 1000px;
+}
+
+#img {
+    width:250px;
+    height:250px;
+}
+
+#topBar {
+  background-color:#43a047;
+  height:75px;
+}
+
+#logInForm {
+  margin-top: 21px;
+}
+
+#signInInputEmail {
+  width: 180px !important;
+  margin-right: 5px;
+}
+
+#signInInputPwd {
+  width: 130px !important;
+  margin-right: 5px;
+}
+
+.tealHeading {
+  color:#004d40;
+}
+
+.signUpInput {
+  width:300px;
+  margin-bottom:5px !important;
+}

@@ -1,0 +1,4 @@
+.table, .table td, .table th{
+  border: solid 1px;
+  border-color: black !important;
+}

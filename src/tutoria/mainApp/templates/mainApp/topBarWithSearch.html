@@ -1,0 +1,81 @@
+<html>
+
+<head>
+
+    <title>Tutoria</title>
+
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/topBarWithSearch.css' %}">
+
+    {% block extra_head %} {% endblock %}
+
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar fixed-top" id="topBar">
+    <div class="container-fluid">
+
+        <div class="" style="float:left;">
+            <div class="" style="float:left;">
+                <h1 id="mainHeading">Tutoria</h1>
+            </div>
+            <form class="form-inline" id="searchForm" action="search" method="post">{% csrf_token %}
+                <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+            <!--<button class="btn btn-info my-2 my-sm-0" href="search">Search</button>-->
+        </div>
+
+
+        <div class="" id="logInForm" style="float:right;">
+
+            <div class="dropdown">
+                <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <img src="/static/assets/img/aang.jpg" id="avatarPic">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="profile.html">My Profile</a>
+                    <a class="dropdown-item" href="bookings.html">My Bookings</a>
+                    <a class="dropdown-item" href="wallet.html">My Wallet</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+
+</body>
+
+
+</html>
+
+

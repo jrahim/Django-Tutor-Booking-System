@@ -1,0 +1,145 @@
+<html>
+
+    <head>
+
+        <title>Tutoria</title>
+
+        <meta charset="utf-8">
+      	<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="../src/tutoria/mainApp/templates/mainApp/css/topBarWithSearch.css">
+        <link rel="stylesheet" href="../src/tutoria/mainApp/templates/mainApp/css/profile.css">
+        <link rel="stylesheet" href="../src/tutoria/mainApp/templates/mainApp/css/common.css">
+        <style type="text/css">
+
+        </style>
+
+    </head>
+
+    <body>
+
+      <div class="navbar fixed-top" id="topBar">
+        <div class="container-fluid">
+
+          <div class="" style="float:left;">
+            <div class="" style="float:left;">
+              <a href="../src/tutoria/mainApp/templates/mainApp/landing.html" id="tutoriaClick"><h1 id="mainHeading">Tutoria</h1></a>
+            </div>
+            <form class="form-inline" id="searchForm" action="../src/tutoria/mainApp/templates/mainApp/search.html">
+              <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+              <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+
+
+          <div class="" id="logInForm" style="float:right;">
+
+            <div class="dropdown">
+              <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="assets/img/aang.jpg" id="avatarPic">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="bookings.html">My Bookings</a>
+                <a class="dropdown-item" href="wallet.html">My Wallet</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid" style="margin-top:115px; width:600px !important;">
+        <div class="centerAlign">
+        <img src="assets/img/aang.jpg" id="bigAvatarPic" alt="">
+        <h1>Aang</h1>
+        <br>
+        </div>
+        <ul class="list-group" style="width:600px;">
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Email:</h5>
+              <a href=""><small style="color:green">change</small></a>
+            </div>
+            <p class="mb-1">thelastairbender@avatar.com</p>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Contact Number:</h5>
+              <a href=""><small style="color:green">change</small></a>
+            </div>
+            <p class="mb-1">1234-5678</p>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Short Bio:</h5>
+              <a href=""><small style="color:green">change</small></a>
+            </div>
+            <p class="mb-1">Aang was a male Air Nomad born in 12 BG and the Avatar during the century-long conflict known as the Hundred Year War. His immediate predecessor was Avatar Roku, and his immediate successor is Avatar Korra. As the Avatar of his time, he was the only person capable of using all four bending arts: airbending, waterbending, earthbending, and firebending.</p>
+          </li>
+          <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Manage Available Timeslots</h5>
+            </div>
+          </a>
+          <a class="list-group-item list-group-item-action flex-column align-items-start" href="bookings.html">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">View My Bookings</h5>
+            </div>
+          </a>
+          <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Change Password</h5>
+            </div>
+          </a>
+        </ul>
+
+      </div>
+
+      <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+      <script type="text/javascript">
+          /*if (window.innerWidth < 520) {
+              $(".container").width("auto");
+              $("#mainContainer").css('margin-top', "0");
+              $("#img").css('width', "150");
+              $("#img").css('height', "150");
+            	$("h1").css('font-size', "220%");
+          } else {
+              $(".container").width("500px");
+              $("#mainContainer").css('margin-top', "10px");
+              $("#img").css('width', "250");
+              $("#img").css('height', "250");
+            	$("h1").css('font-size', "250%");
+          }
+
+          $(window).resize(function () {
+              if (window.innerWidth < 520) {
+                  $(".container").width("auto");
+                  $("#mainContainer").css('margin-top', "0");
+                  $("#img").css('width', "150");
+                  $("#img").css('height', "150");
+                	$("h1").css('font-size', "220%");
+              } else {
+                  $(".container").width("500px");
+                  $("#mainContainer").css('margin-top', "10px");
+                  $("#img").css('width', "250");
+                  $("#img").css('height', "250");
+                	$("h1").css('font-size', "250%");
+              }
+              $(html).height("100%");
+          });*/
+
+      </script>
+
+    </body>
+
+
+
+</html>

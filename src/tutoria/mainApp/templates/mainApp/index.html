@@ -1,0 +1,117 @@
+<html>
+
+    <head>
+
+        <title>Tutoria</title>
+
+        <meta charset="utf-8">
+      	<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="../src/tutoria/mainApp/templates/mainApp/css/index.css">
+        <link rel="stylesheet" href="../src/tutoria/mainApp/templates/mainApp/css/animate.css">
+
+        <style type="text/css">
+
+
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="" id="topBar">
+          <div class="container-fluid" >
+            <div class="" style="float:left;">
+              <h1 id="mainHeading">Tutoria</h1>
+            </div>
+            
+            <div class="" id="logInForm" style="float:right;">
+              <form class="form-inline" action="../src/tutoria/mainApp/templates/mainApp/landing.html" method="post">
+                <input type="email" class="form-control" id="signInInputEmail" name="email" value="" placeholder="Email Address">
+                <input type="password" class="form-control" id="signInInputPwd" name="password" value="" placeholder="Password">
+                <input type="submit" class="form-control btn btn-info" name="login" value="Log In">
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="container-fluid animated bounceInUp" id="mainContainer">
+
+          <div style="float:left; width: 500px;" class="">
+            <h1 style="" class="tealHeading">Welcome to Tutoria!<br></h1>
+            <p>Tutoria is an awesome place where you can find just the person you want to teach you whatever you want to learn! So sign up or sign in! </p>
+
+            <form method="post"id="logInFields">
+
+                <div class="form-group" >
+                </div>
+
+            </form>
+          </div>
+
+          <div style="float:right; width:400px;" class="">
+            <h1 class="tealHeading">Sign Up!</h1><br>
+            <form class="form" action="../src/tutoria/mainApp/templates/mainApp/landing.html">
+              <input type="text" class="form-control signUpInput" name="fullName" value="" placeholder="Full Name">
+              <input type="email" class="form-control signUpInput" name="email" value="" placeholder="Email Address">
+              <input type="password" class="form-control signUpInput" name="password" value="" placeholder="New Password">
+              <p>Are you a student or tutor?</p>
+              <label class="radio-inline"><input type="radio" name="optradio">Student</label>
+              <label class="radio-inline"><input type="radio" name="optradio">Tutor</label>
+              <input type="submit" class="form-control btn btn-info signUpInput" name="signup" value="Sign Up!">
+            </form>
+          </div>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+
+            /*if (window.innerWidth < 520) {
+                $(".container").width("auto");
+                $("#mainContainer").css('margin-top', "0");
+                $("#img").css('width', "150");
+                $("#img").css('height', "150");
+              	$("h1").css('font-size', "220%");
+            } else {
+                $(".container").width("500px");
+                $("#mainContainer").css('margin-top', "10px");
+                $("#img").css('width', "250");
+                $("#img").css('height', "250");
+              	$("h1").css('font-size', "250%");
+            }
+
+            $(window).resize(function () {
+                if (window.innerWidth < 520) {
+                    $(".container").width("auto");
+                    $("#mainContainer").css('margin-top', "0");
+                    $("#img").css('width', "150");
+                    $("#img").css('height', "150");
+                  	$("h1").css('font-size', "220%");
+                } else {
+                    $(".container").width("500px");
+                    $("#mainContainer").css('margin-top', "10px");
+                    $("#img").css('width', "250");
+                    $("#img").css('height', "250");
+                  	$("h1").css('font-size', "250%");
+                }
+                $(html).height("100%");
+            });*/
+
+        </script>
+
+    </body>
+
+
+
+</html>
