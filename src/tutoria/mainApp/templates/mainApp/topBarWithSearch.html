@@ -30,9 +30,9 @@
 
         <div class="" style="float:left;">
             <div class="" style="float:left;">
-                <h1 id="mainHeading">Tutoria</h1>
+                <a href="index" id="tutoriaClick"><h1 id="mainHeading">Tutoria</h1></a>
             </div>
-            <form class="form-inline" id="searchForm" action="search" method="post">{% csrf_token %}
+            <form class="form-inline" id="searchForm" action="search" method="post">
                 <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search"
                        aria-label="Search">
                 <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
@@ -42,7 +42,7 @@
         </div>
 
 
-        <div class="" id="logInForm" style="float:right;">
+        <div class="" id="" style="float:right;">
 
             <div class="dropdown">
                 <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -50,9 +50,9 @@
                     <img src="/static/assets/img/aang.jpg" id="avatarPic">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="profile.html">My Profile</a>
-                    <a class="dropdown-item" href="bookings.html">My Bookings</a>
-                    <a class="dropdown-item" href="wallet.html">My Wallet</a>
+                    <a class="dropdown-item" href="profile">My Profile</a>
+                    <a class="dropdown-item" href="bookings">My Bookings</a>
+                    <a class="dropdown-item" href="wallet">My Wallet</a>
                 </div>
             </div>
 
@@ -72,6 +72,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
+
+{% block extra_script %}
+
+{% endblock %}
 
 </body>
 
