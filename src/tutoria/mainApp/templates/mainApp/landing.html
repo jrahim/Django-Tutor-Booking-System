@@ -1,0 +1,126 @@
+<html>
+
+<head>
+
+    <title>Tutoria</title>
+
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/topBarWithSearch.css">
+    <link rel="stylesheet" href="css/landing.css">
+
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar fixed-top" id="topBar">
+    <div class="container-fluid">
+
+        <div class="" style="float:left;">
+            <div class="" style="float:left;">
+                <h1 id="mainHeading">Tutoria</h1>
+            </div>
+            <form class="form-inline" id="searchForm" action="search" method="post">{% csrf_token %}
+                <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+            <!--<button class="btn btn-info my-2 my-sm-0" href="search">Search</button>-->
+        </div>
+
+
+        <div class="" id="logInForm" style="float:right;">
+
+            <div class="dropdown">
+                <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <img src="assets/img/aang.jpg" id="avatarPic">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="profile.html">My Profile</a>
+                    <a class="dropdown-item" href="bookings.html">My Bookings</a>
+                    <a class="dropdown-item" href="wallet.html">My Wallet</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin-top:155px;">
+    <h1 class="tealHeading">This is the landing page</h1>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+        a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+        Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+        of Lorem Ipsum.</p>
+    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at
+        its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+        opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing
+        packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+        will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by
+        accident, sometimes on purpose (injected humour and the like).</p>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    /*if (window.innerWidth < 520) {
+        $(".container").width("auto");
+        $("#mainContainer").css('margin-top', "0");
+        $("#img").css('width', "150");
+        $("#img").css('height', "150");
+          $("h1").css('font-size', "220%");
+    } else {
+        $(".container").width("500px");
+        $("#mainContainer").css('margin-top', "10px");
+        $("#img").css('width', "250");
+        $("#img").css('height', "250");
+          $("h1").css('font-size', "250%");
+    }
+
+    $(window).resize(function () {
+        if (window.innerWidth < 520) {
+            $(".container").width("auto");
+            $("#mainContainer").css('margin-top', "0");
+            $("#img").css('width', "150");
+            $("#img").css('height', "150");
+              $("h1").css('font-size', "220%");
+        } else {
+            $(".container").width("500px");
+            $("#mainContainer").css('margin-top', "10px");
+            $("#img").css('width', "250");
+            $("#img").css('height', "250");
+              $("h1").css('font-size', "250%");
+        }
+        $(html).height("100%");
+    });*/
+
+</script>
+
+</body>
+
+
+</html>
