@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.template import loader
+from .models import *
 
 # Create your views here.
 
@@ -9,7 +11,13 @@ def index(request):
 
 @csrf_exempt
 def search(request):
-    return render(request, 'mainApp/search.html')
+
+    tutor_list = Tutor.objects.all()
+    context = {
+        'tutor_list': tutor_list,
+    }
+
+    return render(request, 'mainApp/search.html', context)
 
 @csrf_exempt
 def profile(request):

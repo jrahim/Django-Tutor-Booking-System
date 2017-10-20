@@ -60,10 +60,18 @@
     </div>
     <hr>
 
-    <img src="/static/assets/img/zuko.png" alt="" class="tutorPic">
+    <img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">
 
-    <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">Prince
-        Zuko</a>
+   <!--<img src="/static/assets/img/zuko.png" alt="" class="tutorPic">-->
+
+
+    {% for tutor in tutor_list %}
+        <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor.user.password}}</a>
+    {% endfor %}
+
+
+
+    <!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
     <div style="width:300px !important; display:inline-block; border:solid black 2px; margin-left:83px;position:relative; padding:5px">
         Zuko is a firebending master, born as a prince in the Fire Nation Royal Family.
