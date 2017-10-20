@@ -3,11 +3,24 @@ from django.db import models
 
 # Create your models here.
 
+class Wallet(models.Model):
+    balance = models.PositiveIntegerField()
+
+    def addFunds(self, amount):
+        self.balance += amount
+        self.save()
+
+    def subtractFunds(self, amount):
+        self.balance -= amount
+        self.save()
+
+
 class User(models.Model):
     name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
+    wallet = models.OneToOneField(Wallet, default='')
 
     def __str__(self):
         return self.name
@@ -21,12 +34,11 @@ class Course(models.Model):
         return self.title
 
 
-
 class Tutor(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.OneToOneField(User)
     course = models.ManyToManyField(Course)
-    shortBio = models.CharField(max_length=300)
+    shortBio = models.CharField(max_length=300, default='None')
     rate = models.PositiveIntegerField()
     rating = models.FloatField()
     isPrivate = models.BooleanField()
@@ -35,9 +47,7 @@ class Tutor(models.Model):
         return self.user.name
 
 
-
 class PrivateTimetable(models.Model):
-
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     day = models.CharField(max_length=5)
     t07_08 = models.PositiveIntegerField()
@@ -49,7 +59,5 @@ class PrivateTimetable(models.Model):
     t13_14 = models.PositiveIntegerField()
     t14_15 = models.PositiveIntegerField()
 
-
     def __str__(self):
         return self.tutor.user.name
-
