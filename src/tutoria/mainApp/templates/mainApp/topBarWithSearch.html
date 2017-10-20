@@ -30,9 +30,9 @@
 
         <div class="" style="float:left;">
             <div class="" style="float:left;">
-                <a href="index" id="tutoriaClick"><h1 id="mainHeading">Tutoria</h1></a>
+                <a href="/mainApp/index" id="tutoriaClick"><h1 id="mainHeading">Tutoria</h1></a>
             </div>
-            <form class="form-inline" id="searchForm" action="http://localhost:8000/mainApp/search" method="post">
+            <form class="form-inline" id="searchForm" action="/mainApp/search" method="post">
                 <input id="searchInput" name="searchParam" class="form-control mr-sm-2" type="text" placeholder="Search"
                        aria-label="Search">
                 <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
@@ -50,9 +50,9 @@
                     <img src="/static/assets/img/aang.jpg" id="avatarPic">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="http://localhost:8000/mainApp/profile">My Profile</a>
-                    <a class="dropdown-item" href="http://localhost:8000/mainApp/bookings">My Bookings</a>
-                    <a class="dropdown-item" href="http://localhost:8000/mainApp/wallet">My Wallet</a>
+                    <a class="dropdown-item" href="/mainApp/profile">My Profile</a>
+                    <a class="dropdown-item" href="/mainApp/bookings">My Bookings</a>
+                    <a class="dropdown-item" href="/mainApp/wallet">My Wallet</a>
                 </div>
             </div>
 
@@ -63,9 +63,7 @@
 {% block content %}
 {% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
         integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>

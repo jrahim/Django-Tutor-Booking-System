@@ -1,0 +1,75 @@
+:root {
+  --primarycolor: #e1f5fe;
+  --topbarcolor: #43a047;
+}
+
+body {
+    background-color: var(--primarycolor);
+}
+
+.container-fluid {
+    width: 1000px;
+}
+
+#topBar {
+  background-color:var(--topbarcolor);
+  height:75px;
+}
+
+#tutoriaClick:hover {
+  text-decoration: none;
+}
+
+#mainHeading {
+  font-size: 300%;
+  position:relative;
+  top: 14px;
+  color: white !important
+}
+
+.tealHeading {
+  color:#004d40;
+}
+
+#avatarPic {
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  margin-top: -2px;
+}
+
+.dropdown-menu {
+  background-color: var(--primarycolor);
+  margin-top: 0px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--topbarcolor);
+  color: white;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+#dropdownMenuButton {
+  background-color: inherit;
+  border: none;
+}
+
+form {
+  display: inline;
+  float: left;
+}
+
+#searchForm {
+  margin-top: 24px;
+  margin-left: 125px;
+  width: 500px;
+}
+
+#searchInput{
+  width:400px;
+}

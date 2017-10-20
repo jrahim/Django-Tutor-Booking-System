@@ -13,22 +13,28 @@
         <h1>My Wallet</h1>
         <br>
     </div>
+    <div class="alert alert-success" role="alert" id="success">
+
+    </div>
+    <div class="alert alert-info" role="alert" id="success">
+        Processing request...
+    </div>
     <ul class="list-group" style="width:600px;">
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Balance:</h5>
             </div>
-            <p class="mb-1">{{budget.balance}}</p>
+            <span class="mb-1" id="balance">{{ wallet.balance }}</span>
         </li>
         <a data-toggle="modal" data-target=".bd-example-modal-sm"
-           class="list-group-item list-group-item-action flex-column align-items-start">
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Add Funds</h5>
             </div>
         </a>
 
         <a data-toggle="modal" data-target=".bd-example-modal-sm"
-           class="list-group-item list-group-item-action flex-column align-items-start">
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="sub()">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Withdraw Funds</h5>
             </div>
@@ -47,15 +53,48 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="number" class="form-control" id="signInInputEmail" name="email" value=""
+                <input id="amount" type="number" class="form-control" id="signInInputEmail" name="email" value=""
                        placeholder="Amount">
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="process()">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+        var action = "";
+        function add() {
+            action = "add";
+        }
+        function sub() {
+            action = "sub";
+        }
+        function process() {
+            if ($('#amount').val()>0) {
+                $('.alert-success').hide();
+                $('.alert-info').show();
+                $.get('/mainApp/managewallet/5', {
+                    action: action,
+                    amount: $('#amount').val()
+                }, function(response) {
+                    $('.alert-info').hide();
+                    $('.alert-success').show();
+                    if (action=="add") {
+                        $('.alert-success').html("Success! "+$('#amount').val()+" HKD have been added to your wallet!");
+                        $('#balance').html(parseInt($('#balance').html())+parseInt($('#amount').val()));
+                    } else {
+                        $('.alert-success').html("Success! "+$('#amount').val()+" HKD have been withdrawn from your wallet!");
+                        $('#balance').html(parseInt($('#balance').html())-parseInt($('#amount').val()));
+                    }
+
+                });
+            }
+        }
+    </script>
 {% endblock %}

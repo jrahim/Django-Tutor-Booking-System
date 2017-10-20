@@ -3,3 +3,8 @@
   width: 130px;
   border-radius: 50%;
 }
+
+.alert {
+  width: 600px;
+  display: none;
+}

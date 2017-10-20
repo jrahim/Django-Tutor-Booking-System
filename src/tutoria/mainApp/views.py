@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from .models import *
 from django.core import serializers
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -30,9 +31,9 @@ def bookings(request):
 
 @csrf_exempt
 def wallet(request, pk):
-    budget = Wallet.objects.get(user=pk)
+    wallet = Wallet.objects.get(user=pk)
     context = {
-        'budget': budget,
+        'wallet': wallet,
     }
     return render(request, 'mainApp/wallet.html', context)
 
@@ -45,3 +46,14 @@ def book(request, pk):
 @csrf_exempt
 def confirmation(request):
     return render(request, 'mainApp/confirmation.html')
+
+@csrf_exempt
+def manageWallet(request, pk):
+    w = Wallet.objects.get(user=pk)
+    if (request.GET.get('action', None) == "add"):
+        w.balance = w.balance + int(request.GET.get('amount', None))
+    else:
+        w.balance = w.balance - int(request.GET.get('amount', None))
+    w.save();
+    data = {'status' : 'success'}
+    return JsonResponse(data)

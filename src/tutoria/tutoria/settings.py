@@ -122,3 +122,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL= '/static/assets/img/' 
 MEDIA_ROOT = ('mainApp/static/assets/img')
+PROJECT_DIR = os.path.dirname(os.path.abspath("D:/SE17/src/tutoria/static"))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')

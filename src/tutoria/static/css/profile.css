@@ -1,0 +1,14 @@
+#bigAvatarPic {
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+}
+
+#fieldHeading {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.list-group-item-action:hover {
+  cursor: pointer;
+}
