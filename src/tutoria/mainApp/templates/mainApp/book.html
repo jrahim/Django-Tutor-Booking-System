@@ -13,36 +13,46 @@
         <thead>
         <tr>
             <th>Day</th>
-            <th>13:00-13:30</th>
-            <th>13:30-14:00</th>
-            <th>14:00-14:30</th>
+            <th>07:00-08:00</th>
+            <th>08:00-09:00</th>
+            <th>09:00-10:00</th>
+            <th>10:00-11:00</th>
+            <th>11:00-12:00</th>
+            <th>12:00-13:00</th>
+            <th>13:00-14:00</th>
+            <th>14:00-15:00</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">Monday</th>
-            <td style="background-color:black;"></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">Tuesday</th>
-            <td></td>
-            <td style="background-color:black;"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">Wednesday</th>
-            <td></td>
-            <td></td>
-            <td style="background-color:black;"></td>
-        </tr>
+        {% for instance in data %}
+            <tr>
+                {#            <th scope="row">{{ t.day }}</th>#}
+                {% for field, value in instance.fields.items %}
+                    {% if field == 'day' %}
+                        <th scope="row">{{ value }}</th>
+                    {% endif %}
+                    {% if field != "id" and field != "tutor" and field != "day" %}
+                        {% if value > 0 %}
+                            <td class="unavailable"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <a href="confirmation">
+    <a href="../confirmation">
         <button class="btn btn-info btn-lg">Confirm!</button>
     </a>
+
+
+
+
 
 </div>
 

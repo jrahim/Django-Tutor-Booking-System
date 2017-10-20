@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from .models import *
+from django.core import serializers
 
 # Create your views here.
 
@@ -32,8 +33,10 @@ def wallet(request):
     return render(request, 'mainApp/wallet.html')
 
 @csrf_exempt
-def book(request):
-    return render(request, 'mainApp/book.html')
+def book(request, pk):
+    context = {'data':serializers.serialize( "python", PrivateTimetable.objects.filter(tutor=pk) )}
+    #tt = {'tt': PrivateTimetable.objects.filter(tutor=pk), 'fields':PrivateTimetable._meta.get_fields()}
+    return render(request, 'mainApp/book.html', context)
 
 @csrf_exempt
 def confirmation(request):

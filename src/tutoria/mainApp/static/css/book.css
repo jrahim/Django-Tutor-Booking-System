@@ -2,3 +2,8 @@
   border: solid 1px;
   border-color: black !important;
 }
+
+
+.unavailable {
+  background-color: black !important;
+}

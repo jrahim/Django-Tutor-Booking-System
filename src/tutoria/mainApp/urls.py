@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^profile$', views.profile, name='profile'),
     url(r'^bookings$', views.bookings, name='bookings'),
     url(r'^wallet$', views.wallet, name='wallet'),
-    url(r'^book$', views.book, name='book'),
+    url(r'^book/(?P<pk>\d+)$', views.book, name='book'),
     url(r'^confirmation$', views.confirmation, name='confirmation'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
