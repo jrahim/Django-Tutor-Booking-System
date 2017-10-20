@@ -60,13 +60,14 @@
     </div>
     <hr>
 
-    <img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">
+    <!--<img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">-->
 
    <!--<img src="/static/assets/img/zuko.png" alt="" class="tutorPic">-->
 
 
     {% for tutor in tutor_list %}
-        <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor.user.password}}</a>
+        <img src="{{MEDIA_URL}}{{tutor.user.avatar}}" alt="" class="tutorPic">
+        <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor.user.name}}</a>
     {% endfor %}
 
 

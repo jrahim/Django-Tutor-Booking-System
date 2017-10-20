@@ -120,5 +120,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL= 'http://localhost:8000/mainApp/media/' 
-MEDIA_ROOT = ('mainApp/media/')
+MEDIA_URL= '/static/assets/img/' 
+MEDIA_ROOT = ('mainApp/static/assets/img')
