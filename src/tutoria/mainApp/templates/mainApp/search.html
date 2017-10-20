@@ -68,23 +68,25 @@
     {% for tutor in tutor_list %}
         <img src="{{MEDIA_URL}}{{tutor.user.avatar}}" alt="" class="tutorPic">
         <a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor.user.name}}</a>
+        <div style="width:300px !important; display:inline-block; border:solid black 2px; margin-left:83px;position:relative; padding:5px">
+            {{tutor.shortBio}}
+        </div>
+
+        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Other <br> Profile<br> Details</div>
+
+        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> HKD{{tutor.rate}}</div>
+
+        <div style="display:inine-block; float:right; margin-top:20px;"><a href="book">
+            <button class="btn btn-success btn-lg">Book!</button>
+        </a></div>
+        <br>
+
     {% endfor %}
 
-
+</div>
 
     <!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
-    <div style="width:300px !important; display:inline-block; border:solid black 2px; margin-left:83px;position:relative; padding:5px">
-        Zuko is a firebending master, born as a prince in the Fire Nation Royal Family.
-    </div>
 
-    <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Other <br> Profile<br> Details</div>
-
-    <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> 250HKD</div>
-
-    <div style="display:inine-block; float:right; margin-top:20px;"><a href="book">
-        <button class="btn btn-success btn-lg">Book!</button>
-    </a></div>
-</div>
 
 {% endblock %}
