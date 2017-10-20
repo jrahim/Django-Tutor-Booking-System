@@ -29,8 +29,12 @@ def bookings(request):
     return render(request, 'mainApp/bookings.html')
 
 @csrf_exempt
-def wallet(request):
-    return render(request, 'mainApp/wallet.html')
+def wallet(request, pk):
+    budget = Wallet.objects.get(user=pk)
+    context = {
+        'budget': budget,
+    }
+    return render(request, 'mainApp/wallet.html', context)
 
 @csrf_exempt
 def book(request, pk):

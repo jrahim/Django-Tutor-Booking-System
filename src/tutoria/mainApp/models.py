@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 
 
 # Create your models here.
@@ -8,6 +8,12 @@ class User(models.Model):
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
+        w = Wallet(balance = 0, user = self)
+        w.save()
 
     def __str__(self):
         return self.name
@@ -52,4 +58,12 @@ class PrivateTimetable(models.Model):
 
     def __str__(self):
         return self.tutor.user.name
+
+class Wallet(models.Model):
+
+    balance = models.PositiveIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.name
 
