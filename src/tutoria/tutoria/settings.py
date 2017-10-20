@@ -124,3 +124,4 @@ MEDIA_URL= '/static/assets/img/'
 MEDIA_ROOT = ('mainApp/static/assets/img')
 PROJECT_DIR = os.path.dirname(os.path.abspath("D:/SE17/src/tutoria/static"))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
