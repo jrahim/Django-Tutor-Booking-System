@@ -38,8 +38,27 @@ class Tutor(models.Model):
     course = models.ManyToManyField(Course)
     shortBio = models.CharField(max_length=300)
     rate = models.PositiveIntegerField(default=0)
-    rating = models.FloatField()
+    rating = models.FloatField(default=0)
     isPrivate = models.BooleanField()
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super(Tutor, self).save(*args, **kwargs)
+        if not PrivateTimetable.objects.filter(tutor=self).exists():
+            ttmon = PrivateTimetable(tutor=self, day='Mon')
+            ttmon.save()
+            tttue = PrivateTimetable(tutor=self, day='Tue')
+            tttue.save()
+            ttwed = PrivateTimetable(tutor=self, day='Wed')
+            ttwed.save()
+            ttthu = PrivateTimetable(tutor=self, day='Thu')
+            ttthu.save()
+            ttfri = PrivateTimetable(tutor=self, day='Fri')
+            ttfri.save()
+            ttsat = PrivateTimetable(tutor=self, day='Sat')
+            ttsat.save()
+            ttsun = PrivateTimetable(tutor=self, day='Sun')
+            ttsun.save()
 
     def __str__(self):
         return self.user.name
@@ -59,6 +78,7 @@ class PrivateTimetable(models.Model):
 
     def __str__(self):
         return self.tutor.user.name
+
 
 
 class Wallet(models.Model):

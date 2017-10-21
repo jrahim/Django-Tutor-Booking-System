@@ -34,7 +34,6 @@ def index(request):
                             request.session['uid'] = user.id  # add user id to session
                             return redirect('/mainApp/index?first=1')  # take user to landing page
                         else:
-                            url = reverse()
                             return render(request, 'mainApp/index.html',
                                           {'form': form, 'emailError': 'Email Already Used'})  # else give error
                     except:
@@ -131,7 +130,7 @@ def confirmation(request):
 @csrf_exempt
 def manageWallet(request):
     if 'uid' not in request.session:
-        return redirect('/mainApp/index')
+        return JsonResponse({'status': 'fail'})
     w = Wallet.objects.get(user=request.session['uid']);
     if request.GET.get('action', None) == "add":
         w.add_funds(int(request.GET.get('amount', None)))
@@ -139,3 +138,20 @@ def manageWallet(request):
         w.subtract_funds(int(request.GET.get('amount', None)))
     data = {'status': 'success'}
     return JsonResponse(data)
+
+
+@csrf_exempt
+def makeTutor(request):
+    if 'uid' not in request.session:
+        return JsonResponse({'status': 'fail'})
+    user = User.objects.get(id=request.session['uid'])
+    if Tutor.objects.filter(user=user).exists():
+        return JsonResponse({'status': 'fail'})
+    if request.POST.get('isPrivate') == 'yes':
+        tutor = Tutor(user=user, shortBio=request.POST.get('shortBio'), rate=int(request.POST.get('rate')),
+                      isPrivate=True)
+        tutor.save()
+    else:
+        tutor = Tutor(user=user, shortBio=request.POST.get('shortBio'), rate=0, isPrivate=False)
+        tutor.save()
+    return JsonResponse({'status': 'success'})
