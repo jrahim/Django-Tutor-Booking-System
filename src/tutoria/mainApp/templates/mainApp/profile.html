@@ -1,64 +1,103 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="/static/css/profile.css">
-<link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid" style="margin-top:115px; width:600px !important;">
-    <div class="centerAlign">
-        <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
-        <h1>{{ user.name }}</h1>
-        <br>
-    </div>
-    <ul class="list-group" style="width:600px;">
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Email:</h5>
-                <a href="">
-                    <small style="color:green">change</small>
+    <div class="container-fluid" style="margin-top:115px; width:600px !important;">
+        <div class="centerAlign">
+            <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
+            <h1>{{ user.name }}</h1>
+            <br>
+        </div>
+        <ul class="list-group" style="width:600px;">
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Email:</h5>
+                    <a href="">
+                        <small style="color:green">change</small>
+                    </a>
+                </div>
+                <p class="mb-1">{{ user.email }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Contact Number:</h5>
+                    <a href="">
+                        <small style="color:green">change</small>
+                    </a>
+                </div>
+                <p class="mb-1"></p>
+            </li>
+            {% if isTutor == '1' %}
+                <li class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Short Bio:</h5>
+                        <a href="">
+                            <small style="color:green">change</small>
+                        </a>
+                    </div>
+                    <p class="mb-1">{{ tutor.shortBio }}</p>
+                </li>
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Manage Available Timeslots</h5>
+                    </div>
                 </a>
-            </div>
-            <p class="mb-1">{{ user.email }}</p>
-        </li>
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Contact Number:</h5>
-                <a href="">
-                    <small style="color:green">change</small>
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Manage Courses you Teach</h5>
+                    </div>
                 </a>
-            </div>
-            <p class="mb-1"></p>
-        </li>
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Short Bio:</h5>
-                <a href="">
-                    <small style="color:green">change</small>
+            {% else %}
+                <a class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal" data-target="#becomeTutorModal">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Become a tutor</h5>
+                    </div>
                 </a>
-            </div>
-            <p class="mb-1">Aang was a male Air Nomad born in 12 BG and the Avatar during the century-long conflict
-                known as the Hundred Year War. His immediate predecessor was Avatar Roku, and his immediate successor is
-                Avatar Korra. As the Avatar of his time, he was the only person capable of using all four bending arts:
-                airbending, waterbending, earthbending, and firebending.</p>
-        </li>
-        <a class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Manage Available Timeslots</h5>
-            </div>
-        </a>
-        <a class="list-group-item list-group-item-action flex-column align-items-start" href="bookings">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">View My Bookings</h5>
-            </div>
-        </a>
-        <a class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Change Password</h5>
-            </div>
-        </a>
-    </ul>
+            {% endif %}
+            <a class="list-group-item list-group-item-action flex-column align-items-start" href="bookings">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">View My Bookings</h5>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Change Password</h5>
+                </div>
+            </a>
+        </ul>
 
-</div>
+        <div class="modal fade bd-example-modal-sm" id="becomeTutorModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enter Info:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Enter a short bio:</h6>
+                        <textarea id="bio" type="text" class="form-control"
+                               value=""
+                                  placeholder="Enter Short Bio"> </textarea>
+                        <br>
+                        <h6>Enter Your Rate per Session:</h6>
+                        <input type="number" id="rate" class="form-control" placeholder="Enter your Rate per Session">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="process()">Submit
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

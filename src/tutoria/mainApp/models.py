@@ -37,7 +37,7 @@ class Tutor(models.Model):
     user = models.OneToOneField(User)
     course = models.ManyToManyField(Course)
     shortBio = models.CharField(max_length=300)
-    rate = models.PositiveIntegerField()
+    rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField()
     isPrivate = models.BooleanField()
 
@@ -48,14 +48,14 @@ class Tutor(models.Model):
 class PrivateTimetable(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     day = models.CharField(max_length=3)
-    t07_08 = models.PositiveIntegerField()
-    t08_09 = models.PositiveIntegerField()
-    t09_10 = models.PositiveIntegerField()
-    t10_11 = models.PositiveIntegerField()
-    t11_12 = models.PositiveIntegerField()
-    t12_13 = models.PositiveIntegerField()
-    t13_14 = models.PositiveIntegerField()
-    t14_15 = models.PositiveIntegerField()
+    t07_08 = models.PositiveIntegerField(default=1)
+    t08_09 = models.PositiveIntegerField(default=1)
+    t09_10 = models.PositiveIntegerField(default=1)
+    t10_11 = models.PositiveIntegerField(default=1)
+    t11_12 = models.PositiveIntegerField(default=1)
+    t12_13 = models.PositiveIntegerField(default=1)
+    t13_14 = models.PositiveIntegerField(default=1)
+    t14_15 = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.tutor.user.name

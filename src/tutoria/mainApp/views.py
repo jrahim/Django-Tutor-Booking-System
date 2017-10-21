@@ -58,7 +58,7 @@ def index(request):
                 del request.session['uid']
                 return render(request, 'mainApp/index.html', {'form': form})
         user = User.objects.get(id=request.session['uid'])
-        return render(request, 'mainApp/landing.html', {'user':user})
+        return render(request, 'mainApp/landing.html', {'user': user})
 
 
 @csrf_exempt
@@ -69,7 +69,7 @@ def search(request):
     tutor_list = Tutor.objects.all()
     context = {
         'tutor_list': tutor_list,
-        'user':user
+        'user': user
     }
 
     return render(request, 'mainApp/search.html', context)
@@ -80,7 +80,12 @@ def profile(request):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/profile.html', {'user':user})
+    isTutor = '0'
+    tutor = {}
+    if Tutor.objects.filter(user=request.session['uid']):
+        isTutor = '1'
+        tutor = Tutor.objects.get(user=request.session['uid'])
+    return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
 
 @csrf_exempt
@@ -88,7 +93,7 @@ def bookings(request):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/bookings.html', {'user':user})
+    return render(request, 'mainApp/bookings.html', {'user': user})
 
 
 @csrf_exempt
@@ -110,7 +115,7 @@ def book(request, pk):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     context = {'data': serializers.serialize("python", PrivateTimetable.objects.filter(tutor=pk)),
-               'tutor': Tutor.objects.filter(id=pk)[0], 'user':user}
+               'tutor': Tutor.objects.filter(id=pk)[0], 'user': user}
     # tt = {'tt': PrivateTimetable.objects.filter(tutor=pk), 'fields':PrivateTimetable._meta.get_fields()}
     return render(request, 'mainApp/book.html', context)
 
@@ -120,7 +125,7 @@ def confirmation(request):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/confirmation.html', {'user':user})
+    return render(request, 'mainApp/confirmation.html', {'user': user})
 
 
 @csrf_exempt
