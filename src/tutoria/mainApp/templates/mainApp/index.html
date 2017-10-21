@@ -60,10 +60,13 @@
 
     <div style="float:right; width:400px;" class="">
         <h1 class="tealHeading">Sign Up!</h1><br>
-        <form class="form" action="/mainApp/index" method="post" enctype="multipart/form-data">
-            <input type="text" class="form-control signUpInput" name="name" value="" placeholder="Full Name">
-            <input type="email" class="form-control signUpInput" name="email" value="" placeholder="Email Address">
-            <input type="password" class="form-control signUpInput" name="password" value="" placeholder="New Password">
+        <form class="form" id="signUpForm" action="/mainApp/index" method="post" enctype="multipart/form-data">
+            <input type="text" id="nameinput" class="form-control signUpInput" name="name" value="" placeholder="Full Name">
+            <p id="nameError" style="color:red;"></p>
+            <input type="email" id="emailinput" class="form-control signUpInput" name="email" value="" placeholder="Email Address">
+            <p id="emailError" style="color:red;">{{ emailError }}</p>
+            <input type="password" id="pwdinput" class="form-control signUpInput" name="password" value="" placeholder="New Password">
+            <p id="pwdError" style="color:red;"></p>
             <p>{{ form.non_field_errors }}</p>
             <p>{{ form.docfile.label_tag }} </p>
             <p>
@@ -89,36 +92,24 @@
 
 <script type="text/javascript">
 
-    /*if (window.innerWidth < 520) {
-        $(".container").width("auto");
-        $("#mainContainer").css('margin-top', "0");
-        $("#img").css('width', "150");
-        $("#img").css('height', "150");
-          $("h1").css('font-size', "220%");
-    } else {
-        $(".container").width("500px");
-        $("#mainContainer").css('margin-top', "10px");
-        $("#img").css('width', "250");
-        $("#img").css('height', "250");
-          $("h1").css('font-size', "250%");
-    }
-
-    $(window).resize(function () {
-        if (window.innerWidth < 520) {
-            $(".container").width("auto");
-            $("#mainContainer").css('margin-top', "0");
-            $("#img").css('width', "150");
-            $("#img").css('height', "150");
-              $("h1").css('font-size', "220%");
-        } else {
-            $(".container").width("500px");
-            $("#mainContainer").css('margin-top', "10px");
-            $("#img").css('width', "250");
-            $("#img").css('height', "250");
-              $("h1").css('font-size', "250%");
+    $('#signUpForm').submit(function (e) {
+        $('#nameError').html('');
+        $('#emailError').html('');
+        $('#pwdError').html('');
+        if ($('#nameinput').val()=="") {
+            $('#nameError').html('Please Enter Your Name')
+            e.preventDefault();
         }
-        $(html).height("100%");
-    });*/
+        if ($('#emailinput').val()=="") {
+            $('#emailError').html('Please Enter Your Email Address')
+            e.preventDefault();
+        }
+        if ($('#pwdinput').val()=="") {
+            $('#pwdError').html('Please Enter A Password')
+            e.preventDefault();
+        }
+    });
+
 
 </script>
 

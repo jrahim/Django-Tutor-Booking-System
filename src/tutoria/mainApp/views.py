@@ -5,6 +5,7 @@ from .models import *
 from django.core import serializers
 from django.http import JsonResponse
 from mainApp.forms import ImageForm
+from django.core.validators import validate_email
 
 
 # Create your views here.
@@ -17,13 +18,19 @@ def index(request):
             if 'signup' in request.POST:
                 form = ImageForm(request.POST, request.FILES)
                 if form.is_valid():
-                    if not User.objects.filter(email=request.POST.get('email')).exists():
-                        user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'], email=request.POST.get("email"), password=request.POST.get("password"))
-                        user.save()
-                        request.session['uid']=user.id
-                        return render(request, 'mainApp/landing.html')
-                    else:
-                        return render(request, 'mainApp/index.html', {'form': form, 'error': 'Email already used'})
+                    try:
+                        validate_email(request.POST.get('email'))
+                        if not User.objects.filter(email=request.POST.get('email')).exists():
+                            user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'], email=request.POST.get("email"), password=request.POST.get("password"))
+                            user.save()
+                            request.session['uid']=user.id
+                            return render(request, 'mainApp/landing.html')
+                        else:
+                            return render(request, 'mainApp/index.html', {'form': form, 'emailError': 'Email Already Used'})
+                    except:
+                        return render(request, 'mainApp/index.html', {'form': form, 'emailError': 'Please Enter a Valid Email Address'})
+                else:
+                    return render(request, 'mainApp/index.html', {'form': form})
             if 'login' in request.POST:
                 if User.objects.filter(email=request.POST.get('email'), password=request.POST.get('password')).exists():
                     request.session['uid'] = User.objects.get(email=request.POST.get('email'), password=request.POST.get('password')).id
