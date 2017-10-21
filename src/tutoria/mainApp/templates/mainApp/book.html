@@ -1,76 +1,105 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="/static/css/book.css">
-<link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/book.css">
+    <link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 
 {% block content %}
-<div class="container-fluid centerAlign" style="margin-top: 130px;">
+    <div class="container-fluid centerAlign" style="margin-top: 130px;">
 
-    <table class="table table-sm table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>Day</th>
-            <th>07:00-08:00</th>
-            <th>08:00-09:00</th>
-            <th>09:00-10:00</th>
-            <th>10:00-11:00</th>
-            <th>11:00-12:00</th>
-            <th>12:00-13:00</th>
-            <th>13:00-14:00</th>
-            <th>14:00-15:00</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        {% for instance in data %}
+        <table class="table table-sm table-bordered table-hover">
+            <thead>
             <tr>
-                {#            <th scope="row">{{ t.day }}</th>#}
-                {% for field, value in instance.fields.items %}
-                    {% if field == 'day' %}
-                        <th scope="row">{{ value }}</th>
-                    {% endif %}
-                    {% if field != "id" and field != "tutor" and field != "day" %}
-                        {% if value > 0 %}
-                            <td class="unavailable"></td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
+                <th>Day</th>
+                <th>07:00-08:00</th>
+                <th>08:00-09:00</th>
+                <th>09:00-10:00</th>
+                <th>10:00-11:00</th>
+                <th>11:00-12:00</th>
+                <th>12:00-13:00</th>
+                <th>13:00-14:00</th>
+                <th>14:00-15:00</th>
 
-                    {% endif %}
-                {% endfor %}
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for instance in data %}
+                <tr>
+                    {#            <th scope="row">{{ t.day }}</th>#}
+                    {% for field, value in instance.fields.items %}
+                        {% if field == 'day' %}
+                            <th scope="row">{{ value }}</th>
+                        {% endif %}
+                        {% if field != "id" and field != "tutor" and field != "day" %}
+                            {% if value > 0 %}
+                                <td class="unavailable" id="{{ instance.fields.day }}{{ field }}"></td>
+                            {% else %}
+                                <td id="{{ instance.fields.day }}{{ field }}"></td>
+                            {% endif %}
 
-    <a href="../confirmation">
-        <button class="btn btn-info btn-lg">Confirm!</button>
-    </a>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a data-toggle="modal" data-target=".modal">
+            <button class="btn btn-info btn-lg">Proceed</button>
+        </a>
+
+        <div class="modal fade bd-example-modal-sm">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Booking!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Tutor:</h6>
+                        <p><img src="/static/assets/img/{{ tutor.user.avatar }}" alt=""
+                                style="width:50px; height: 50px; border-radius: 50%;"></p>
+                        <p>{{ tutor.user.name }}</p>
+
+                        <h6>Charges:</h6>
+                        <p>{{ tutor.rate }} HKD</p>
+
+                        <h6>Time:</h6>
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="confirmation">
+                            <button class="btn btn-primary">Submit
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+    </div>
 
-
-
-</div>
-
-<div id="bc" style="background-color:black; display:none"></div>
+    <div id="bc" style="background-color:black; display:none"></div>
 {% endblock %}
 
 {% block extra_script %}
-<script type="text/javascript">
-    $('.table td').click(function () {
-        if ($(this).css('background-color') != $('#bc').css('background-color')) {
-            $('.table td').each(function (i, obj) {
-                if ($(this).css('background-color') != $('#bc').css('background-color')) {
-                    $(this).css('background-color', 'inherit');
-                }
-            });
-            $(this).css('background-color', 'green');
-        }
-    });
-</script>
+    <script type="text/javascript">
+        $('.table td').click(function () {
+            if ($(this).css('background-color') != $('#bc').css('background-color')) {
+                $('.table td').each(function (i, obj) {
+                    if ($(this).css('background-color') != $('#bc').css('background-color')) {
+                        $(this).css('background-color', 'inherit');
+                    }
+                });
+                $(this).css('background-color', 'green');
+            }
+        });
+    </script>
 {% endblock %}
 

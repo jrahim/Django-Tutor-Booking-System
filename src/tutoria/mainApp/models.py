@@ -45,7 +45,7 @@ class Tutor(models.Model):
 class PrivateTimetable(models.Model):
 
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    day = models.CharField(max_length=5)
+    day = models.CharField(max_length=3)
     t07_08 = models.PositiveIntegerField()
     t08_09 = models.PositiveIntegerField()
     t09_10 = models.PositiveIntegerField()

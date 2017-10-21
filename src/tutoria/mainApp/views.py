@@ -79,7 +79,8 @@ def wallet(request, pk):
 
 @csrf_exempt
 def book(request, pk):
-    context = {'data': serializers.serialize("python", PrivateTimetable.objects.filter(tutor=pk))}
+    context = {'data': serializers.serialize("python", PrivateTimetable.objects.filter(tutor=pk)),
+               'tutor': Tutor.objects.filter(id=pk)[0]}
     # tt = {'tt': PrivateTimetable.objects.filter(tutor=pk), 'fields':PrivateTimetable._meta.get_fields()}
     return render(request, 'mainApp/book.html', context)
 
