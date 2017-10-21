@@ -8,8 +8,8 @@
 {% block content %}
 <div class="container-fluid" style="margin-top:115px; width:600px !important;">
     <div class="centerAlign">
-        <img src="/static/assets/img/aang.jpg" id="bigAvatarPic" alt="">
-        <h1>Aang</h1>
+        <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
+        <h1>{{ user.name }}</h1>
         <br>
     </div>
     <ul class="list-group" style="width:600px;">
@@ -20,7 +20,7 @@
                     <small style="color:green">change</small>
                 </a>
             </div>
-            <p class="mb-1">thelastairbender@avatar.com</p>
+            <p class="mb-1">{{ user.email }}</p>
         </li>
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
@@ -29,7 +29,7 @@
                     <small style="color:green">change</small>
                 </a>
             </div>
-            <p class="mb-1">1234-5678</p>
+            <p class="mb-1"></p>
         </li>
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">

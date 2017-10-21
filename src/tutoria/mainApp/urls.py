@@ -10,8 +10,8 @@ urlpatterns = [
     url(r'^search$', views.search, name='search' ),
     url(r'^profile$', views.profile, name='profile'),
     url(r'^bookings$', views.bookings, name='bookings'),
-    url(r'^wallet/(?P<pk>\d+)$', views.wallet, name='wallet'),
+    url(r'^wallet$', views.wallet, name='wallet'),
     url(r'^book/(?P<pk>\d+)$', views.book, name='book'),
     url(r'^book/confirmation$', views.confirmation, name='confirmation'),
-    url(r'^managewallet/(?P<pk>\d+)$', views.manageWallet),
+    url(r'^managewallet$', views.manageWallet),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
