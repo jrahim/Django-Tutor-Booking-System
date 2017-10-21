@@ -19,6 +19,9 @@
     <div class="alert alert-info" role="alert" id="success">
         Processing request...
     </div>
+    <div class="alert alert-danger" role="alert" id="success" style="display: none;">
+        Illegal Withdrawal Amount.
+    </div>
     <ul class="list-group" style="width:600px;">
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
@@ -77,23 +80,30 @@
         }
         function process() {
             if ($('#amount').val()>0) {
-                $('.alert-success').hide();
-                $('.alert-info').show();
-                $.get('/mainApp/managewallet', {
-                    action: action,
-                    amount: $('#amount').val()
-                }, function(response) {
+                if (action=='sub' && (parseInt($('#balance').html())-parseInt($('#amount').val()))<0) {
+                    $('.alert-success').hide();
                     $('.alert-info').hide();
-                    $('.alert-success').show();
-                    if (action=="add") {
-                        $('.alert-success').html("Success! "+$('#amount').val()+" HKD have been added to your wallet!");
-                        $('#balance').html(parseInt($('#balance').html())+parseInt($('#amount').val()));
-                    } else {
-                        $('.alert-success').html("Success! "+$('#amount').val()+" HKD have been withdrawn from your wallet!");
-                        $('#balance').html(parseInt($('#balance').html())-parseInt($('#amount').val()));
-                    }
+                    $('.alert-danger').show();
+                } else {
+                    $('.alert-danger').hide();
+                    $('.alert-success').hide();
+                    $('.alert-info').show();
+                    $.get('/mainApp/managewallet', {
+                        action: action,
+                        amount: $('#amount').val()
+                    }, function (response) {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        if (action == "add") {
+                            $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been added to your wallet!");
+                            $('#balance').html(parseInt($('#balance').html()) + parseInt($('#amount').val()));
+                        } else {
+                            $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been withdrawn from your wallet!");
+                            $('#balance').html(parseInt($('#balance').html()) - parseInt($('#amount').val()));
+                        }
 
-                });
+                    });
+                }
             }
         }
     </script>
