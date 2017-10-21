@@ -12,8 +12,13 @@ class User(models.Model):
     @transaction.atomic
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        w = Wallet(balance = 0, user = self)
-        w.save()
+        if not Wallet.objects.filter(user=self).exists():
+            w = Wallet(balance=0, user=self)
+            w.save()
+
+    # def make_wallet(self):
+    #     w = Wallet(balance=0, user=self)
+    #     w.save()
 
     def __str__(self):
         return self.name
@@ -25,7 +30,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class Tutor(models.Model):
@@ -41,9 +45,7 @@ class Tutor(models.Model):
         return self.user.name
 
 
-
 class PrivateTimetable(models.Model):
-
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     day = models.CharField(max_length=3)
     t07_08 = models.PositiveIntegerField()
@@ -55,15 +57,21 @@ class PrivateTimetable(models.Model):
     t13_14 = models.PositiveIntegerField()
     t14_15 = models.PositiveIntegerField()
 
-
     def __str__(self):
         return self.tutor.user.name
 
-class Wallet(models.Model):
 
+class Wallet(models.Model):
     balance = models.PositiveIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def add_funds(self, amount):
+        self.balance += amount
+        self.save()
+
+    def subtract_funds(self, amount):
+        self.balance -= amount
+        self.save()
+
     def __str__(self):
         return self.user.name
-

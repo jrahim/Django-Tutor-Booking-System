@@ -79,7 +79,7 @@
             if ($('#amount').val()>0) {
                 $('.alert-success').hide();
                 $('.alert-info').show();
-                $.get('/mainApp/managewallet/5', {
+                $.get('/mainApp/managewallet/{{wallet.user.id}}', {
                     action: action,
                     amount: $('#amount').val()
                 }, function(response) {
