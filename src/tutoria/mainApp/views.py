@@ -155,3 +155,12 @@ def makeTutor(request):
         tutor = Tutor(user=user, shortBio=request.POST.get('shortBio'), rate=0, isPrivate=False)
         tutor.save()
     return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def confirmBooking(request):
+    if 'uid' not in request.session:
+        return JsonResponse({'status': 'fail'})
+    tt = PrivateTimetable.objects.get(tutor=request.POST.get("tutorid", None), day=request.POST.get("day", None))
+    setattr(tt, request.POST.get("timeslot", None), 2)
+    tt.save()
+    return JsonResponse({'status': 'success'})

@@ -113,7 +113,7 @@
                             </div>
                         </fieldset>
                         <div class="alert alert-success" id="makeTutorSuccess" role="alert" style="display: none;">
-                            <strong>Success</strong> You are now also a tutor! Please fo to your profile to manage your courses and timetable.
+                            <strong>Success</strong> You are now also a tutor! You will now be redirected to your profile page where you can manage your courses and timetable.
                         </div>
                         <div class="alert alert-warning" id="makeTutorFail" role="alert" style="display: none;">
                             Failed!
@@ -185,7 +185,7 @@
                 if (response.status == 'success') {
                     $('#makeTutorSuccess').show();
                     $('#makeTutorSubmit').submit();
-                    location.reload();
+                    setTimeout(function() {location.reload();}, 4000);
                 } else {
                     $('#makeTutorFail').show();
                 }

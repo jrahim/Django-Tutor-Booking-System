@@ -9,6 +9,15 @@
 {% block content %}
     <div class="container-fluid centerAlign" style="margin-top: 130px;">
 
+        <div style="margin-bottom: 25px !important; overflow: hidden;">
+            <div style="float: left;">
+            <img src="/static/assets/img/{{ tutor.user.avatar }}" alt=""
+                 style="width:50px; height: 50px; border-radius: 50%;">
+            <span style="margin-left: 15px;">{{ tutor.user.name }}</span>
+            </div>
+            <span style="float: right; margin-top: 15px;">Charges: {{ tutor.rate }} HKD</span>
+        </div>
+
         <table class="table table-sm table-bordered table-hover">
             <thead>
             <tr>
@@ -69,13 +78,12 @@
                         <p>{{ tutor.rate }} HKD</p>
 
                         <h6>Time:</h6>
+                        <p id="bookingTime"></p>
 
                     </div>
                     <div class="modal-footer">
-                        <a href="confirmation">
-                            <button class="btn btn-primary">Submit
-                            </button>
-                        </a>
+                        <button class="btn btn-primary" onclick="confirm()">Submit
+                        </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -90,6 +98,8 @@
 
 {% block extra_script %}
     <script type="text/javascript">
+        var selectedDay = "";
+        var selectedSlot = "";
         $('.table td').click(function () {
             if ($(this).css('background-color') != $('#bc').css('background-color')) {
                 $('.table td').each(function (i, obj) {
@@ -98,8 +108,27 @@
                     }
                 });
                 $(this).css('background-color', 'green');
+                //alert($(this).attr('id').slice(0,3));
+                //alert($(this).attr('id').slice(3,));
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(3,);
+                $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+selectedSlot.slice(4, )+":00");
             }
         });
+
+        function confirm() {
+            if (selectedSlot != "") {
+                $.post('../confirmbooking', {
+                    tutorid: "{{ tutor.id }}",
+                    day: selectedDay,
+                    timeslot: selectedSlot
+                }, function (response) {
+                    if (response.status == 'success') {
+                        window.location.replace('confirmation');
+                    }
+                });
+            }
+        }
     </script>
 {% endblock %}
 
