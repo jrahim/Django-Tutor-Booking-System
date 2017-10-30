@@ -120,6 +120,7 @@ def book(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     tutorBookings = BookedSlot.objects.filter(tutor=pk)
+    tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
     slots = ["07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00"]
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -131,16 +132,22 @@ def book(request, pk):
             {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day, 'month': months[nextDay.month - 1], 'row': ""})
     for d in BookableDates:
         dt = d['dt']
+        weekday = d['weekday']
         for slot in slots:
-            isBooked = False
+            isUnavailable = False
             for booking in tutorBookings:
                 if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M:%S').time():
-                    isBooked = True
+                    isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
-            if not isBooked:
+            if not isUnavailable:
+                for unavailable in tutorUnavailable:
+                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                        isUnavailable = True
+                        d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
+            if not isUnavailable:
                 d['row'] = d['row'] + "<td id=''></td>"
 
-    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'booked': tutorBookings, 'today': today}
+    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today}
     return render(request, 'mainApp/book.html', context)
 
 @csrf_exempt

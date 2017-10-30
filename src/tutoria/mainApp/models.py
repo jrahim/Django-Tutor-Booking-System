@@ -161,7 +161,7 @@ class BookedSlot(models.Model):
 
 class UnavailableSlot(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    day = models.DateField()  # type??
+    day = models.CharField(max_length=3)  # type??
     time_start = models.TimeField()
     duration = models.FloatField();
     #duration = models.TimeField()  # time or integer?

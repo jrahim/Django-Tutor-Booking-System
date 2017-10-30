@@ -43,9 +43,6 @@
             {% endfor %}
             </tbody>
         </table>
-        {% for booking in booked %}
-            <p>{{ booking.date }}</p>
-        {% endfor %}
 
         <a data-toggle="modal" data-target=".modal">
             <button class="btn btn-info btn-lg">Proceed</button>
@@ -85,7 +82,6 @@
 
     </div>
 
-    <div id="bc" style="background-color:black; display:none"></div>
 {% endblock %}
 
 {% block extra_script %}
@@ -93,9 +89,9 @@
         var selectedDay = "";
         var selectedSlot = "";
         $('.table td').click(function () {
-            if ($(this).css('background-color') != $('#bc').css('background-color')) {
+            if ($(this).attr('class') != "unavailable") {
                 $('.table td').each(function (i, obj) {
-                    if ($(this).css('background-color') != $('#bc').css('background-color')) {
+                    if ($(this).attr('class') != "unavailable") {
                         $(this).css('background-color', 'inherit');
                     }
                 });
