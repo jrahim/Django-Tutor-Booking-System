@@ -34,26 +34,18 @@
             </tr>
             </thead>
             <tbody>
-            {% for instance in data %}
+            {% for date in dates %}
                 <tr>
-                    {#            <th scope="row">{{ t.day }}</th>#}
-                    {% for field, value in instance.fields.items %}
-                        {% if field == 'day' %}
-                            <th scope="row">{{ value }}</th>
-                        {% endif %}
-                        {% if field != "id" and field != "tutor" and field != "day" %}
-                            {% if value > 0 %}
-                                <td class="unavailable" id="{{ instance.fields.day }}{{ field }}"></td>
-                            {% else %}
-                                <td id="{{ instance.fields.day }}{{ field }}"></td>
-                            {% endif %}
-
-                        {% endif %}
-                    {% endfor %}
+                    <th scope="row">{{ date.weekday }}, {{ date.day }} {{ date.month }}</th>
+                    {{ date.row | safe }}
                 </tr>
+
             {% endfor %}
             </tbody>
         </table>
+        {% for booking in booked %}
+            <p>{{ booking.date }}</p>
+        {% endfor %}
 
         <a data-toggle="modal" data-target=".modal">
             <button class="btn btn-info btn-lg">Proceed</button>

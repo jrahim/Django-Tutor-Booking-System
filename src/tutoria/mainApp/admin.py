@@ -2,10 +2,13 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Tutor, User, Course, PrivateTimetable, Wallet
+from . import models
 
-admin.site.register(Tutor)
-admin.site.register(User)
-admin.site.register(Course)
-admin.site.register(PrivateTimetable)
-admin.site.register(Wallet)
+admin.site.register(models.Tutor)
+admin.site.register(models.User)
+admin.site.register(models.Course)
+admin.site.register(models.Wallet)
+admin.site.register(models.BookedSlot)
+admin.site.register(models.UnavailableSlot)
+admin.site.register(models.Student)
+

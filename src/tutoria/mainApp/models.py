@@ -3,6 +3,21 @@ from django.db import models
 
 # Create your models here.
 
+class Wallet(models.Model):
+    balance = models.PositiveIntegerField()
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def add_funds(self, amount):
+        self.balance += amount
+        self.save()
+
+    def subtract_funds(self, amount):
+        self.balance -= amount
+        self.save()
+
+    def __str__(self):
+        return self.user.name
+
 class User(models.Model):
     name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to='avatar')
@@ -28,8 +43,8 @@ class User(models.Model):
         s.save()
         return s
 
-    def become_tutor(self, short_bio, rate, rating, is_private):
-        t = Tutor(user=self, shortBio=short_bio, rate=rate, rating=rating,
+    def become_tutor(self, short_bio, rate, is_private):
+        t = Tutor(user=self, shortBio=short_bio, rate=rate,
                   isPrivate=is_private)  # what to do about course
         t.save()
         return t
@@ -57,7 +72,7 @@ class Course(models.Model):
 class Tutor(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.OneToOneField(User)
-    course = models.ManyToManyField(Course)
+    course = models.ManyToManyField(Course, blank=True)
     shortBio = models.CharField(max_length=300)
     rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField(default=0)
@@ -118,26 +133,13 @@ class Student(models.Model):
         return self.user.name
 
 
-class Wallet(models.Model):
-    balance = models.PositiveIntegerField()
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def add_funds(self, amount):
-        self.balance += amount
-        self.save()
-
-    def subtract_funds(self, amount):
-        self.balance -= amount
-        self.save()
-
-    def __str__(self):
-        return self.user.name
 
 
 class BookedSlot(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     time_start = models.TimeField()
-    duration = models.TimeField()  # time or integer?
+    duration = models.FloatField()  # time or integer?
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     STATUSES = (
@@ -161,6 +163,7 @@ class UnavailableSlot(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     day = models.DateField()  # type??
     time_start = models.TimeField()
-    duration = models.TimeField()  # time or integer?
+    duration = models.FloatField();
+    #duration = models.TimeField()  # time or integer?
 
     # modify/delete unavailable slot?

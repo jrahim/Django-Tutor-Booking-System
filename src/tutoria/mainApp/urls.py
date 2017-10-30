@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^book/confirmation$', views.confirmation, name='confirmation'),
     url(r'^managewallet$', views.manageWallet),
     url(r'^maketutor$', views.makeTutor),
-    url(r'^confirmbooking$', views.confirmBooking),
+    url(r'^book/confirmbooking$', views.confirmBooking),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

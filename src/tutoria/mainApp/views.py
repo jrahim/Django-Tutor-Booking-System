@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .forms import ImageForm
+from datetime import datetime, timedelta, date
+from dateutil import parser
 
 from .models import *
 from django.shortcuts import redirect
@@ -30,7 +32,10 @@ def index(request):
                                     request.POST.get("password").encode(
                                         'utf-8')).hexdigest())  # make a new user with md5 hash of pwd
                             # user.make_wallet()
+                            user.wallet = user.create_wallet()
                             user.save()  # save new user in db
+                            # make wallet for new user
+                            user.become_student();
                             request.session['uid'] = user.id  # add user id to session
                             return redirect('/mainApp/index?first=1')  # take user to landing page
                         else:
@@ -51,13 +56,13 @@ def index(request):
                     return render(request, 'mainApp/index.html', {'form': form, 'loginError': 'Incorrect Combination'})
 
         return render(request, 'mainApp/index.html', {'form': form})  # render index page if no post request
-    else:
+    else:  # if user already logged in
         if request.method == 'GET':  # handle logout
             if request.GET.get("logout", None) == '1':
                 del request.session['uid']
                 return render(request, 'mainApp/index.html', {'form': form})
-        user = User.objects.get(id=request.session['uid'])
-        return render(request, 'mainApp/landing.html', {'user': user})
+        user = User.objects.get(id=request.session['uid'])  # get user details
+        return render(request, 'mainApp/landing.html', {'user': user})  # take user to landing page
 
 
 @csrf_exempt
@@ -70,7 +75,6 @@ def search(request):
         'tutor_list': tutor_list,
         'user': user
     }
-
     return render(request, 'mainApp/search.html', context)
 
 
@@ -112,12 +116,32 @@ def wallet(request):
 def book(request, pk):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
+    extra = parser.parse("Nov 2")
+    tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    context = {'data': serializers.serialize("python", PrivateTimetable.objects.filter(tutor=pk)),
-               'tutor': Tutor.objects.filter(id=pk)[0], 'user': user}
-    # tt = {'tt': PrivateTimetable.objects.filter(tutor=pk), 'fields':PrivateTimetable._meta.get_fields()}
-    return render(request, 'mainApp/book.html', context)
+    tutorBookings = BookedSlot.objects.filter(tutor=pk)
+    today = date.today()
+    slots = ["07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00"]
+    weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    BookableDates = []
+    for i in range(1, 8):
+        nextDay = today + timedelta(days=i)
+        BookableDates.append(
+            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day, 'month': months[nextDay.month - 1], 'row': ""})
+    for d in BookableDates:
+        dt = d['dt']
+        for slot in slots:
+            isBooked = False
+            for booking in tutorBookings:
+                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                    isBooked = True
+                    d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
+            if not isBooked:
+                d['row'] = d['row'] + "<td id=''></td>"
 
+    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'booked': tutorBookings, 'today': today}
+    return render(request, 'mainApp/book.html', context)
 
 @csrf_exempt
 def confirmation(request):
@@ -148,13 +172,11 @@ def makeTutor(request):
     if Tutor.objects.filter(user=user).exists():
         return JsonResponse({'status': 'fail'})
     if request.POST.get('isPrivate') == 'yes':
-        tutor = Tutor(user=user, shortBio=request.POST.get('shortBio'), rate=int(request.POST.get('rate')),
-                      isPrivate=True)
-        tutor.save()
+        user.become_tutor(request.POST.get('shortBio'), int(request.POST.get('rate')), True)
     else:
-        tutor = Tutor(user=user, shortBio=request.POST.get('shortBio'), rate=0, isPrivate=False)
-        tutor.save()
+        user.become_tutor(request.POST.get('shortBio'), 0, False)
     return JsonResponse({'status': 'success'})
+
 
 @csrf_exempt
 def confirmBooking(request):
