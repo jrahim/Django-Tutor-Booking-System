@@ -125,7 +125,7 @@ def book(request, pk):
     user = User.objects.get(id=request.session['uid'])
     if user.wallet.balance < math.ceil(tutor.rate * 1.05):
         return render(request, 'mainApp/lessBalance.html', {'user': user})
-    tutorBookings = BookedSlot.objects.filter(tutor=pk)
+    tutorBookings = BookedSlot.objects.filter(tutor=pk, status='BOOKED')
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
     slots = []
