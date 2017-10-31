@@ -71,7 +71,12 @@ class User(models.Model):
             return array
 
     def get_past_bookings(self):
-        a1 = BookedSlot.objects.filter(Q(student=self.student, status='ENDED') | Q(tutor=self.tutor, status='ENDED')).order_by('date').reverse()
+        student = Student.objects.get(user=self)
+        if Tutor.objects.filter(user=self).exists():
+            tutor = Tutor.objects.filter(user=self)
+            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED') | Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
+        else:
+            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED'))
         return a1
 
     def __str__(self):

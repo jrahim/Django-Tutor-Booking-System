@@ -11,8 +11,11 @@
 
 
 
-        {% if isTutor == 1 %}
-            <h2 class="centerAlign">Your Upcoming Teaching Sessions:</h2>
+        {% if isStudent == 1 %}
+            <h2 class="centerAlign">Your Upcoming Learning Sessions:</h2>
+            {% if tutor_bookings|length == 0 %}
+                <div style="text-align: center"><h3>You have no upcoming learning sessions</h3></div>
+            {% endif %}
             <ul class="list-group" style="width:800px; margin-bottom: 50px;">
                 {% for booking in tutor_bookings %}
                     <li class="list-group-item">
@@ -22,9 +25,9 @@
                                 <small style="color:green">Cancel</small>
                             </a>
                         </div>
-                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt=""
+                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.tutor.user.avatar }}" alt=""
                                              id="tutorPic"> <a href=""><span
-                                style="margin-left:20px;">{{ booking.student.user.name }}:</span></a><span
+                                style="margin-left:20px;">{{ booking.tutor.user.name }}:</span></a><span
                                 style="margin-left:20px;">{{ booking.time_start }}</span>
                         </p>
                     </li>
@@ -33,8 +36,11 @@
         {% endif %}
 
 
-        {% if isStudent == 1 %}
-            <h2 class="centerAlign">Your Upcoming Learning Sessions:</h2>
+        {% if isTutor == 1 %}
+            <h2 class="centerAlign">Your Upcoming Teaching Sessions:</h2>
+            {% if student_bookings|length == 0 %}
+                <div style="text-align: center"><h3>You have no upcoming teachings sessions</h3></div>
+            {% endif %}
             <ul class="list-group" style="width:800px;  margin-bottom: 50px;">
                 {% for booking in student_bookings %}
                     <li class="list-group-item">
@@ -44,9 +50,9 @@
                                 <small style="color:green">Cancel</small>
                             </a>
                         </div>
-                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.tutor.user.avatar }}" alt="" id="tutorPic">
+                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt="" id="tutorPic">
                             <a href=""><span
-                                    style="margin-left:20px;">{{ booking.tutor.user.name }}:</span></a><span
+                                    style="margin-left:20px;">{{ booking.student.user.name }}:</span></a><span
                                     style="margin-left:20px;">{{ booking.time_start }}</span>
                         </p>
                     </li>
@@ -55,8 +61,9 @@
         {% endif %}
         <br><br>
 
+        <h2 class="centerAlign">Past Bookings</h2>
         {% if past_bookings|length > 0 %}
-            <h1 class="centerAlign">Past Bookings</h1>
+
 
             <ul class="list-group" style="width:800px; margin-bottom: 50px;">
                 {% for booking in past_bookings %}
@@ -84,6 +91,8 @@
                     </li>
                 {% endfor %}
             </ul>
+        {% else %}
+            <div style="text-align: center"><h3>You have no past bookings</h3></div>
         {% endif %}
 
 
@@ -125,7 +134,7 @@
         function cancelBooking() {
             $.post(link, {}, function (response) {
                 if (response.status == 'fail') {
-                    $('#failmsg').html("<div class='alert alert-danger'> Could not cancel booking </div>")
+                    $('#failmsg').html("<div class='alert alert-danger'> Could not cancel booking. <br> Please check that the booking you are trying to cancel is within the next 24 hours. </div>")
                 }
                 else {
                     $('#failmsg').html("<div class='alert alert-success'> Booking cancelled! Page will now be reloaded. </div>")

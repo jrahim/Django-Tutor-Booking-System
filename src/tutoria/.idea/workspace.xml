@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="Added a bit of jinja templating.">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/lessBalance.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/models.py" afterPath="$PROJECT_DIR$/mainApp/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/urls.py" afterPath="$PROJECT_DIR$/mainApp/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -105,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="186" column="23" lean-forward="false" selection-start-line="186" selection-start-column="23" selection-end-line="186" selection-end-column="23" />
+            <state relative-caret-position="1808">
+              <caret line="183" column="64" lean-forward="false" selection-start-line="183" selection-start-column="63" selection-end-line="183" selection-end-column="64" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -120,37 +115,40 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
+            <state relative-caret-position="890">
+              <caret line="78" column="53" lean-forward="false" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
-                <marker date="1509471522505" expanded="true" signature="3595:3773" ph="..." />
+                <marker date="1509476862885" expanded="true" signature="3836:4014" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1295">
-              <caret line="79" column="49" lean-forward="true" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
+            <state relative-caret-position="188">
+              <caret line="54" column="80" lean-forward="false" selection-start-line="54" selection-start-column="80" selection-end-line="54" selection-end-column="80" />
               <folding>
-                <element signature="e#440#481#0#HTML" expanded="true" />
-                <element signature="e#914#933#0#HTML" expanded="true" />
-                <element signature="e#1229#1254#0#HTML" expanded="true" />
-                <element signature="e#1336#1361#0#HTML" expanded="true" />
-                <element signature="e#1659#1701#0#HTML" expanded="true" />
-                <element signature="e#2136#2155#0#HTML" expanded="true" />
-                <element signature="e#2436#2461#0#HTML" expanded="true" />
-                <element signature="e#2545#2570#0#HTML" expanded="true" />
-                <element signature="e#2876#2917#0#HTML" expanded="true" />
-                <element signature="e#3552#3577#0#HTML" expanded="true" />
-                <element signature="e#3660#3685#0#HTML" expanded="true" />
-                <element signature="e#4229#4254#0#HTML" expanded="true" />
-                <element signature="e#4339#4364#0#HTML" expanded="true" />
-                <element signature="e#5043#5050#1#HTML" expanded="true" />
-                <element signature="e#5281#5306#0#HTML" expanded="true" />
+                <element signature="e#476#502#0#HTML" expanded="true" />
+                <element signature="e#616#657#0#HTML" expanded="true" />
+                <element signature="e#1090#1109#0#HTML" expanded="true" />
+                <element signature="e#1403#1428#0#HTML" expanded="true" />
+                <element signature="e#1508#1533#0#HTML" expanded="true" />
+                <element signature="e#1865#1891#0#HTML" expanded="true" />
+                <element signature="e#2006#2048#0#HTML" expanded="true" />
+                <element signature="e#2483#2502#0#HTML" expanded="true" />
+                <element signature="e#2785#2810#0#HTML" expanded="true" />
+                <element signature="e#2896#2921#0#HTML" expanded="true" />
+                <element signature="e#3224#3265#0#HTML" expanded="true" />
+                <element signature="e#3900#3925#0#HTML" expanded="true" />
+                <element signature="e#4008#4033#0#HTML" expanded="true" />
+                <element signature="e#4577#4602#0#HTML" expanded="true" />
+                <element signature="e#4687#4712#0#HTML" expanded="true" />
+                <element signature="e#4894#4920#0#HTML" expanded="true" />
+                <element signature="e#5495#5502#1#HTML" expanded="true" />
+                <element signature="e#5733#5758#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -220,10 +218,10 @@
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/error.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
         <option value="$PROJECT_DIR$/mainApp/urls.py" />
-        <option value="$PROJECT_DIR$/mainApp/models.py" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
         <option value="$PROJECT_DIR$/mainApp/views.py" />
+        <option value="$PROJECT_DIR$/mainApp/models.py" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
       </list>
     </option>
   </component>
@@ -853,17 +851,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-            <marker date="1509471522505" expanded="true" signature="3595:3773" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/profile.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1809">
@@ -880,30 +867,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1295">
-          <caret line="79" column="49" lean-forward="true" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
-          <folding>
-            <element signature="e#440#481#0#HTML" expanded="true" />
-            <element signature="e#914#933#0#HTML" expanded="true" />
-            <element signature="e#1229#1254#0#HTML" expanded="true" />
-            <element signature="e#1336#1361#0#HTML" expanded="true" />
-            <element signature="e#1659#1701#0#HTML" expanded="true" />
-            <element signature="e#2136#2155#0#HTML" expanded="true" />
-            <element signature="e#2436#2461#0#HTML" expanded="true" />
-            <element signature="e#2545#2570#0#HTML" expanded="true" />
-            <element signature="e#2876#2917#0#HTML" expanded="true" />
-            <element signature="e#3552#3577#0#HTML" expanded="true" />
-            <element signature="e#3660#3685#0#HTML" expanded="true" />
-            <element signature="e#4229#4254#0#HTML" expanded="true" />
-            <element signature="e#4339#4364#0#HTML" expanded="true" />
-            <element signature="e#5043#5050#1#HTML" expanded="true" />
-            <element signature="e#5281#5306#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
@@ -916,10 +879,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="186" column="23" lean-forward="false" selection-start-line="186" selection-start-column="23" selection-end-line="186" selection-end-column="23" />
+        <state relative-caret-position="1808">
+          <caret line="183" column="64" lean-forward="false" selection-start-line="183" selection-start-column="63" selection-end-line="183" selection-end-column="64" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="890">
+          <caret line="78" column="53" lean-forward="false" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+            <marker date="1509476862885" expanded="true" signature="3836:4014" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="54" column="80" lean-forward="false" selection-start-line="54" selection-start-column="80" selection-end-line="54" selection-end-column="80" />
+          <folding>
+            <element signature="e#476#502#0#HTML" expanded="true" />
+            <element signature="e#616#657#0#HTML" expanded="true" />
+            <element signature="e#1090#1109#0#HTML" expanded="true" />
+            <element signature="e#1403#1428#0#HTML" expanded="true" />
+            <element signature="e#1508#1533#0#HTML" expanded="true" />
+            <element signature="e#1865#1891#0#HTML" expanded="true" />
+            <element signature="e#2006#2048#0#HTML" expanded="true" />
+            <element signature="e#2483#2502#0#HTML" expanded="true" />
+            <element signature="e#2785#2810#0#HTML" expanded="true" />
+            <element signature="e#2896#2921#0#HTML" expanded="true" />
+            <element signature="e#3224#3265#0#HTML" expanded="true" />
+            <element signature="e#3900#3925#0#HTML" expanded="true" />
+            <element signature="e#4008#4033#0#HTML" expanded="true" />
+            <element signature="e#4577#4602#0#HTML" expanded="true" />
+            <element signature="e#4687#4712#0#HTML" expanded="true" />
+            <element signature="e#4894#4920#0#HTML" expanded="true" />
+            <element signature="e#5495#5502#1#HTML" expanded="true" />
+            <element signature="e#5733#5758#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
