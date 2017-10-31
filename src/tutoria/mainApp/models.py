@@ -124,10 +124,11 @@ class Tutor(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User)
 
-    def create_booking(self, date, time_start, duration, tutor):
+    def create_booking(self, date, time_start, duration, tutor, charges):
         booking = BookedSlot(date=date, time_start=time_start, duration=duration, tutor=tutor, student=self,
                              status="BOOKED")
         booking.save()
+        self.user.wallet.subtract_funds(int(charges))
         return booking
 
     def __str__(self):

@@ -13,24 +13,19 @@
             <div style="float: left;">
             <img src="/static/assets/img/{{ tutor.user.avatar }}" alt=""
                  style="width:50px; height: 50px; border-radius: 50%;">
-            <span style="margin-left: 15px;">{{ tutor.user.name }}</span>
+                <span style="margin-left: 15px;"><strong>{{ tutor.user.name }}</strong></span>
             </div>
             {% load custom_tags %}
-            <span style="float: right; margin-top: 15px;">Charges: {{ tutor.rate|mult:"1.05" }} HKD</span>
+            <span style="float: right; margin-top: 15px;"><strong> Charges: {{ tutor.rate|mult:"1.05" }} HKD</strong></span>
         </div>
 
         <table class="table table-sm table-bordered table-hover">
             <thead>
             <tr>
                 <th>Day</th>
-                <th>07:00-08:00</th>
-                <th>08:00-09:00</th>
-                <th>09:00-10:00</th>
-                <th>10:00-11:00</th>
-                <th>11:00-12:00</th>
-                <th>12:00-13:00</th>
-                <th>13:00-14:00</th>
-                <th>14:00-15:00</th>
+                {% for slot in slotsToRender %}
+                    <th>{{ slot }}</th>
+                {% endfor %}
 
             </tr>
             </thead>
@@ -50,7 +45,7 @@
             </tbody>
         </table>
 
-        <a data-toggle="modal" data-target=".modal">
+        <a data-toggle="modal" data-target=".modal" style="margin-bottom: 30px;">
             <button class="btn btn-info btn-lg">Proceed</button>
         </a>
 

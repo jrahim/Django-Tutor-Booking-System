@@ -123,10 +123,22 @@ def book(request, pk):
     extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
+    if user.wallet.balance < math.ceil(tutor.rate * 1.05):
+        return render(request, 'mainApp/lessBalance.html', {'user': user})
     tutorBookings = BookedSlot.objects.filter(tutor=pk)
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
-    slots = ["07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00"]
+    slots = []
+    if tutor.isPrivate:
+        slots = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00"]
+        slotsToRender = ["07:00-08:00", "08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
+                         "13:00-14:00", "14:00-15:00"]
+    else:
+        slots = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00",
+                 "12:30", "13:00", "13:30", "14:00"]
+        slotsToRender = ["07:00-07:30", "07:30-08:00", "08:00-08:30", "08:30-09:00", "09:00-09:30", "09:30-10:00",
+                         "10:00-10:30", "10:30-11:00", "11:00-11:30", "11:30-12:00", "12:00-12:30", "12:30-13:00",
+                         "13:00-13:30", "13:30-14:00", "14:30-15:00"]
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
@@ -141,13 +153,13 @@ def book(request, pk):
         for slot in slots:
             isUnavailable = False
             for booking in tutorBookings:
-                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M').time():
                     isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
                 for unavailable in tutorUnavailable:
                     if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot,
-                                                                                                  '%H:%M:%S').time():
+                                                                                                  '%H:%M').time():
                         isUnavailable = True
                         d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
@@ -160,7 +172,7 @@ def book(request, pk):
                 tdid = month + "-" + day + "_" + slot
                 d['row'] = d['row'] + "<td id='" + tdid + "'></td>"
 
-    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today}
+    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today, 'slotsToRender': slotsToRender}
     return render(request, 'mainApp/book.html', context)
 
 
@@ -170,7 +182,7 @@ def confirmation(request, pk):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     booking = BookedSlot.objects.get(id=pk)
-    charges = math.ceil(booking.tutor.rate*1.05)
+    charges = math.ceil(booking.tutor.rate * 1.05)
     return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking, 'charges': charges})
 
 
@@ -212,12 +224,14 @@ def confirmBooking(request):
         try:
             if tutor.isPrivate:
                 booking = student.create_booking(parser.parse(request.POST.get('date')),
-                                       datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 1.0,
-                                       tutor)
+                                                 datetime.strptime(request.POST.get('time') + ":00:00",
+                                                                   '%H:%M:%S').time(), 1.0,
+                                                 tutor, math.ceil(tutor.rate * 1.05))
             else:
                 booking = student.create_booking(parser.parse(request.POST.get('date')),
-                                       datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 0.5,
-                                       tutor)
+                                                 datetime.strptime(request.POST.get('time') + ":00", '%H:%M').time(),
+                                                 0.5,
+                                                 tutor, 0)
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
             return JsonResponse({'status': 'fail'})
