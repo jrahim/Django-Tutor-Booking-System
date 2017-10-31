@@ -65,7 +65,7 @@
                         <p>{{ tutor.user.name }}</p>
 
                         <h6>Charges:</h6>
-                        <p>{{ tutor.rate }} HKD</p>
+                        <p>{{ tutor.rate|mult:"1.05" }} HKD</p>
 
                         <h6>Time:</h6>
                         <p id="bookingTime"></p>
@@ -89,7 +89,7 @@
     <script type="text/javascript">
         var selectedDay = "";
         var selectedSlot = "";
-        $('#bookingTime').html("<strong>No Time Slot Selected</strong>");
+        $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
         $('.table td').click(function () {
             if ($(this).attr('class') != "unavailable") {
                 $('.table td').each(function (i, obj) {
