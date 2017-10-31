@@ -36,7 +36,12 @@
             <tbody>
             {% for date in dates %}
                 <tr>
-                    <th scope="row">{{ date.weekday }}, {{ date.day }} {{ date.month }}</th>
+                    <th scope="row" style="text-align: center">
+{#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
+{#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
+{#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
+                        {{ date.weekday }}, {{ date.day }} {{ date.month }}
+                    </th>
                     {{ date.row | safe }}
                 </tr>
 
@@ -88,6 +93,7 @@
     <script type="text/javascript">
         var selectedDay = "";
         var selectedSlot = "";
+        $('#bookingTime').html("<strong>No Time Slot Selected</strong>");
         $('.table td').click(function () {
             if ($(this).attr('class') != "unavailable") {
                 $('.table td').each(function (i, obj) {
@@ -98,24 +104,37 @@
                 $(this).css('background-color', 'green');
                 //alert($(this).attr('id').slice(0,3));
                 //alert($(this).attr('id').slice(3,));
-                selectedDay = $(this).attr('id').slice(0, 3);
-                selectedSlot = $(this).attr('id').slice(3,);
-                $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+selectedSlot.slice(4, )+":00");
+                selectedDay = $(this).attr('id').slice(0, 6);
+                selectedSlot = $(this).attr('id').slice(6,);
+                {% if tutor.isPrivate == True %}
+                    $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+(parseInt(selectedSlot.slice(1,3))+1)+":00");
+                {% else %}
+                    $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+(parseInt(selectedSlot.slice(1,3)))+":30");
+                {% endif %}
             }
         });
 
         function confirm() {
             if (selectedSlot != "") {
-                $.post('../confirmbooking', {
+                $.post('confirmbooking', {
                     tutorid: "{{ tutor.id }}",
-                    day: selectedDay,
-                    timeslot: selectedSlot
+                    date: selectedDay,
+                    time: selectedSlot.slice(1,3),
+                    {% if tutor.isPrivate == True %}
+                    isPrivate: '1',
+                    {% else %}
+                    isPrivate: '0',
+                    {% endif %}
                 }, function (response) {
                     if (response.status == 'success') {
                         window.location.replace('confirmation');
                     }
+                    if (response.status == 'fail') {
+                        alert('hi');
+                    }
                 });
             }
+
         }
     </script>
 {% endblock %}

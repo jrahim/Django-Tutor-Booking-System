@@ -51,7 +51,7 @@ def index(request):
                         request.POST.get("password").encode('utf-8')).hexdigest()).exists():
                     request.session['uid'] = User.objects.get(email=request.POST.get('email')).id
 
-                    return redirect('/mainApp/index');
+                    return redirect('/mainApp/index')
                 else:
                     return render(request, 'mainApp/index.html', {'form': form, 'loginError': 'Incorrect Combination'})
 
@@ -61,7 +61,11 @@ def index(request):
             if request.GET.get("logout", None) == '1':
                 del request.session['uid']
                 return render(request, 'mainApp/index.html', {'form': form})
-        user = User.objects.get(id=request.session['uid'])  # get user details
+        try:
+            user = User.objects.get(id=request.session['uid'])  # get user details
+        except:
+            del request.session['uid']
+            return redirect('/mainApp/index')
         return render(request, 'mainApp/landing.html', {'user': user})  # take user to landing page
 
 
@@ -116,7 +120,7 @@ def wallet(request):
 def book(request, pk):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
-    extra = parser.parse("Nov 2")
+    extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     tutorBookings = BookedSlot.objects.filter(tutor=pk)
@@ -129,7 +133,8 @@ def book(request, pk):
     for i in range(1, 8):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
-            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day, 'month': months[nextDay.month - 1], 'row': ""})
+            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
+             'month': months[nextDay.month - 1], 'row': "", 'id': ""})
     for d in BookableDates:
         dt = d['dt']
         weekday = d['weekday']
@@ -141,14 +146,23 @@ def book(request, pk):
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
                 for unavailable in tutorUnavailable:
-                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot,
+                                                                                                  '%H:%M:%S').time():
                         isUnavailable = True
                         d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
-                d['row'] = d['row'] + "<td id=''></td>"
+                day = d['day']
+                month = d['month']
+                if day < 10:
+                    day = "0" + str(day)
+                else:
+                    day = str(day)
+                tdid = month + "-" + day + "_" + slot
+                d['row'] = d['row'] + "<td id='" + tdid + "'></td>"
 
     context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today}
     return render(request, 'mainApp/book.html', context)
+
 
 @csrf_exempt
 def confirmation(request):
@@ -189,10 +203,24 @@ def makeTutor(request):
 def confirmBooking(request):
     if 'uid' not in request.session:
         return JsonResponse({'status': 'fail'})
-    tt = PrivateTimetable.objects.get(tutor=request.POST.get("tutorid", None), day=request.POST.get("day", None))
-    setattr(tt, request.POST.get("timeslot", None), 2)
-    tt.save()
-    return JsonResponse({'status': 'success'})
+    user = User.objects.get(id=request.session['uid'])
+    student = Student.objects.get(user=request.session['uid'])
+    if request.method == 'POST':
+        tutor = Tutor.objects.get(id=request.POST.get('tutorid'))
+        try:
+            if request.POST.get('isPrivate') == '1':
+                student.create_booking(parser.parse(request.POST.get('date')),
+                                       datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 1.0,
+                                       tutor)
+            else:
+                student.create_booking(parser.parse(request.POST.get('date')),
+                                       datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 0.5,
+                                       tutor)
+            return JsonResponse({'status': 'success'})
+        except:
+            return JsonResponse({'status': 'fail'})
+    else:
+        return JsonResponse({'status': 'fail'})
 
 @csrf_exempt
 def tutorProfile(request,pk):
