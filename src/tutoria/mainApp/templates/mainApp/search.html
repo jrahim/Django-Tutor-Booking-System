@@ -73,8 +73,8 @@
         </div>
 
         <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Other <br> Profile<br> Details</div>
-
-        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> HKD{{tutor.rate}}</div>
+        {% load custom_tags %}
+        <div style="display:inline-block; margin-left:45px;" class="centerAlign"> Rate per Session: <br> HKD{{tutor.rate|mult:"1.05"}}</div>
 
         <div style="display:inline-block; float:right; margin-top:20px;"><a href="book/{{ tutor.id }}">
             <button class="btn btn-success btn-lg">Book!</button>

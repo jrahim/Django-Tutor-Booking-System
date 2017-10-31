@@ -15,7 +15,8 @@
                  style="width:50px; height: 50px; border-radius: 50%;">
             <span style="margin-left: 15px;">{{ tutor.user.name }}</span>
             </div>
-            <span style="float: right; margin-top: 15px;">Charges: {{ tutor.rate }} HKD</span>
+            {% load custom_tags %}
+            <span style="float: right; margin-top: 15px;">Charges: {{ tutor.rate|mult:"1.05" }} HKD</span>
         </div>
 
         <table class="table table-sm table-bordered table-hover">

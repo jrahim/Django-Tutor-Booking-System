@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
 from .models import *
+import math
 
 
 # Create your views here.
@@ -169,7 +170,8 @@ def confirmation(request, pk):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     booking = BookedSlot.objects.get(id=pk)
-    return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking})
+    charges = math.ceil(booking.tutor.rate*1.05)
+    return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking, 'charges': charges})
 
 
 @csrf_exempt
@@ -208,7 +210,7 @@ def confirmBooking(request):
     if request.method == 'POST':
         tutor = Tutor.objects.get(id=request.POST.get('tutorid'))
         try:
-            if request.POST.get('isPrivate') == '1':
+            if tutor.isPrivate:
                 booking = student.create_booking(parser.parse(request.POST.get('date')),
                                        datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 1.0,
                                        tutor)

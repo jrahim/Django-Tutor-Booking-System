@@ -14,14 +14,14 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Tutor: </h5>
             </div>
-            <p class="mb-1"><br><img src="/static/assets/img/{{booking.tutor.user.avatar}}" id="tutorPic" alt=""><span style="margin-left:20px;">{{booking.tutor.user.name}}</span>
+            <p class="mb-1"><br><img src="/static/assets/img/{{booking.tutor.user.avatar}}" id="tutorPic" alt=""><span style="margin-left:20px;"><strong>{{booking.tutor.user.name}}</strong></span>
             </p>
         </li>
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Timeslot:</h5>
             </div>
-            <p class="mb-1">{{booking.date}}</p>
+            <p class="mb-1">{{booking.date}},</p>
             <br>
             <p class="mb-1">{{booking.time_start}}</p>
         </li>
@@ -29,7 +29,8 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Session Charges:</h5>
             </div>
-            <p class="mb-1">{{booking.tutor.rate}}</p>
+            {% load custom_tags %}
+            <p class="mb-1">{{ booking.tutor.rate|mult:"1.05" }}</p>
         </li>
     </ul>
 </div>
