@@ -50,12 +50,25 @@ class User(models.Model):
         return t
 
     def get_upcoming_bookings(self):
-        if Student.objects.filter(user=self).exists():
+
+        if Tutor.objects.filter(user=self).exists() and Student.objects.filter(user=self).exists():
+
+            t = Tutor.objects.get(user=self)
             s = Student.objects.get(user=self)
-            return BookedSlot.objects.get(student=s)
-        elif Tutor.objects.filter(user=self).exists():
-            t = Tutor.objects.filter(user=self)
-            return BookedSlot.objects.get(tutor=t)
+            array1 = BookedSlot.objects.filter(tutor=t)
+            array2 = BookedSlot.objects.filter(student=s)
+            return array1, array2
+
+        if Student.objects.filter(user=self).exists() and not Tutor.objects.filter(user=self).exists():
+            s = Student.objects.get(user=self)
+            array = BookedSlot.objects.filter(student=s)
+            return array
+
+        if Tutor.objects.filter(user=self).exists() and not Student.objects.filter(user=self).exists():
+            t = Tutor.objects.get(user=self)
+            array = BookedSlot.objects.filter(tutor=t)
+            return array
+
 
     def __str__(self):
         return self.name

@@ -9,23 +9,66 @@
 {% block content %}
 <div class="container-fluid" style="margin-top:115px; width:800px;">
 
-    <h1 class="centerAlign">Upcoming Bookings</h1>
+    {% if isStudent == 1 || isTutor == 1 %}
+        <h1 class="centerAlign">Upcoming Bookings</h1>
+        {% for booking in booking_list %}
+                <ul class="list-group" style="width:800px;">
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{booking.date}}:</h6>
+                            <a href="">
+                                <small style="color:green">Cancel</small>
+                            </a>
+                        </div>
+                        <p class="mb-1"><img src="{{MEDIA_URL}}{{ booking.tutor.user.avatar }}" alt="" id="tutorPic"> <a href=""><span
+                                style="margin-left:20px;">{{ booking.tutor.user.name }}:</span></a><span style="margin-left:20px;">{{ booking.time_start }}</span>
+                        </p>
+                    </li>
+                </ul>
+        {% endfor %}
+    {% endif %}
 
-    <ul class="list-group" style="width:800px;">
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Monday, 16th Oct:</h6>
-                <a href="">
-                    <small style="color:green">Cancel</small>
-                </a>
-            </div>
-            <p class="mb-1"><img src="/static/assets/img/zuko.png" alt="" id="tutorPic"> <a href=""><span
-                    style="margin-left:20px;">Prince Zuko:</span></a><span style="margin-left:20px;">13:30-14:00</span>
-            </p>
-        </li>
-    </ul>
+    {% if isStudent == 1 and isTutor == 1 %}
+        <h1 class="centerAlign">Student Upcoming Bookings</h1>
+        {% for booking in tutor_bookings %}
 
+                <ul class="list-group" style="width:800px;">
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{booking.date}}:</h6>
+                            <a href="">
+                                <small style="color:green">Cancel</small>
+                            </a>
+                        </div>
+                        <p class="mb-1"><img src="{{MEDIA_URL}}{{ booking.student.user.avatar }}" alt="" id="tutorPic"> <a href=""><span
+                                style="margin-left:20px;">{{ booking.student.user.name }}:</span></a><span style="margin-left:20px;">{{ booking.time_start }}</span>
+                        </p>
+                    </li>
+                </ul>
+
+        {% endfor %}
+
+        <h1 class="centerAlign">Tutor Upcoming Bookings</h1>
+        {% for booking in student_bookings %}
+            <ul class="list-group" style="width:800px;">
+                <li class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">{{booking.date}}:</h6>
+                        <a href="">
+                            <small style="color:green">Cancel</small>
+                        </a>
+                    </div>
+                    <p class="mb-1"><img src="{{MEDIA_URL}}{{ booking.tutor.user.avatar }}" alt="" id="tutorPic"> <a href=""><span
+                            style="margin-left:20px;">{{ booking.tutor.user.name }}:</span></a><span style="margin-left:20px;">{{ booking.time_start }}</span>
+                    </p>
+                </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
     <br><br>
+
+
+
 
     <h1 class="centerAlign">Past Bookings</h1>
 
@@ -45,6 +88,7 @@
                     style="margin-left:20px;">Toph:</span></a><span style="margin-left:20px;">15:30-16:00</span></p>
         </li>
     </ul>
+
 
 </div>
 {% endblock %}

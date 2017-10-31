@@ -61,6 +61,10 @@ def index(request):
             if request.GET.get("logout", None) == '1':
                 del request.session['uid']
                 return render(request, 'mainApp/index.html', {'form': form})
+        # user = User.objects.get(id=request.session['uid'])  # get user details
+        if not User.objects.filter(id=request.session['uid']).exists():
+            del request.session['uid']
+            return redirect('/mainApp/index');
         user = User.objects.get(id=request.session['uid'])  # get user details
         return render(request, 'mainApp/landing.html', {'user': user})  # take user to landing page
 
@@ -96,7 +100,33 @@ def bookings(request):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/bookings.html', {'user': user})
+    isStudent = 0
+    isTutor = 0
+
+    if Student.objects.filter(user=request.session['uid']).exists():
+        isStudent = 1
+    if Tutor.objects.filter(user=request.session['uid']).exists():
+        isTutor = 1
+
+    if isTutor == 1 and isStudent == 1:
+        tutor_bookings, student_bookings = user.get_upcoming_bookings()
+        context = {
+            'user': user,
+            'tutor_bookings': tutor_bookings,
+            'student_bookings':  student_bookings,
+            'isStudent': isStudent,
+            'isTutor': isTutor
+        }
+    else:
+        bookings = user.get_upcoming_bookings()
+        context = {
+            'user': user,
+            'booking_list': bookings,
+            'isStudent': isStudent,
+            'isTutor': isTutor
+        }
+
+    return render(request, 'mainApp/bookings.html', context)
 
 
 @csrf_exempt
