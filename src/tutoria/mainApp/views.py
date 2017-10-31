@@ -1,16 +1,15 @@
 import hashlib
+from datetime import datetime, timedelta, date
 
-from django.core import serializers
+from dateutil import parser
 from django.core.validators import validate_email
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .forms import ImageForm
-from datetime import datetime, timedelta, date
-from dateutil import parser
 
+from .forms import ImageForm
 from .models import *
-from django.shortcuts import redirect
 
 
 # Create your views here.
@@ -165,11 +164,12 @@ def book(request, pk):
 
 
 @csrf_exempt
-def confirmation(request):
+def confirmation(request, pk):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/confirmation.html', {'user': user})
+    booking = BookedSlot.objects.get(id=pk)
+    return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking})
 
 
 @csrf_exempt
@@ -209,21 +209,22 @@ def confirmBooking(request):
         tutor = Tutor.objects.get(id=request.POST.get('tutorid'))
         try:
             if request.POST.get('isPrivate') == '1':
-                student.create_booking(parser.parse(request.POST.get('date')),
+                booking = student.create_booking(parser.parse(request.POST.get('date')),
                                        datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 1.0,
                                        tutor)
             else:
-                student.create_booking(parser.parse(request.POST.get('date')),
+                booking = student.create_booking(parser.parse(request.POST.get('date')),
                                        datetime.strptime(request.POST.get('time') + ":00:00", '%H:%M:%S').time(), 0.5,
                                        tutor)
-            return JsonResponse({'status': 'success'})
+            return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
             return JsonResponse({'status': 'fail'})
     else:
         return JsonResponse({'status': 'fail'})
 
+
 @csrf_exempt
-def tutorProfile(request,pk):
+def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/tutorProfile.html', {'tutor':tutor, 'user':user})
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})

@@ -128,6 +128,7 @@ class Student(models.Model):
         booking = BookedSlot(date=date, time_start=time_start, duration=duration, tutor=tutor, student=self,
                              status="BOOKED")
         booking.save()
+        return booking
 
     def __str__(self):
         return self.user.name
