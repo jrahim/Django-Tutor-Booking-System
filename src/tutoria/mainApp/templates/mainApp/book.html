@@ -105,7 +105,11 @@
                 {% if tutor.isPrivate == True %}
                     $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+(parseInt(selectedSlot.slice(1,3))+1)+":00");
                 {% else %}
-                    $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+(parseInt(selectedSlot.slice(1,3)))+":30");
+                    if(selectedSlot.slice(4,6)=="00") {
+                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3))) + ":30");
+                    } else {
+                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":30 - " + (parseInt(selectedSlot.slice(1, 3))+1) + ":00");
+                    }
                 {% endif %}
             }
         });
