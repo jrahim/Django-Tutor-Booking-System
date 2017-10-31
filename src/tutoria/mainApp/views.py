@@ -193,3 +193,9 @@ def confirmBooking(request):
     setattr(tt, request.POST.get("timeslot", None), 2)
     tt.save()
     return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def tutorProfile(request,pk):
+    tutor = Tutor.objects.get(id=pk)
+    user = User.objects.get(id=request.session['uid'])
+    return render(request, 'mainApp/tutorProfile.html', {'tutor':tutor, 'user':user})
