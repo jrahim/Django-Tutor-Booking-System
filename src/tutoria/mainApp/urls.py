@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^maketutor$', views.makeTutor),
     url(r'^book/confirmbooking$', views.confirmBooking),
     url(r'^profile/tutor/(?P<pk>\d+)$', views.tutorProfile),
+    url(r'^cancel/(?P<pk>\d+)$', views.cancel, name='cancel'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

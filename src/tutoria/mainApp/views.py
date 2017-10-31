@@ -15,6 +15,9 @@ import math
 
 # Create your views here.
 
+def rateWithCommision(tutorRate):
+    return math.ceil(tutorRate*1.05)
+
 @csrf_exempt
 def index(request):
     form = ImageForm()  # make a form to get
@@ -100,8 +103,44 @@ def bookings(request):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/bookings.html', {'user': user})
+    isStudent = 0
+    isTutor = 0
 
+    if Student.objects.filter(user=request.session['uid']).exists():
+        isStudent = 1
+    if Tutor.objects.filter(user=request.session['uid']).exists():
+        isTutor = 1
+    pb = user.get_past_bookings()
+    if isTutor == 1 and isStudent == 1:
+        tutor_bookings, student_bookings = user.get_upcoming_bookings()
+        context = {
+            'user': user,
+            'tutor_bookings': tutor_bookings,
+            'student_bookings':  student_bookings,
+            'isStudent': isStudent,
+            'isTutor': isTutor,
+            'past_bookings': pb
+        }
+    else:
+        bookings = user.get_upcoming_bookings()
+        if isStudent:
+            context = {
+                'user': user,
+                'tutor_bookings': bookings,
+                'isStudent': isStudent,
+                'isTutor': isTutor,
+                'past_bookings': pb
+            }
+        else:
+            context = {
+                'user': user,
+                'student_bookings': bookings,
+                'isStudent': isStudent,
+                'isTutor': isTutor,
+                'past_bookings': pb
+            }
+
+    return render(request, 'mainApp/bookings.html', context)
 
 @csrf_exempt
 def wallet(request):
@@ -123,8 +162,11 @@ def book(request, pk):
     extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    if user.wallet.balance < math.ceil(tutor.rate * 1.05):
-        return render(request, 'mainApp/lessBalance.html', {'user': user})
+    if tutor.user == user:
+        return render(request, 'mainApp/error.html', {'user': user, 'error': "You can not book yourself!"})
+    if user.wallet.balance < rateWithCommision(tutor.rate):
+        return render(request, 'mainApp/error.html', {'user': user, 'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
+
     tutorBookings = BookedSlot.objects.filter(tutor=pk, status='BOOKED')
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
@@ -142,7 +184,7 @@ def book(request, pk):
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
-    for i in range(1, 8):
+    for i in range(0, 7):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
             {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
@@ -241,6 +283,32 @@ def confirmBooking(request):
 
 @csrf_exempt
 def tutorProfile(request, pk):
+    if 'uid' not in request.session:
+        return redirect('/mainApp/index')
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+
+@csrf_exempt
+def cancel(request, pk):
+    if 'uid' not in request.session:
+        return JsonResponse({'status': 'fail'})
+    booking = BookedSlot.objects.get(id=pk)
+    if not booking.student.user.id == request.session['uid']:
+        return JsonResponse({'status': 'fail'})
+    dt = booking.date
+    today = date.today()
+    if booking.status == 'CANCELLED':
+        return JsonResponse({'status': 'fail'})
+    if (dt < today):
+        return JsonResponse({'status': 'fail'})
+    if (abs(dt-today).days == 0):
+        return JsonResponse({'status': 'fail'})
+    if (abs(dt-today).days == 1):
+        if (datetime.now().time() > booking.time_start):
+            return JsonResponse({'status': 'fail'})
+    try:
+        booking.update_booking('CANCELLED')
+        return JsonResponse({'status': 'success'})
+    except:
+        return JsonResponse({'status': 'fail'})

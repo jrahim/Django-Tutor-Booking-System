@@ -25,6 +25,7 @@
             <br>
             <p class="mb-1">{{booking.time_start}}</p>
         </li>
+        {% if booking.tutor.rate != 0 %}
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Session Charges:</h5>
@@ -32,6 +33,16 @@
             {% load custom_tags %}
             <p class="mb-1">{{ booking.tutor.rate|mult:"1.05" }}</p>
         </li>
+        {% else %}
+            <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No charges (contracted tutor)</h5>
+            </div>
+        </li>
+        {% endif %}
     </ul>
+    {% if booking.tutor.rate != 0 %}
+    <div class="alert alert-success" style="text-align: center; width: 600px;"><strong>The respective charges have been deducted from your wallet.</strong></div>
+    {% endif %}
 </div>
 {% endblock %}

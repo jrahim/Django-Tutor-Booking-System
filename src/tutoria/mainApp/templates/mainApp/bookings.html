@@ -1,50 +1,140 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="/static/css/bookings.css">
-<link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/bookings.css">
+    <link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 
 {% block content %}
-<div class="container-fluid" style="margin-top:115px; width:800px;">
+    <div class="container-fluid" style="margin-top:115px; width:800px;">
 
-    <h1 class="centerAlign">Upcoming Bookings</h1>
 
-    <ul class="list-group" style="width:800px;">
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Monday, 16th Oct:</h6>
-                <a href="">
-                    <small style="color:green">Cancel</small>
-                </a>
+
+        {% if isTutor == 1 %}
+            <h2 class="centerAlign">Your Upcoming Teaching Sessions:</h2>
+            <ul class="list-group" style="width:800px; margin-bottom: 50px;">
+                {% for booking in tutor_bookings %}
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ booking.date }}:</h6>
+                            <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn" data-toggle="modal" data-target="#myModal">
+                                <small style="color:green">Cancel</small>
+                            </a>
+                        </div>
+                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt=""
+                                             id="tutorPic"> <a href=""><span
+                                style="margin-left:20px;">{{ booking.student.user.name }}:</span></a><span
+                                style="margin-left:20px;">{{ booking.time_start }}</span>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if isStudent == 1 %}
+            <h2 class="centerAlign">Your Upcoming Learning Sessions:</h2>
+            <ul class="list-group" style="width:800px;  margin-bottom: 50px;">
+                {% for booking in student_bookings %}
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ booking.date }}:</h6>
+                            <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn" data-toggle="modal" data-target="#myModal">
+                                <small style="color:green">Cancel</small>
+                            </a>
+                        </div>
+                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.tutor.user.avatar }}" alt="" id="tutorPic">
+                            <a href=""><span
+                                    style="margin-left:20px;">{{ booking.tutor.user.name }}:</span></a><span
+                                    style="margin-left:20px;">{{ booking.time_start }}</span>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+
+        {% if past_bookings|length > 0 %}
+            <h1 class="centerAlign">Past Bookings</h1>
+
+            <ul class="list-group" style="width:800px; margin-bottom: 50px;">
+                {% for booking in past_bookings %}
+                    <li class="list-group-item">
+
+                        {% if booking.student.user == user %}
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ booking.date }} - (Learning Session)</h6>
+                            </div>
+                            <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.tutor.user.avatar }}" alt=""
+                                                 id="tutorPic"> <a
+                                    href=""><span
+                                    style="margin-left:20px;">{{ booking.tutor.user.name }}</span></a><span
+                                    style="margin-left:20px;">{{ booking.time_start }}</span></p>
+                        {% else %}
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ booking.date }} - (Teaching Session)</h6>
+                            </div>
+                            <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt=""
+                                                 id="tutorPic"> <a
+                                    href=""><span
+                                    style="margin-left:20px;">{{ booking.student.user.name }}</span></a><span
+                                    style="margin-left:20px;">{{ booking.time_start }}</span></p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to cancel your booking?
+                    <br>
+                    <div id="failmsg" style="margin-top: 30px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="cancelBooking()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+
+                </div>
             </div>
-            <p class="mb-1"><img src="/static/assets/img/zuko.png" alt="" id="tutorPic"> <a href=""><span
-                    style="margin-left:20px;">Prince Zuko:</span></a><span style="margin-left:20px;">13:30-14:00</span>
-            </p>
-        </li>
-    </ul>
+        </div>
+    </div>
+{% endblock %}
 
-    <br><br>
+{% block extra_script %}
+    <script type="text/javascript">
+        var link = ""
+        $('.cancelbtn').click(function () {
+            link = $(this).data('link');
+            $('#failmsg').html("");
+        });
 
-    <h1 class="centerAlign">Past Bookings</h1>
+        function cancelBooking() {
+            $.post(link, {}, function (response) {
+                if (response.status == 'fail') {
+                    $('#failmsg').html("<div class='alert alert-danger'> Could not cancel booking </div>")
+                }
+                else {
+                    $('#failmsg').html("<div class='alert alert-success'> Booking cancelled! Page will now be reloaded. </div>")
+                    setTimeout(function () {
+                        location.reload()
+                    }, 1500);
+                }
+            });
+        }
 
-    <ul class="list-group" style="width:800px;">
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Monday, 9th Oct:</h6>
-            </div>
-            <p class="mb-1"><img src="/static/assets/img/Katara.png" alt="" id="tutorPic"> <a href=""><span
-                    style="margin-left:20px;">Katara:</span></a><span style="margin-left:20px;">14:30-15:00</span></p>
-        </li>
-        <li class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Saturday, 7th Oct:</h6>
-            </div>
-            <p class="mb-1"><img src="/static/assets/img/toph.png" alt="" id="tutorPic"> <a href=""><span
-                    style="margin-left:20px;">Toph:</span></a><span style="margin-left:20px;">15:30-16:00</span></p>
-        </li>
-    </ul>
-
-</div>
+    </script>
 {% endblock %}

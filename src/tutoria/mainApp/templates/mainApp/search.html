@@ -9,7 +9,13 @@
 
     <div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
         <div style="float:left;">
-            <h2 class="tealText">Your search returned 1 result:</h2>
+            <h2 class="tealText">Your search returned {{ tutor_list | length }}
+                {% if tutor_list|length == 1 %}
+                    result:
+                {% else %}
+                    results:
+                {% endif %}
+            </h2>
         </div>
 
         <div class="form-inline form-row" style="float:right; margin-top:2px;">
