@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^managewallet$', views.manageWallet),
     url(r'^maketutor$', views.makeTutor),
     url(r'^book/confirmbooking$', views.confirmBooking),
+    url(r'^profile/tutor/(?P<pk>\d+)$', views.tutorProfile),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
