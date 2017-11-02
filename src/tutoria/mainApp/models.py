@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import date, time
+from django.db.models import Q
 
 
 # Create your models here.
@@ -52,23 +54,30 @@ class User(models.Model):
     def get_upcoming_bookings(self):
 
         if Tutor.objects.filter(user=self).exists() and Student.objects.filter(user=self).exists():
-
             t = Tutor.objects.get(user=self)
             s = Student.objects.get(user=self)
-            array1 = BookedSlot.objects.filter(tutor=t)
-            array2 = BookedSlot.objects.filter(student=s)
+            array1 = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
+            array2 = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
             return array1, array2
 
         if Student.objects.filter(user=self).exists() and not Tutor.objects.filter(user=self).exists():
             s = Student.objects.get(user=self)
-            array = BookedSlot.objects.filter(student=s)
+            array = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
             return array
 
         if Tutor.objects.filter(user=self).exists() and not Student.objects.filter(user=self).exists():
             t = Tutor.objects.get(user=self)
-            array = BookedSlot.objects.filter(tutor=t)
+            array = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
             return array
 
+    def get_past_bookings(self):
+        student = Student.objects.get(user=self)
+        if Tutor.objects.filter(user=self).exists():
+            tutor = Tutor.objects.filter(user=self)
+            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED') | Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
+        else:
+            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED'))
+        return a1
 
     def __str__(self):
         return self.name
@@ -95,57 +104,23 @@ class Tutor(models.Model):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
         unavailable.save()
 
-    # @transaction.atomic
-    # def save(self, *args, **kwargs):
-    #     super(Tutor, self).save(*args, **kwargs)
-    #     if not PrivateTimetable.objects.filter(tutor=self).exists():
-    #         ttmon = PrivateTimetable(tutor=self, day='Mon')
-    #         ttmon.save()
-    #         tttue = PrivateTimetable(tutor=self, day='Tue')
-    #         tttue.save()
-    #         ttwed = PrivateTimetable(tutor=self, day='Wed')
-    #         ttwed.save()
-    #         ttthu = PrivateTimetable(tutor=self, day='Thu')
-    #         ttthu.save()
-    #         ttfri = PrivateTimetable(tutor=self, day='Fri')
-    #         ttfri.save()
-    #         ttsat = PrivateTimetable(tutor=self, day='Sat')
-    #         ttsat.save()
-    #         ttsun = PrivateTimetable(tutor=self, day='Sun')
-    #         ttsun.save()
 
     def __str__(self):
         return self.user.name
 
-
-# class PrivateTimetable(models.Model):
-#     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-#     day = models.CharField(max_length=3)
-#     t07_08 = models.PositiveIntegerField(default=1)
-#     t08_09 = models.PositiveIntegerField(default=1)
-#     t09_10 = models.PositiveIntegerField(default=1)
-#     t10_11 = models.PositiveIntegerField(default=1)
-#     t11_12 = models.PositiveIntegerField(default=1)
-#     t12_13 = models.PositiveIntegerField(default=1)
-#     t13_14 = models.PositiveIntegerField(default=1)
-#     t14_15 = models.PositiveIntegerField(default=1)
-#
-#     def __str__(self):
-#         return self.tutor.user.name
-#
 
 class Student(models.Model):
     user = models.OneToOneField(User)
 
-    def create_booking(self, date, time_start, duration, tutor):
+    def create_booking(self, date, time_start, duration, tutor, charges):
         booking = BookedSlot(date=date, time_start=time_start, duration=duration, tutor=tutor, student=self,
                              status="BOOKED")
         booking.save()
+        self.user.wallet.subtract_funds(int(charges))
+        return booking
 
     def __str__(self):
         return self.user.name
-
-
 
 
 
@@ -174,9 +149,6 @@ class BookedSlot(models.Model):
 
 class UnavailableSlot(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    day = models.CharField(max_length=3)  # type??
+    day = models.CharField(max_length=3)
     time_start = models.TimeField()
-    duration = models.FloatField();
-    #duration = models.TimeField()  # time or integer?
-
-    # modify/delete unavailable slot?
+    duration = models.FloatField()

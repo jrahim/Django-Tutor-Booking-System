@@ -1,19 +1,22 @@
 import hashlib
+from datetime import datetime, timedelta, date
 
-from django.core import serializers
+from dateutil import parser
 from django.core.validators import validate_email
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .forms import ImageForm
-from datetime import datetime, timedelta, date
-from dateutil import parser
 
+from .forms import ImageForm
 from .models import *
-from django.shortcuts import redirect
+import math
 
 
 # Create your views here.
+
+def rateWithCommision(tutorRate):
+    return math.ceil(tutorRate*1.05)
 
 @csrf_exempt
 def index(request):
@@ -51,7 +54,7 @@ def index(request):
                         request.POST.get("password").encode('utf-8')).hexdigest()).exists():
                     request.session['uid'] = User.objects.get(email=request.POST.get('email')).id
 
-                    return redirect('/mainApp/index');
+                    return redirect('/mainApp/index')
                 else:
                     return render(request, 'mainApp/index.html', {'form': form, 'loginError': 'Incorrect Combination'})
 
@@ -61,11 +64,11 @@ def index(request):
             if request.GET.get("logout", None) == '1':
                 del request.session['uid']
                 return render(request, 'mainApp/index.html', {'form': form})
-        # user = User.objects.get(id=request.session['uid'])  # get user details
-        if not User.objects.filter(id=request.session['uid']).exists():
+        try:
+            user = User.objects.get(id=request.session['uid'])  # get user details
+        except:
             del request.session['uid']
-            return redirect('/mainApp/index');
-        user = User.objects.get(id=request.session['uid'])  # get user details
+            return redirect('/mainApp/index')
         return render(request, 'mainApp/landing.html', {'user': user})  # take user to landing page
 
 
@@ -107,7 +110,7 @@ def bookings(request):
         isStudent = 1
     if Tutor.objects.filter(user=request.session['uid']).exists():
         isTutor = 1
-
+    pb = user.get_past_bookings()
     if isTutor == 1 and isStudent == 1:
         tutor_bookings, student_bookings = user.get_upcoming_bookings()
         context = {
@@ -115,19 +118,29 @@ def bookings(request):
             'tutor_bookings': tutor_bookings,
             'student_bookings':  student_bookings,
             'isStudent': isStudent,
-            'isTutor': isTutor
+            'isTutor': isTutor,
+            'past_bookings': pb
         }
     else:
         bookings = user.get_upcoming_bookings()
-        context = {
-            'user': user,
-            'booking_list': bookings,
-            'isStudent': isStudent,
-            'isTutor': isTutor
-        }
+        if isStudent:
+            context = {
+                'user': user,
+                'tutor_bookings': bookings,
+                'isStudent': isStudent,
+                'isTutor': isTutor,
+                'past_bookings': pb
+            }
+        else:
+            context = {
+                'user': user,
+                'student_bookings': bookings,
+                'isStudent': isStudent,
+                'isTutor': isTutor,
+                'past_bookings': pb
+            }
 
     return render(request, 'mainApp/bookings.html', context)
-
 
 @csrf_exempt
 def wallet(request):
@@ -146,46 +159,73 @@ def wallet(request):
 def book(request, pk):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
-    extra = parser.parse("Nov 2")
+    extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    tutorBookings = BookedSlot.objects.filter(tutor=pk)
+    if tutor.user == user:
+        return render(request, 'mainApp/error.html', {'user': user, 'error': "You can not book yourself!"})
+    if user.wallet.balance < rateWithCommision(tutor.rate):
+        return render(request, 'mainApp/error.html', {'user': user, 'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
+
+    tutorBookings = BookedSlot.objects.filter(tutor=pk, status='BOOKED')
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
-    slots = ["07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00"]
+    slots = []
+    if tutor.isPrivate:
+        slots = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00"]
+        slotsToRender = ["07:00-08:00", "08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
+                         "13:00-14:00", "14:00-15:00"]
+    else:
+        slots = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00",
+                 "12:30", "13:00", "13:30", "14:00"]
+        slotsToRender = ["07:00-07:30", "07:30-08:00", "08:00-08:30", "08:30-09:00", "09:00-09:30", "09:30-10:00",
+                         "10:00-10:30", "10:30-11:00", "11:00-11:30", "11:30-12:00", "12:00-12:30", "12:30-13:00",
+                         "13:00-13:30", "13:30-14:00", "14:30-15:00"]
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
-    for i in range(1, 8):
+    for i in range(0, 7):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
-            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day, 'month': months[nextDay.month - 1], 'row': ""})
+            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
+             'month': months[nextDay.month - 1], 'row': "", 'id': ""})
     for d in BookableDates:
         dt = d['dt']
         weekday = d['weekday']
         for slot in slots:
             isUnavailable = False
             for booking in tutorBookings:
-                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M').time():
                     isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
                 for unavailable in tutorUnavailable:
-                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot, '%H:%M:%S').time():
+                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot,
+                                                                                                  '%H:%M').time():
                         isUnavailable = True
                         d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
-                d['row'] = d['row'] + "<td id=''></td>"
+                day = d['day']
+                month = d['month']
+                if day < 10:
+                    day = "0" + str(day)
+                else:
+                    day = str(day)
+                tdid = month + "-" + day + "_" + slot
+                d['row'] = d['row'] + "<td id='" + tdid + "'></td>"
 
-    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today}
+    context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today, 'slotsToRender': slotsToRender}
     return render(request, 'mainApp/book.html', context)
 
+
 @csrf_exempt
-def confirmation(request):
+def confirmation(request, pk):
     if 'uid' not in request.session:
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/confirmation.html', {'user': user})
+    booking = BookedSlot.objects.get(id=pk)
+    charges = math.ceil(booking.tutor.rate * 1.05)
+    return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking, 'charges': charges})
 
 
 @csrf_exempt
@@ -219,7 +259,56 @@ def makeTutor(request):
 def confirmBooking(request):
     if 'uid' not in request.session:
         return JsonResponse({'status': 'fail'})
-    tt = PrivateTimetable.objects.get(tutor=request.POST.get("tutorid", None), day=request.POST.get("day", None))
-    setattr(tt, request.POST.get("timeslot", None), 2)
-    tt.save()
-    return JsonResponse({'status': 'success'})
+    user = User.objects.get(id=request.session['uid'])
+    student = Student.objects.get(user=request.session['uid'])
+    if request.method == 'POST':
+        tutor = Tutor.objects.get(id=request.POST.get('tutorid'))
+        try:
+            if tutor.isPrivate:
+                booking = student.create_booking(parser.parse(request.POST.get('date')),
+                                                 datetime.strptime(request.POST.get('time') + ":00:00",
+                                                                   '%H:%M:%S').time(), 1.0,
+                                                 tutor, math.ceil(tutor.rate * 1.05))
+            else:
+                booking = student.create_booking(parser.parse(request.POST.get('date')),
+                                                 datetime.strptime(request.POST.get('time') + ":00", '%H:%M').time(),
+                                                 0.5,
+                                                 tutor, 0)
+            return JsonResponse({'status': 'success', 'booking': booking.id})
+        except:
+            return JsonResponse({'status': 'fail'})
+    else:
+        return JsonResponse({'status': 'fail'})
+
+
+@csrf_exempt
+def tutorProfile(request, pk):
+    if 'uid' not in request.session:
+        return redirect('/mainApp/index')
+    tutor = Tutor.objects.get(id=pk)
+    user = User.objects.get(id=request.session['uid'])
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+
+@csrf_exempt
+def cancel(request, pk):
+    if 'uid' not in request.session:
+        return JsonResponse({'status': 'fail'})
+    booking = BookedSlot.objects.get(id=pk)
+    if not booking.student.user.id == request.session['uid']:
+        return JsonResponse({'status': 'fail'})
+    dt = booking.date
+    today = date.today()
+    if booking.status == 'CANCELLED':
+        return JsonResponse({'status': 'fail'})
+    if (dt < today):
+        return JsonResponse({'status': 'fail'})
+    if (abs(dt-today).days == 0):
+        return JsonResponse({'status': 'fail'})
+    if (abs(dt-today).days == 1):
+        if (datetime.now().time() > booking.time_start):
+            return JsonResponse({'status': 'fail'})
+    try:
+        booking.update_booking('CANCELLED')
+        return JsonResponse({'status': 'success'})
+    except:
+        return JsonResponse({'status': 'fail'})

@@ -1,0 +1,78 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="margin-top:115px; width:600px !important;">
+        <div class="centerAlign">
+            <img src="/static/assets/img/{{ tutor.user.avatar }}" id="bigAvatarPic" alt="">
+            <h1>{{ tutor.user.name }}</h1>
+            <br>
+        </div>
+        <ul class="list-group" style="width:600px;">
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Email:</h5>
+                </div>
+                <p class="mb-1">{{ tutor.user.email }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Contact Number:</h5>
+                </div>
+                <p class="mb-1">{{ tutor.user.contact }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Bio:</h5>
+                </div>
+                <p class="mb-1">{{ tutor.shortBio }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Session Rate:</h5>
+                </div>
+                {% load custom_tags %}
+                <p class="mb-1">{{ tutor.rate|mult:"1.05" }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Rating:</h5>
+                </div>
+                <p class="mb-1">{{ tutor.rating }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Tutor Type:</h5>
+                </div>
+                {% if tutor.isPrivate == True %}
+                    <p class="mb-1">Private</p>
+                {% else %}
+                    <p class="mb-1">Contracted</p>
+                {% endif %}
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Courses:</h5>
+                </div>
+                <p class="mb-1">Course List Here</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Subject Tags:</h5>
+                </div>
+                <p class="mb-1">Subject tags Here</p>
+            </li>
+        </ul>
+
+        <div style="text-align: center; margin-top: 25px; margin-bottom: 35px;">
+        <a href="/mainApp/book/{{ tutor.id }}" style="margin-right: auto; margin-left: auto;">
+            <button class="btn btn-success btn-lg">Book!</button>
+        </a>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div class="alert alert-danger" role="alert" style="margin-top: 150px; width: 500px; text-align: center;">
+                <strong>
+                    {{ error | safe }}
+                </strong>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+{% endblock %}
