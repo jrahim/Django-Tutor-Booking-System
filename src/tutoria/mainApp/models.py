@@ -9,6 +9,7 @@ class Wallet(models.Model):
     balance = models.PositiveIntegerField()
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
     def add_funds(self, amount):
         self.balance += amount
         self.save()

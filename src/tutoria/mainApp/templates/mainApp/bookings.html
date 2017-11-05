@@ -13,11 +13,11 @@
 
         {% if isStudent == 1 %}
             <h2 class="centerAlign">Your Upcoming Learning Sessions:</h2>
-            {% if tutor_bookings|length == 0 %}
+            {% if student_bookings|length == 0 %}
                 <div style="text-align: center"><h3>You have no upcoming learning sessions</h3></div>
             {% endif %}
             <ul class="list-group" style="width:800px; margin-bottom: 50px;">
-                {% for booking in tutor_bookings %}
+                {% for booking in student_bookings %}
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1">{{ booking.date }}:</h6>
@@ -38,11 +38,11 @@
 
         {% if isTutor == 1 %}
             <h2 class="centerAlign">Your Upcoming Teaching Sessions:</h2>
-            {% if student_bookings|length == 0 %}
+            {% if tutor_bookings|length == 0 %}
                 <div style="text-align: center"><h3>You have no upcoming teachings sessions</h3></div>
             {% endif %}
             <ul class="list-group" style="width:800px;  margin-bottom: 50px;">
-                {% for booking in student_bookings %}
+                {% for booking in tutor_bookings %}
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1">{{ booking.date }}:</h6>
