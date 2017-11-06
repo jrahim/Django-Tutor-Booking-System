@@ -13,15 +13,38 @@ from .models import *
 import math
 
 
-# Create your views here.
+# functions
 
 def rateWithCommision(tutorRate):
-    return math.ceil(tutorRate*1.05)
+    return math.ceil(tutorRate * 1.05)
 
+
+def checkUser(uid):
+    isTutor = Tutor.objects.filter(user=uid)
+    isStudent = Student.objects.filter(user=uid)
+    return isTutor, isStudent
+
+
+def isAuthenticated(request):
+    if 'uid' not in request.session:
+        return False
+    else:
+        return True
+
+
+def getTutor(uid):
+    return Tutor.objects.get(user=uid)
+
+
+def getStudent(uid):
+    return Student.objects.get(user=uid)
+
+
+# views
 @csrf_exempt
 def index(request):
     form = ImageForm()  # make a form to get
-    if 'uid' not in request.session:  # if user not already logged in
+    if not isAuthenticated(request):  # if user not already logged in
         if request.method == 'POST':  # if user submitted something
             if 'signup' in request.POST:  # if user submitted signup request
                 form = ImageForm(request.POST, request.FILES)  # get the uploaded image
@@ -40,6 +63,11 @@ def index(request):
                             # make wallet for new user
                             user.become_student();
                             request.session['uid'] = user.id  # add user id to session
+                            isTutor, isStudent = checkUser(user.id)
+                            if isTutor:
+                                request.session['tid'] = getTutor(user.id).id
+                            if isStudent:
+                                request.session['sid'] = getStudent(user.id).id
                             return redirect('/mainApp/index?first=1')  # take user to landing page
                         else:
                             return render(request, 'mainApp/index.html',
@@ -74,7 +102,7 @@ def index(request):
 
 @csrf_exempt
 def search(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     tutor_list = Tutor.objects.all()
@@ -87,7 +115,7 @@ def search(request):
 
 @csrf_exempt
 def profile(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     isTutor = '0'
@@ -100,7 +128,7 @@ def profile(request):
 
 @csrf_exempt
 def bookings(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     isStudent = 0
@@ -116,7 +144,7 @@ def bookings(request):
         context = {
             'user': user,
             'tutor_bookings': tutor_bookings,
-            'student_bookings':  student_bookings,
+            'student_bookings': student_bookings,
             'isStudent': isStudent,
             'isTutor': isTutor,
             'past_bookings': pb
@@ -142,9 +170,10 @@ def bookings(request):
 
     return render(request, 'mainApp/bookings.html', context)
 
+
 @csrf_exempt
 def wallet(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     wallet = Wallet.objects.get(user=request.session['uid'])
@@ -157,7 +186,7 @@ def wallet(request):
 
 @csrf_exempt
 def book(request, pk):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
@@ -165,7 +194,8 @@ def book(request, pk):
     if tutor.user == user:
         return render(request, 'mainApp/error.html', {'user': user, 'error': "You can not book yourself!"})
     if user.wallet.balance < rateWithCommision(tutor.rate):
-        return render(request, 'mainApp/error.html', {'user': user, 'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
+        return render(request, 'mainApp/error.html', {'user': user,
+                                                      'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
 
     tutorBookings = BookedSlot.objects.filter(tutor=pk, status='BOOKED')
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
@@ -184,7 +214,7 @@ def book(request, pk):
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
-    for i in range(0, 7):
+    for i in range(1, 8):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
             {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
@@ -220,7 +250,7 @@ def book(request, pk):
 
 @csrf_exempt
 def confirmation(request, pk):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     booking = BookedSlot.objects.get(id=pk)
@@ -230,7 +260,7 @@ def confirmation(request, pk):
 
 @csrf_exempt
 def manageWallet(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     w = Wallet.objects.get(user=request.session['uid']);
     if request.GET.get('action', None) == "add":
@@ -243,21 +273,23 @@ def manageWallet(request):
 
 @csrf_exempt
 def makeTutor(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     user = User.objects.get(id=request.session['uid'])
     if Tutor.objects.filter(user=user).exists():
         return JsonResponse({'status': 'fail'})
+    t = 0;
     if request.POST.get('isPrivate') == 'yes':
-        user.become_tutor(request.POST.get('shortBio'), int(request.POST.get('rate')), True)
+        t = user.become_tutor(request.POST.get('shortBio'), int(request.POST.get('rate')), True)
     else:
-        user.become_tutor(request.POST.get('shortBio'), 0, False)
+        t = user.become_tutor(request.POST.get('shortBio'), 0, False)
+    request.session['tid'] = t.id
     return JsonResponse({'status': 'success'})
 
 
 @csrf_exempt
 def confirmBooking(request):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     user = User.objects.get(id=request.session['uid'])
     student = Student.objects.get(user=request.session['uid'])
@@ -283,15 +315,16 @@ def confirmBooking(request):
 
 @csrf_exempt
 def tutorProfile(request, pk):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return redirect('/mainApp/index')
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
 
+
 @csrf_exempt
 def cancel(request, pk):
-    if 'uid' not in request.session:
+    if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     booking = BookedSlot.objects.get(id=pk)
     if not booking.student.user.id == request.session['uid']:
@@ -302,13 +335,14 @@ def cancel(request, pk):
         return JsonResponse({'status': 'fail'})
     if (dt < today):
         return JsonResponse({'status': 'fail'})
-    if (abs(dt-today).days == 0):
+    if (abs(dt - today).days == 0):
         return JsonResponse({'status': 'fail'})
-    if (abs(dt-today).days == 1):
+    if (abs(dt - today).days == 1):
         if (datetime.now().time() > booking.time_start):
             return JsonResponse({'status': 'fail'})
     try:
         booking.update_booking('CANCELLED')
+        booking.student.user.wallet.add_funds(rateWithCommision(booking.tutor.rate))
         return JsonResponse({'status': 'success'})
     except:
         return JsonResponse({'status': 'fail'})
