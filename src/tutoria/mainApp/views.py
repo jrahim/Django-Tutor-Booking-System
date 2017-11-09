@@ -19,7 +19,16 @@ def rateWithCommision(tutorRate):
     return math.ceil(tutorRate * 1.05)
 
 
-def checkUser(uid):
+def checkUser(uid, request):
+    isTutor = False
+    isStudent = False
+    if 'tid' in request.session:
+        isTutor = True
+    if 'sid' in request.session:
+        isStudent = True
+    return isTutor, isStudent
+
+def checkUserFromDB(uid):
     isTutor = Tutor.objects.filter(user=uid)
     isStudent = Student.objects.filter(user=uid)
     return isTutor, isStudent
@@ -63,7 +72,7 @@ def index(request):
                             # make wallet for new user
                             user.become_student();
                             request.session['uid'] = user.id  # add user id to session
-                            isTutor, isStudent = checkUser(user.id)
+                            isTutor, isStudent = checkUserFromDB(user.id)
                             if isTutor:
                                 request.session['tid'] = getTutor(user.id).id
                             if isStudent:
@@ -81,7 +90,11 @@ def index(request):
                 if User.objects.filter(email=request.POST.get('email'), password=hashlib.md5(
                         request.POST.get("password").encode('utf-8')).hexdigest()).exists():
                     request.session['uid'] = User.objects.get(email=request.POST.get('email')).id
-
+                    isTutor, isStudent = checkUserFromDB(request.session['uid'])
+                    if isTutor:
+                        request.session['tid'] = getTutor(request.session['uid']).id
+                    if isStudent:
+                        request.session['sid'] = getStudent(request.session['uid']).id
                     return redirect('/mainApp/index')
                 else:
                     return render(request, 'mainApp/index.html', {'form': form, 'loginError': 'Incorrect Combination'})
@@ -90,7 +103,9 @@ def index(request):
     else:  # if user already logged in
         if request.method == 'GET':  # handle logout
             if request.GET.get("logout", None) == '1':
-                del request.session['uid']
+                keys = list(request.session.keys())
+                for key in keys:
+                    del request.session[key]
                 return render(request, 'mainApp/index.html', {'form': form})
         try:
             user = User.objects.get(id=request.session['uid'])  # get user details
@@ -105,6 +120,7 @@ def search(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
+    isTutor, isStudent = checkUser(user.id, request)
     tutor_list = Tutor.objects.all()
     context = {
         'tutor_list': tutor_list,
@@ -118,11 +134,13 @@ def profile(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    isTutor = '0'
+    isTutor, isStudent = checkUser(user.id, request)
     tutor = {}
-    if Tutor.objects.filter(user=request.session['uid']):
+    if isTutor:
         isTutor = '1'
         tutor = Tutor.objects.get(user=request.session['uid'])
+    else:
+        isTutor = '0'
     return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
 
@@ -131,16 +149,10 @@ def bookings(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    isStudent = 0
-    isTutor = 0
-
-    if Student.objects.filter(user=request.session['uid']).exists():
-        isStudent = 1
-    if Tutor.objects.filter(user=request.session['uid']).exists():
-        isTutor = 1
-    pb = user.get_past_bookings()
+    isTutor, isStudent = checkUser(user.id, request)
+    pb = user.get_past_bookings(isTutor, isStudent)
     if isTutor == 1 and isStudent == 1:
-        tutor_bookings, student_bookings = user.get_upcoming_bookings()
+        tutor_bookings, student_bookings = user.get_upcoming_bookings(isTutor, isStudent)
         context = {
             'user': user,
             'tutor_bookings': tutor_bookings,
@@ -150,7 +162,7 @@ def bookings(request):
             'past_bookings': pb
         }
     else:
-        bookings = user.get_upcoming_bookings()
+        bookings = user.get_upcoming_bookings(isTutor, isStudent)
         if isStudent:
             context = {
                 'user': user,
@@ -188,7 +200,6 @@ def wallet(request):
 def book(request, pk):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
-    extra = parser.parse("Nov-2")
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     if tutor.user == user:
