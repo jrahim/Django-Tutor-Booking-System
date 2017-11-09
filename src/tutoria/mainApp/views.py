@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import ImageForm
 from .models import *
 import math
+from django.conf import settings
 
 
 # functions
@@ -182,7 +183,6 @@ def bookings(request):
 
     return render(request, 'mainApp/bookings.html', context)
 
-
 @csrf_exempt
 def wallet(request):
     if not isAuthenticated(request):
@@ -225,7 +225,7 @@ def book(request, pk):
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
-    for i in range(1, 8):
+    for i in range(0, 7):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
             {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
@@ -274,10 +274,20 @@ def manageWallet(request):
     if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     w = Wallet.objects.get(user=request.session['uid']);
+    user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
         w.add_funds(int(request.GET.get('amount', None)))
+        message_body = "You added $" + str(request.GET.get('amount', None)) + " to your wallet." #notification for wallet
     else:
         w.subtract_funds(int(request.GET.get('amount', None)))
+        message_body = "You subtracted $" + str(request.GET.get('amount', None)) + " from your wallet."
+
+    message_subject = "Wallet Update"
+    mail_to = str(user.email)
+    mail_from = "My Tutors"
+
+    user.send_mail(mail_to, mail_from, message_body, message_subject)
+
     data = {'status': 'success'}
     return JsonResponse(data)
 
@@ -317,6 +327,23 @@ def confirmBooking(request):
                                                  datetime.strptime(request.POST.get('time') + ":00", '%H:%M').time(),
                                                  0.5,
                                                  tutor, 0)
+#SEND NOTIFICATION ON BOOKING TO TUTOR
+            message_subject = "New Booking"
+            message_body = "You have been booked by " + student.user.name + " on " + str(parser.parse(request.POST.get('date'))) + "."
+            mail_to = str(tutor.user.email)
+            mail_from = "My Tutors"
+
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
+
+#SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
+            message_subject = "Booking Update"
+            message_body = "You booked  " + tutor.user.name + " on " + str(parser.parse(request.POST.get('date'))) + ". $" + str(tutor.rate) + " will be deducted from your wallet."
+            mail_to = str(student.user.email)
+            mail_from = "My Tutors"
+
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
+
+
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
             return JsonResponse({'status': 'fail'})
@@ -332,12 +359,12 @@ def tutorProfile(request, pk):
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
 
-
 @csrf_exempt
 def cancel(request, pk):
     if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
     booking = BookedSlot.objects.get(id=pk)
+    user = User.objects.get(id=request.session['uid'])
     if not booking.student.user.id == request.session['uid']:
         return JsonResponse({'status': 'fail'})
     dt = booking.date
@@ -354,6 +381,23 @@ def cancel(request, pk):
     try:
         booking.update_booking('CANCELLED')
         booking.student.user.wallet.add_funds(rateWithCommision(booking.tutor.rate))
+
+        #NOTIFICATION ON Cancellation TO TUTOR
+        message_subject = "Booking Cancellation"
+        message_body = "Your booking on " + str(booking.date) + " have been cancelled by " + booking.student.user.name + ". "
+        mail_to = str(booking.tutor.user.email)
+        mail_from = "My Tutors"
+
+        user.send_mail(mail_to, mail_from, message_body, message_subject)
+
+        #SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
+        message_subject = "Booking Update"
+        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(booking.tutor.rate) + " will be refunded to your wallet."
+        mail_to = str(booking.student.user.email)
+        mail_from = "My Tutors"
+
+        user.send_mail(mail_to, mail_from, message_body, message_subject)
+
         return JsonResponse({'status': 'success'})
     except:
         return JsonResponse({'status': 'fail'})
