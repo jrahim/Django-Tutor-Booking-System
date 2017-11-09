@@ -9,7 +9,6 @@ class Wallet(models.Model):
     balance = models.PositiveIntegerField()
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
     def add_funds(self, amount):
         self.balance += amount
         self.save()
@@ -20,6 +19,7 @@ class Wallet(models.Model):
 
     def __str__(self):
         return str(self.id)
+
 
 class User(models.Model):
     name = models.CharField(max_length=200)
@@ -52,32 +52,37 @@ class User(models.Model):
         t.save()
         return t
 
-    def get_upcoming_bookings(self):
+    def get_upcoming_bookings(self, isTutor, isStudent):
 
-        if Tutor.objects.filter(user=self).exists() and Student.objects.filter(user=self).exists():
+        if isTutor and isStudent:
             t = Tutor.objects.get(user=self)
             s = Student.objects.get(user=self)
             array1 = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
             array2 = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
             return array1, array2
 
-        if Student.objects.filter(user=self).exists() and not Tutor.objects.filter(user=self).exists():
+        if isStudent and not isTutor:
             s = Student.objects.get(user=self)
             array = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
             return array
 
-        if Tutor.objects.filter(user=self).exists() and not Student.objects.filter(user=self).exists():
+        if isTutor and not isStudent:
             t = Tutor.objects.get(user=self)
             array = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
             return array
 
-    def get_past_bookings(self):
-        student = Student.objects.get(user=self)
-        if Tutor.objects.filter(user=self).exists():
+    def get_past_bookings(self, isTutor, isStudent):
+        if isTutor and isStudent:
+            student = Student.objects.get(user=self)
             tutor = Tutor.objects.filter(user=self)
-            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED') | Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
-        else:
+            a1 = BookedSlot.objects.filter(
+                Q(student=student, status='ENDED') | Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
+        elif isStudent:
+            student = Student.objects.get(user=self)
             a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED'))
+        else:
+            tutor = Tutor.objects.filter(user=self)
+            a1 = BookedSlot.objects.filter(Q(tutor=tutor, status='ENDED'))
         return a1
 
     def send_mail(self, mail_to, mail_from, message_body, message_subject):
