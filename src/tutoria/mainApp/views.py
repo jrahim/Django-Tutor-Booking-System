@@ -122,6 +122,8 @@ def search(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     tags = Tag.objects.all()
+
+    # search
     universities = University.objects.all()
     given_name = request.POST.get('givenName', "")
     last_name = request.POST.get('lastName', "")
@@ -135,6 +137,9 @@ def search(request):
         tag = ""
     max_rate = request.POST.get('maxRate', "")
     min_rate = request.POST.get('minRate', "")
+
+    # sort
+    sort = request.POST.get('sort', "")
 
     if tutor_type == "tutorPrivate":
         tutor_type = True
@@ -172,6 +177,9 @@ def search(request):
     # TODO handle exceptions of one being entered and other not
     if max_rate != "" and min_rate != "":
         tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
+
+    if sort != "" and sort == "rateAsc":
+        tutor_list = tutor_list.order_by('rate')
 
     context = {
         'tutor_list': tutor_list,

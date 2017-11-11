@@ -18,21 +18,11 @@
         </h2>
     </div>
 
-    <div class="form-inline form-row" style="float:right; margin-top:2px;">
-        <div class="col-3" style="margin-top:0px; font-size:120%">
-            Sort:
-        </div>
-        <select class="form-control form-control col-8" style="margin-top:0px;">
-            <option>Select</option>
-            <option value="rateAsc">Cheapest to Most Expensive</option>
-        </select>
-    </div>
-
     <form action="/mainApp/search" method="post">
         <br>
         <h2>Advanced Search</h2>
 
-        <div style="float: left; width: 400px; height: 600px;">
+        <div style="float: left; width: 400px; height: 560px;">
             <fieldset class="form-group">
                 <legend>Search By Name</legend>
                 <label for="familyName">Family Name</label>
@@ -73,7 +63,7 @@
 
         </div>
 
-        <div style="float: right; width: 400px; margin-left: 20px;height: 600px;">
+        <div style="float: right; width: 400px; margin-left: 20px;height: 560px;">
 
             <div class="form-group">
                 <legend>Search by University</legend>
@@ -106,6 +96,17 @@
             </div>
 
         </div>
+
+        <div class="form-group">
+            <legend for="sort">Sort</legend>
+            <label for="sort">Sorting order</label>
+            <select class="form-control" name="sort" id="sort">
+                <option>Select</option>
+                <option value="rateAsc">Cheapest to Most Expensive</option>
+            </select>
+        </div>
+
+        <br>
 
         <div>
             <button type="submit" class="btn btn-primary">Search</button>
