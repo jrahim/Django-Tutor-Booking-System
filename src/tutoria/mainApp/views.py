@@ -121,17 +121,29 @@ def search(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    # tutor_list=[]
-    namePost = request.POST.get('givenName', "")
+    given_name = request.POST.get('givenName', "")
+    tutor_type = request.POST.get('tutorType', "")
+    universityName = request.POST.get('universityName', "")
+    if tutor_type == "tutorPrivate":
+        tutor_type = True
+    elif tutor_type == "tutorContracted":
+        tutor_type = False
+    tutor_list = Tutor.objects.all()
 
-    if namePost != "":
-        user_list = User.objects.filter(name__iexact=namePost)
-        tutor_list = Tutor.objects.filter(user__in=user_list)
-    elif namePost == "":
-        tutor_list = Tutor.objects.all()
+    # if given_name == "" and tutor_type == "":
+    #     tutor_list = Tutor.objects.all()
+
+    if given_name != "":
+        user_list = User.objects.filter(name__iexact=given_name)
+        tutor_list = tutor_list.filter(user__in=user_list)
+
+    if tutor_type != "":
+        tutor_list = tutor_list.filter(isPrivate=tutor_type)
+
+    # if
+
     # isTutor, isStudent = checkUser(user.id, request)
 
-    # tutor_list = Tutor.objects.all()
 
     context = {
         'tutor_list': tutor_list,
