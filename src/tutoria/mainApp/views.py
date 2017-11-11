@@ -121,12 +121,20 @@ def search(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
+    tags = Tag.objects.all()
+    universities = University.objects.all()
     given_name = request.POST.get('givenName', "")
     last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
     university_name = request.POST.get('universityName', "")
+    if university_name == "0":
+        university_name = ""
     course = request.POST.get('course', "")
-    tag = request.POST.get('subjectTag', "")
+    tag = request.POST.get('tag', "")
+    if tag == "0":
+        tag = ""
+    max_rate = request.POST.get('maxRate', "")
+    min_rate = request.POST.get('minRate', "")
 
     if tutor_type == "tutorPrivate":
         tutor_type = True
@@ -134,11 +142,11 @@ def search(request):
         tutor_type = False
     tutor_list = Tutor.objects.all()
 
-    # if given_name == "" and tutor_type == "":
-    #     tutor_list = Tutor.objects.all()
-
+    # # if given_name == "" and tutor_type == "":
+    # #     tutor_list = Tutor.objects.all()
+    #
     if given_name != "":
-        user_list = User.objects.filter(name__iexact=given_name)  # case insensitive matching - exact matching
+        user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
 
     if last_name != "":
@@ -150,7 +158,7 @@ def search(request):
 
     if university_name != "":
         university_list = University.objects.filter(
-            name_icontains=university_name)  # contains to allow custom input search
+            name__icontains=university_name)  # contains to allow custom input search
         tutor_list = tutor_list.filter(university__in=university_list)
 
     if course != "":
@@ -159,11 +167,17 @@ def search(request):
 
     if tag != "":
         tag_list = Tag.objects.filter(tag_name=tag)
-        tutor_list = tutor_list.filter(tag__in=tag_list)
+        tutor_list = tutor_list.filter(subject_tags__in=tag_list)
+
+    # TODO handle exceptions of one being entered and other not
+    if max_rate != "" and min_rate != "":
+        tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
 
     context = {
         'tutor_list': tutor_list,
-        'user': user
+        'user': user,
+        'tag_list': tags,
+        'university_list': universities
     }
 
     return render(request, 'mainApp/search.html', context)

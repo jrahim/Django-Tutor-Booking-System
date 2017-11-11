@@ -24,10 +24,7 @@
         </div>
         <select class="form-control form-control col-8" style="margin-top:0px;">
             <option>Select</option>
-            <option>Cheapest to Most Expensive</option>
-            <option>Most Expensive to Cheapest</option>
-            <option>Highest Rated First</option>
-            <option>Most Reviewed First</option>
+            <option value="rateAsc">Cheapest to Most Expensive</option>
         </select>
     </div>
 
@@ -35,7 +32,7 @@
         <br>
         <h2>Advanced Search</h2>
 
-        <div style="float: left; width: 400px; height: 350px;">
+        <div style="float: left; width: 400px; height: 600px;">
             <fieldset class="form-group">
                 <legend>Search By Name</legend>
                 <label for="familyName">Family Name</label>
@@ -61,16 +58,31 @@
                     </label>
                 </div>
             </fieldset>
+
+
+            <div class="form-group">
+                <legend>Search by price range</legend>
+                <label for="minRate">Minimum</label>
+                <input type="text" name="minRate" id="minRate" class="form-control">
+                to
+                <br>
+                <label for="maxRate">Maximum</label>
+                <input type="text" name="maxRate" id="maxRate" class="form-control">
+            </div>
+
+
         </div>
 
-        <div style="float: right; width: 400px; margin-left: 20px;height: 350px;">
+        <div style="float: right; width: 400px; margin-left: 20px;height: 600px;">
 
             <div class="form-group">
                 <legend>Search by University</legend>
                 <label for="universityName">University Name</label>
                 <select class="form-control" name="universityName" id="universityName">
-                    <!--TODO retrieve dynamically once university model made-->
-                    <option>The University of Hong Kong</option>
+                    <option value="0">---------</option>
+                    {% for university in university_list %}
+                    <option value="{{university.name}}">{{university.name}}</option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -81,6 +93,18 @@
                     <!--TODO Populate list through ajax-->
                 </select>
             </div>
+
+            <div class="form-group">
+                <legend for="tag">Search by Tag</legend>
+                <label for="tag">Tag Name</label>
+                <select class="form-control" name="tag" id="tag">
+                    <option value="0">---------</option>
+                    {% for tag in tag_list %}
+                    <option value="{{tag.tag_name}}">{{tag.tag_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
         </div>
 
         <div>
@@ -105,6 +129,7 @@
         <div class="col-2" style="padding: 0px;">
             <a href="profile/tutor/{{ tutor.id }}"
                style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
+                {{tutor.user.last_name}}
             </a>
             <br>
             (

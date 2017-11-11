@@ -116,6 +116,7 @@ class User(models.Model):
 class Course(models.Model):
     code = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
+    university = models.ForeignKey(University, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title
