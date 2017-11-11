@@ -5,6 +5,12 @@ from django.db.models import Q
 
 # Create your models here.
 
+class University(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 class Wallet(models.Model):
     balance = models.PositiveIntegerField()
 
@@ -121,6 +127,7 @@ class Tutor(models.Model):
     rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField(default=0)
     isPrivate = models.BooleanField()
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
