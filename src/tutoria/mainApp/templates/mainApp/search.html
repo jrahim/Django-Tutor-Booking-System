@@ -1,120 +1,143 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="/static/css/search.css">
-    <link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/search.css">
+<link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 {% block content %}
 
-    <div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
-        <div style="float:left;">
-            <h2 class="tealText">Your search returned {{ tutor_list | length }}
-                {% if tutor_list|length == 1 %}
-                    result:
-                {% else %}
-                    results:
-                {% endif %}
-            </h2>
-        </div>
-
-        <div class="form-inline form-row" style="float:right; margin-top:2px;">
-            <div class="col-3" style="margin-top:0px; font-size:120%">
-                Sort:
-            </div>
-            <select class="form-control form-control col-8" style="margin-top:0px;">
-                <option>Select</option>
-                <option>Cheapest to Most Expensive</option>
-                <option>Most Expensive to Cheapest</option>
-                <option>Highest Rated First</option>
-                <option>Most Reviewed First</option>
-            </select>
-        </div>
-
-
+<div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
+    <div style="float:left;">
+        <h2 class="tealText">Your search returned {{ tutor_list | length }}
+            {% if tutor_list|length == 1 %}
+            result:
+            {% else %}
+            results:
+            {% endif %}
+        </h2>
     </div>
 
+    <div class="form-inline form-row" style="float:right; margin-top:2px;">
+        <div class="col-3" style="margin-top:0px; font-size:120%">
+            Sort:
+        </div>
+        <select class="form-control form-control col-8" style="margin-top:0px;">
+            <option>Select</option>
+            <option>Cheapest to Most Expensive</option>
+            <option>Most Expensive to Cheapest</option>
+            <option>Highest Rated First</option>
+            <option>Most Reviewed First</option>
+        </select>
+    </div>
 
-    <div class="container-fluid" style="width:1000px;margin-top:0px">
+    <form action="/mainApp/search" method="post">
         <br>
-        Example Filters:(Different type of input options for different type of filters)<br>
-        <div class="form-check form-check-inline" style=" margin-left:10px;">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> HKU Course
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" checked> Subject
-                Tag
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> Contracted Tutors
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> Private Tutors
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" checked> Only
-                Tutors
-                With Atleast One Available Timeslot
-            </label>
-        </div>
-        <hr>
+        <h2>Advanced Search</h2>
 
-        <!--<img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">-->
+        <div style="float: left; width: 400px; height: 350px;">
+            <fieldset class="form-group">
+                <legend>Search By Name</legend>
+                <label for="familyName">Family Name</label>
+                <input type="text" name="familyName" id="familyName" class="form-control">
+                <label for="givenName">Given Name</label>
+                <input type="text" name="givenName" id="givenName" class="form-control">
+            </fieldset>
 
-        <!--<img src="/static/assets/img/zuko.png" alt="" class="tutorPic">-->
-
-        {% load custom_tags %}
-        {% for tutor in tutor_list %}
-            <div class="row" style="margin-left: 0px;">
-                <div class="col-1" style="padding:0px;">
-                    <img src="{{ MEDIA_URL }}{{ tutor.user.avatar }}" alt="" class="tutorPic"
-                         style="position: relative; top:0px !important;">
-                </div>
-                <div class="col-2" style="padding: 0px;">
-                    <a href="profile/tutor/{{ tutor.id }}"
-                       style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
-                    </a>
-                    <br>
-                    (
-                    {% if tutor.isPrivate == True %}
+            <fieldset class="form-group">
+                <legend>Search by Type</legend>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="tutorTypePrivate"
+                               value="tutorPrivate" checked>
                         Private
-                    {% else %}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="tutorTypeContracted"
+                               value="tutorContracted">
                         Contracted
-                    {% endif %}
-                    )
+                    </label>
                 </div>
-                <div class="col-5" style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
-                        {{ tutor.shortBio }}
-                </div>
-                <div class="col-2">
-                    <div style="display:inline-block; margin-left:3px;" class="centerAlign"> Rate per Session: <br>
-                        HKD{{ tutor.rate|mult:"1.05" }}</div>
-                </div>
-                <div class="col-2">
-                    <div style="display:inline-block; float:right; position: relative; top: 5px;">
-                        <a href="book/{{ tutor.id }}">
-                            <button class="btn btn-success btn-md">Book!</button>
-                        </a>
-                    </div>
-                </div>
+            </fieldset>
+        </div>
+
+        <div style="float: right; width: 400px; margin-left: 20px;height: 350px;">
+
+            <div class="form-group">
+                <legend>Search by University</legend>
+                <label for="universityName">University Name</label>
+                <select class="form-control" name="universityName" id="universityName">
+                    <!--TODO retrieve dynamically once university model made-->
+                    <option>The University of Hong Kong</option>
+                </select>
             </div>
+
+            <div class="form-group">
+                <legend for="course">Search by Course</legend>
+                <label for="course">Course Name</label>
+                <select class="form-control" name="course" id="course">
+                    <!--Populate list through ajax-->
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="container-fluid" style="width:1000px;margin-top:0px">
+
+    <hr>
+
+    {% load custom_tags %}
+    {% for tutor in tutor_list %}
+    <div class="row" style="margin-left: 0px;">
+        <div class="col-1" style="padding:0px;">
+            <img src="{{ MEDIA_URL }}{{ tutor.user.avatar }}" alt="" class="tutorPic"
+                 style="position: relative; top:0px !important;">
+        </div>
+        <div class="col-2" style="padding: 0px;">
+            <a href="profile/tutor/{{ tutor.id }}"
+               style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
+            </a>
             <br>
-
-        {% endfor %}
-
+            (
+            {% if tutor.isPrivate == True %}
+            Private
+            {% else %}
+            Contracted
+            {% endif %}
+            )
+        </div>
+        <div class="col-5" style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
+            {{ tutor.shortBio }}
+        </div>
+        <div class="col-2">
+            <div style="display:inline-block; margin-left:3px;" class="centerAlign"> Rate per Session: <br>
+                HKD{{ tutor.rate|mult:"1.05" }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div style="display:inline-block; float:right; position: relative; top: 5px;">
+                <a href="book/{{ tutor.id }}">
+                    <button class="btn btn-success btn-md">Book!</button>
+                </a>
+            </div>
+        </div>
     </div>
+    <br>
 
-    <!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
+    {% endfor %}
 
+</div>
+
+<!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
 
 {% endblock %}

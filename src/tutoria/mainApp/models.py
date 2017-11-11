@@ -1,12 +1,13 @@
-from django.db import models
-from datetime import date, time
-from django.db.models import Q
 from django.core import mail
+from django.db import models
+from django.db.models import Q
+
 
 # Create your models here.
 
 class Wallet(models.Model):
     balance = models.PositiveIntegerField()
+
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def add_funds(self, amount):
@@ -95,7 +96,7 @@ class User(models.Model):
             [mail_to],
             connection=connection,
         )
-        email.send() # Send the email
+        email.send()  # Send the email
         # We need to manually close the connection.
         connection.close()
         return
@@ -125,7 +126,6 @@ class Tutor(models.Model):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
         unavailable.save()
 
-
     def __str__(self):
         return self.user.name
 
@@ -142,7 +142,6 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.name
-
 
 
 class BookedSlot(models.Model):

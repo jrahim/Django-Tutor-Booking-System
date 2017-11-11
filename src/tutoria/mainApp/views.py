@@ -1,4 +1,5 @@
 import hashlib
+import math
 from datetime import datetime, timedelta, date
 
 from dateutil import parser
@@ -10,8 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
 from .models import *
-import math
-from django.conf import settings
 
 
 # functions
@@ -29,9 +28,10 @@ def checkUser(uid, request):
         isStudent = True
     return isTutor, isStudent
 
+
 def checkUserFromDB(uid):
-    isTutor = Tutor.objects.filter(user=uid)
-    isStudent = Student.objects.filter(user=uid)
+    isTutor = Tutor.objects.filter(user=uid).exists()
+    isStudent = Student.objects.filter(user=uid).exists()
     return isTutor, isStudent
 
 
@@ -121,8 +121,18 @@ def search(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    isTutor, isStudent = checkUser(user.id, request)
-    tutor_list = Tutor.objects.all()
+    # tutor_list=[]
+    namePost = request.POST.get('givenName', "")
+
+    if namePost != "":
+        user_list = User.objects.filter(name__iexact=namePost)
+        tutor_list = Tutor.objects.filter(user__in=user_list)
+    elif namePost == "":
+        tutor_list = Tutor.objects.all()
+    # isTutor, isStudent = checkUser(user.id, request)
+
+    # tutor_list = Tutor.objects.all()
+
     context = {
         'tutor_list': tutor_list,
         'user': user
@@ -182,6 +192,7 @@ def bookings(request):
             }
 
     return render(request, 'mainApp/bookings.html', context)
+
 
 @csrf_exempt
 def wallet(request):
@@ -277,7 +288,8 @@ def manageWallet(request):
     user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
         w.add_funds(int(request.GET.get('amount', None)))
-        message_body = "You added $" + str(request.GET.get('amount', None)) + " to your wallet." #notification for wallet
+        message_body = "You added $" + str(
+            request.GET.get('amount', None)) + " to your wallet."  # notification for wallet
     else:
         w.subtract_funds(int(request.GET.get('amount', None)))
         message_body = "You subtracted $" + str(request.GET.get('amount', None)) + " from your wallet."
@@ -327,22 +339,24 @@ def confirmBooking(request):
                                                  datetime.strptime(request.POST.get('time') + ":00", '%H:%M').time(),
                                                  0.5,
                                                  tutor, 0)
-#SEND NOTIFICATION ON BOOKING TO TUTOR
+            # SEND NOTIFICATION ON BOOKING TO TUTOR
             message_subject = "New Booking"
-            message_body = "You have been booked by " + student.user.name + " on " + str(parser.parse(request.POST.get('date'))) + "."
+            message_body = "You have been booked by " + student.user.name + " on " + str(
+                parser.parse(request.POST.get('date'))) + "."
             mail_to = str(tutor.user.email)
             mail_from = "My Tutors"
 
             user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-#SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
+            # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
             message_subject = "Booking Update"
-            message_body = "You booked  " + tutor.user.name + " on " + str(parser.parse(request.POST.get('date'))) + ". $" + str(tutor.rate) + " will be deducted from your wallet."
+            message_body = "You booked  " + tutor.user.name + " on " + str(
+                parser.parse(request.POST.get('date'))) + ". $" + str(
+                tutor.rate) + " will be deducted from your wallet."
             mail_to = str(student.user.email)
             mail_from = "My Tutors"
 
             user.send_mail(mail_to, mail_from, message_body, message_subject)
-
 
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
@@ -358,6 +372,7 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+
 
 @csrf_exempt
 def cancel(request, pk):
@@ -382,17 +397,19 @@ def cancel(request, pk):
         booking.update_booking('CANCELLED')
         booking.student.user.wallet.add_funds(rateWithCommision(booking.tutor.rate))
 
-        #NOTIFICATION ON Cancellation TO TUTOR
+        # NOTIFICATION ON Cancellation TO TUTOR
         message_subject = "Booking Cancellation"
-        message_body = "Your booking on " + str(booking.date) + " have been cancelled by " + booking.student.user.name + ". "
+        message_body = "Your booking on " + str(
+            booking.date) + " have been cancelled by " + booking.student.user.name + ". "
         mail_to = str(booking.tutor.user.email)
         mail_from = "My Tutors"
 
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        #SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
+        # SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
         message_subject = "Booking Update"
-        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(booking.tutor.rate) + " will be refunded to your wallet."
+        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(
+            booking.tutor.rate) + " will be refunded to your wallet."
         mail_to = str(booking.student.user.email)
         mail_from = "My Tutors"
 
