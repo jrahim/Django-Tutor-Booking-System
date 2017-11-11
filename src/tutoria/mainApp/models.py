@@ -11,6 +11,7 @@ class University(models.Model):
     def __str__(self):
         return self.name
 
+
 class Wallet(models.Model):
     balance = models.PositiveIntegerField()
 
@@ -29,7 +30,8 @@ class Wallet(models.Model):
 
 
 class User(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)  # given name
+    last_name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
@@ -119,6 +121,13 @@ class Course(models.Model):
         return self.title
 
 
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tag_name
+
+
 class Tutor(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.OneToOneField(User)
@@ -127,7 +136,8 @@ class Tutor(models.Model):
     rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField(default=0)
     isPrivate = models.BooleanField()
-    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True)
+    subject_tags = models.ManyToManyField(Tag, blank=True)
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)

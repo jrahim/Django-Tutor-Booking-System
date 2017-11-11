@@ -122,8 +122,12 @@ def search(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     given_name = request.POST.get('givenName', "")
+    last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
-    universityName = request.POST.get('universityName', "")
+    university_name = request.POST.get('universityName', "")
+    course = request.POST.get('course', "")
+    tag = request.POST.get('subjectTag', "")
+
     if tutor_type == "tutorPrivate":
         tutor_type = True
     elif tutor_type == "tutorContracted":
@@ -134,21 +138,34 @@ def search(request):
     #     tutor_list = Tutor.objects.all()
 
     if given_name != "":
-        user_list = User.objects.filter(name__iexact=given_name)
+        user_list = User.objects.filter(name__iexact=given_name)  # case insensitive matching - exact matching
+        tutor_list = tutor_list.filter(user__in=user_list)
+
+    if last_name != "":
+        user_list = User.objects.filter(last_name__iexact=last_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
 
     if tutor_type != "":
         tutor_list = tutor_list.filter(isPrivate=tutor_type)
 
-    # if
+    if university_name != "":
+        university_list = University.objects.filter(
+            name_icontains=university_name)  # contains to allow custom input search
+        tutor_list = tutor_list.filter(university__in=university_list)
 
-    # isTutor, isStudent = checkUser(user.id, request)
+    if course != "":
+        course_list = Course.objects.filter(code=course)  # course code
+        tutor_list = tutor_list.filter(course__in=course_list)
 
+    if tag != "":
+        tag_list = Tag.objects.filter(tag_name=tag)
+        tutor_list = tutor_list.filter(tag__in=tag_list)
 
     context = {
         'tutor_list': tutor_list,
         'user': user
     }
+
     return render(request, 'mainApp/search.html', context)
 
 
