@@ -2,35 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20151117_161943.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160123_213044.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160124_163347.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160124_163351.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160421_210750.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160421_210750_prZelje.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/20160430_221542.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/DSC_0076-min.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/Tokyo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0002_auto_20171020_1609.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0003_privatetimetable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0004_privatetimetable_tutor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0005_auto_20171020_1656.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0006_auto_20171020_1657.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0007_wallet.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0008_auto_20171020_2029.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0012_merge_20171031_2344.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0013_auto_20171031_2347.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171103-122301-76663440.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171103-122333-76661424.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171103-122456-73742800.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171103-122459-76989808.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171103-122514-77114800.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tmp/app-messages/20171103-122212-65491536.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/cron.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/management/commands/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/admin.py" afterPath="$PROJECT_DIR$/mainApp/admin.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/models.py" afterPath="$PROJECT_DIR$/mainApp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/static/css/book.css" afterPath="$PROJECT_DIR$/mainApp/static/css/book.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/urls.py" afterPath="$PROJECT_DIR$/mainApp/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tutoria/settings.py" afterPath="$PROJECT_DIR$/tutoria/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/book.css" afterPath="$PROJECT_DIR$/static/css/book.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,19 +45,20 @@
       <file leaf-file-name="book.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="76" column="87" lean-forward="false" selection-start-line="76" selection-start-column="87" selection-end-line="76" selection-end-column="87" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/profile.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="14" column="67" lean-forward="false" selection-start-line="14" selection-start-column="67" selection-end-line="14" selection-end-column="67" />
-              <folding />
+            <state relative-caret-position="584">
+              <caret line="125" column="21" lean-forward="false" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#2622#2629#1#HTML" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,38 +66,30 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="42" lean-forward="false" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="567">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/static/css/search.css">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tutoria/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+            <state relative-caret-position="206">
+              <caret line="35" column="26" lean-forward="false" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="352" column="0" lean-forward="true" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
+            <state relative-caret-position="432">
+              <caret line="365" column="10" lean-forward="true" selection-start-line="365" selection-start-column="10" selection-end-line="365" selection-end-column="10" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -117,11 +97,45 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="endSessions.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lockSessions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/management/commands/lockSessions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="book.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1571">
-              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+            <state relative-caret-position="162">
+              <caret line="138" column="60" lean-forward="false" selection-start-line="138" selection-start-column="60" selection-end-line="138" selection-end-column="60" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -129,26 +143,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
+      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2214">
-              <caret line="82" column="54" lean-forward="false" selection-start-line="82" selection-start-column="54" selection-end-line="82" selection-end-column="54" />
-              <folding>
-                <marker date="1510235817011" expanded="true" signature="419:425" ph="{% if tutor_bookings|length == 0 ... %}" />
-                <marker date="1510235817011" expanded="true" signature="2091:3037" ph="{% for booking in student_bookings ... %}" />
-                <marker date="1510235817011" expanded="true" signature="2091:3054" ph="..." />
-                <marker date="1510235817011" expanded="true" signature="2091:3075" ph="{% if isTutor == 1 ... %}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confirmation.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1053">
-              <caret line="39" column="18" lean-forward="false" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+            <state relative-caret-position="270">
+              <caret line="14" column="40" lean-forward="false" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -159,8 +158,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -168,9 +167,15 @@
     <findStrings>
       <find>mainApp</find>
       <find>isprivate</find>
+      <find>if not isAuthenticated\(request\)\:\n        return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n    user \= User\.objects\.get\(id\=request\.session\[\'uid\'\]\)\n    student \= Student\.objects\.get\(user\=request\.session\[\'uid\'\]\)\n    if request\.method \=\= \'POST\'\:\n        tutor \= Tutor\.objects\.get\(id\=request\.POST\.get\(\'tutorid\'\)\)\n        tutorBookings \= BookedSlot\.objects\.filter\(tutor\=tutor\, status\=\'BOOKED\'\)\n        tutorUnavailable \= UnavailableSlot\.objects\.filter\(tutor\=tutor\)\n        dt \= parser\.parse\(request\.POST\.get\(\'date\'\)\)\n        slot \= datetime\.strptime\(request\.POST\.get\(\'time\'\)\, \'\%H\:\%M\'\)\.time\(\)\n        today \= date\.today\(\)\n        if abs\(dt \- today\)\.days \=\= 1\:\n            if \(datetime\.now\(\)\.time\(\) \&gt;\= datetime\.strptime\(slot\, \'\%H\:\%M\'\)\.time\(\)\)\:\n                return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n        elif abs\(dt \- today\)\.days \=\= 8\:\n            if \(datetime\.now\(\)\.time\(\) \&lt; datetime\.strptime\(slot\, \'\%H\:\%M\'\)\.time\(\)\)\:\n                return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n        if tutorBookings\.filter\(date\=dt\, time_start\=datetime\.strptime\(slot\, \'\%H\:\%M\'\)\.time\(\)\)\.exists\(\)\:\n            return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n        weekDays \= \[\'Mon\'\, \'Tue\'\, \'Wed\'\, \'Thu\'\, \'Fri\'\, \'Sat\'\, \'Sun\'\]\n        if tutorUnavailable\.filter\(day\=weekDays\[dt\.weekday\(\)\]\, time_start\=datetime\.strptime\(slot\, \'\%H\:\%M\'\)\.time\(\)\)\:\n            return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n        if tutorBookings\.filter\(student\=student\, tutor\=tutor\, date\=dt\)\.exists\(\)\:\n            return JsonResponse\(\{\'status\'\: \'fail\'\, \'message\'\: \&quot;Same day\&quot;\}\)\n        try\:\n            if tutor\.isPrivate\:\n                booking \= student\.create_booking\(parser\.parse\(request\.POST\.get\(\'date\'\)\)\,\n                                                 datetime\.strptime\(request\.POST\.get\(\'time\'\)\, \'\%H\:\%M\'\)\.time\(\)\, 1\.0\,\n                                                 tutor\, math\.ceil\(tutor\.rate \* 1\.05\)\)\n            else\:\n                booking \= student\.create_booking\(parser\.parse\(request\.POST\.get\(\'date\'\)\)\,\n                                                 datetime\.strptime\(request\.POST\.get\(\'time\'\)\, \'\%H\:\%M\'\)\.time\(\)\, 0\.5\,\n                                                 tutor\, 0\)\n            \# SEND NOTIFICATION ON BOOKING TO TUTOR\n            message_subject \= \&quot;New Booking\&quot;\n            message_body \= \&quot;You have been booked by \&quot; \+ student\.user\.name \+ \&quot; on \&quot; \+ str\(\n                parser\.parse\(request\.POST\.get\(\'date\'\)\)\) \+ \&quot;\.\&quot;\n            mail_to \= str\(tutor\.user\.email\)\n            mail_from \= \&quot;My Tutors\&quot;\n\n            user\.send_mail\(mail_to\, mail_from\, message_body\, message_subject\)\n\n            \# SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET\n            message_subject \= \&quot;Booking Update\&quot;\n            message_body \= \&quot;You booked  \&quot; \+ tutor\.user\.name \+ \&quot; on \&quot; \+ str\(\n                parser\.parse\(request\.POST\.get\(\'date\'\)\)\) \+ \&quot;\. \$\&quot; \+ str\(\n                tutor\.rate\) \+ \&quot; will be deducted from your wallet\.\&quot;\n            mail_to \= str\(student\.user\.email\)\n            mail_from \= \&quot;My Tutors\&quot;\n\n            user\.send_mail\(mail_to\, mail_from\, message_body\, message_subject\)\n\n            return JsonResponse\(\{\'status\'\: \'success\'\, \'booking\'\: booking\.id\}\)\n        except\:\n            return JsonResponse\(\{\'status\'\: \'fail\'\}\)\n    else\:\n        return JsonResponse\(\{\'status\'\: \'fail\'\}\)</find>
+      <find>GET</find>
+      <find>delta</find>
+      <find>POST</find>
     </findStrings>
     <replaceStrings>
       <replace />
+      <replace>POST</replace>
+      <replace>GET</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -185,31 +190,38 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/mainApp/static/css/book.css" />
         <option value="$PROJECT_DIR$/mainApp/static/css/wallet.css" />
-        <option value="$PROJECT_DIR$/tutoria/settings.py" />
         <option value="$PROJECT_DIR$/mainApp/py/ImageForm.py" />
         <option value="$PROJECT_DIR$/mainApp/forms.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/index.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/landing.html" />
-        <option value="$PROJECT_DIR$/mainApp/admin.py" />
-        <option value="$PROJECT_DIR$/tutoria/urls.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
         <option value="$PROJECT_DIR$/mainApp/templatetags/__init.py__.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
         <option value="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
         <option value="$PROJECT_DIR$/mainApp/static/css/search.css" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/lessBalance.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/error.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
-        <option value="$PROJECT_DIR$/mainApp/urls.py" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html" />
+        <option value="$PROJECT_DIR$/tutoria/urls.py" />
+        <option value="$PROJECT_DIR$/mainApp/cron.py" />
+        <option value="$PROJECT_DIR$/tutoria/settings.py" />
+        <option value="$PROJECT_DIR$/mainApp/urls.py" />
+        <option value="$PROJECT_DIR$/mainApp/static/css/book.css" />
+        <option value="$PROJECT_DIR$/mainApp/management/__init__.py" />
+        <option value="$PROJECT_DIR$/mainApp/management/commands/__init__.py" />
+        <option value="$PROJECT_DIR$/mainApp/management/commands/lockAll.py" />
+        <option value="$PROJECT_DIR$/mainApp/admin.py" />
+        <option value="$PROJECT_DIR$/mainApp/lockAll.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
-        <option value="$PROJECT_DIR$/mainApp/models.py" />
         <option value="$PROJECT_DIR$/mainApp/views.py" />
+        <option value="$PROJECT_DIR$/mainApp/models.py" />
+        <option value="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
       </list>
     </option>
   </component>
@@ -259,27 +271,14 @@
               <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
               <item name="tutoria" type="462c0819:PsiDirectoryNode" />
               <item name="mainApp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="management" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
               <item name="tutoria" type="462c0819:PsiDirectoryNode" />
               <item name="mainApp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tutoria" type="462c0819:PsiDirectoryNode" />
-              <item name="mainApp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tutoria" type="462c0819:PsiDirectoryNode" />
-              <item name="mainApp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="mainApp" type="462c0819:PsiDirectoryNode" />
+              <item name="management" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
@@ -380,15 +379,16 @@
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27228788" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27228788" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0260181" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -417,7 +417,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27228788" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0260181" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout>
@@ -495,62 +494,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="14" column="65" lean-forward="false" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="18" lean-forward="false" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="20" column="62" lean-forward="false" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/static/css/topBarWithSearch.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="17" column="41" lean-forward="false" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="62" column="4" lean-forward="true" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/landing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/landing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tutoria/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -663,33 +606,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/static/css/topBarWithSearch.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/py/ImageForm.py" />
     <entry file="file://$PROJECT_DIR$/mainApp/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="6" column="5" lean-forward="true" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tutoria/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3321">
-          <caret line="123" column="40" lean-forward="false" selection-start-line="123" selection-start-column="40" selection-end-line="123" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -712,21 +633,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
           <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tutoria/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -734,25 +641,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="81" column="39" lean-forward="false" selection-start-line="81" selection-start-column="39" selection-end-line="81" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="15" column="33" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templatetags/__init.py__.py" />
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="31" column="33" lean-forward="false" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -765,13 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="8" column="36" lean-forward="false" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="39" column="18" lean-forward="false" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -780,29 +666,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="76" column="87" lean-forward="false" selection-start-line="76" selection-start-column="87" selection-end-line="76" selection-end-column="87" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/profile.html">
+    <entry file="file://$PROJECT_DIR$/mainApp/static/css/topBarWithSearch.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="14" column="67" lean-forward="false" selection-start-line="14" selection-start-column="67" selection-end-line="14" selection-end-column="67" />
+        <state relative-caret-position="675">
+          <caret line="43" column="47" lean-forward="true" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="2" column="42" lean-forward="false" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+        <state relative-caret-position="481">
+          <caret line="33" column="68" lean-forward="false" selection-start-line="33" selection-start-column="68" selection-end-line="33" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="41" column="66" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -815,43 +702,193 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-          <folding />
+        <state relative-caret-position="378">
+          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2214">
+        <state relative-caret-position="797">
           <caret line="82" column="54" lean-forward="false" selection-start-line="82" selection-start-column="54" selection-end-line="82" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="16" column="40" lean-forward="false" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
           <folding>
-            <marker date="1510235817011" expanded="true" signature="419:425" ph="{% if tutor_bookings|length == 0 ... %}" />
-            <marker date="1510235817011" expanded="true" signature="2091:3037" ph="{% for booking in student_bookings ... %}" />
-            <marker date="1510235817011" expanded="true" signature="2091:3054" ph="..." />
-            <marker date="1510235817011" expanded="true" signature="2091:3075" ph="{% if isTutor == 1 ... %}" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+    <entry file="file://$PROJECT_DIR$/tutoria/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1571">
-          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+        <state relative-caret-position="432">
+          <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#641#682#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/cron.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="79" column="66" lean-forward="false" selection-start-line="79" selection-start-column="66" selection-end-line="79" selection-end-column="66" />
+          <folding>
+            <element signature="e#527#568#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-351">
+          <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/lockAll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/lockAll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="14" column="40" lean-forward="false" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="125" column="21" lean-forward="false" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#2622#2629#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="352" column="0" lean-forward="true" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
+        <state relative-caret-position="432">
+          <caret line="365" column="10" lean-forward="true" selection-start-line="365" selection-start-column="10" selection-end-line="365" selection-end-column="10" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tutoria/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="35" column="26" lean-forward="false" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="138" column="60" lean-forward="false" selection-start-line="138" selection-start-column="60" selection-end-line="138" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/lockSessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>

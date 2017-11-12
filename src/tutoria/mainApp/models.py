@@ -1,12 +1,15 @@
 from django.db import models
-from datetime import date, time
+from datetime import date, time, datetime, timedelta
 from django.db.models import Q
 from django.core import mail
+from math import ceil
+
 
 # Create your models here.
 
 class Wallet(models.Model):
     balance = models.PositiveIntegerField()
+
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def add_funds(self, amount):
@@ -26,7 +29,7 @@ class User(models.Model):
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
-    contact = models.CharField(max_length=20)
+    contact = models.CharField(max_length=20, blank=True)
     wallet = models.OneToOneField(Wallet)
 
     # @transaction.atomic
@@ -95,7 +98,7 @@ class User(models.Model):
             [mail_to],
             connection=connection,
         )
-        email.send() # Send the email
+        email.send()  # Send the email
         # We need to manually close the connection.
         connection.close()
         return
@@ -125,7 +128,6 @@ class Tutor(models.Model):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
         unavailable.save()
 
-
     def __str__(self):
         return self.user.name
 
@@ -134,23 +136,27 @@ class Student(models.Model):
     user = models.OneToOneField(User)
 
     def create_booking(self, date, time_start, duration, tutor, charges):
-        booking = BookedSlot(date=date, time_start=time_start, duration=duration, tutor=tutor, student=self,
-                             status="BOOKED")
-        booking.save()
+        end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=duration)).time()
+        booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED",
+                             rate=charges)
         self.user.wallet.subtract_funds(int(charges))
+        TempWallet = SpecialWallet.objects.get(name='Temporary')
+        TempWallet.add_funds(int(charges))
+        booking.save()
+        booking.create_transaction_record("SESSIONBOOKED", True)
         return booking
 
     def __str__(self):
         return self.user.name
 
 
-
 class BookedSlot(models.Model):
     date = models.DateField()
     time_start = models.TimeField()
-    duration = models.FloatField()  # time or integer?
+    time_end = models.TimeField()
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    rate = models.PositiveIntegerField()
     STATUSES = (
         ('BOOKED', 'booked'),
         ('LOCKED', 'locked'),
@@ -162,7 +168,23 @@ class BookedSlot(models.Model):
 
     def update_booking(self, new_status):
         setattr(self, 'status', new_status)
+        if new_status == "CANCELLED":
+            self.create_transaction_record("SESSIONCANCELLED", True)
+        elif new_status == "ENDED":
+            self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
+
+    def create_transaction_record(self, transactionNature, forStudent):
+        if forStudent:
+            transaction = Transaction(amount=ceil(self.rate * 1.05), date=date.today(), time=datetime.now().time(),
+                                      party=self.tutor.user, nature=transactionNature, user=self.student.user,
+                                      booking_id=self)
+            transaction.save()
+        else:
+            transaction = Transaction(amount=self.rate, date=date.today(), time=datetime.now().time(),
+                                      party=self.student.user,
+                                      nature=transactionNature, user=self.tutor.user, booking_id=self)
+            transaction.save()
 
     def __str__(self):
         return self.student.user.name + self.tutor.user.name
@@ -173,3 +195,24 @@ class UnavailableSlot(models.Model):
     day = models.CharField(max_length=3)
     time_start = models.TimeField()
     duration = models.FloatField()
+
+
+class Transaction(models.Model):
+    user = models.ForeignKey(User)
+    amount = models.PositiveIntegerField()
+    TransactionNatures = (
+        ('SESSIONBOOKED', 'sessionBooked'),
+        ('SESSIONCANCELLED', 'sessionCancelled'),
+        ('FUNDSADDED', 'fundsAdded'),
+        ('FUNDSWITHDRAWN', 'fundsWithdrawn')
+    )
+    nature = models.CharField(max_length=20, choices=TransactionNatures)
+    date = models.DateField()
+    time = models.TimeField()
+    party = models.ForeignKey(User, related_name='party')
+    booking_id = models.ForeignKey(BookedSlot, default=None, null=True)
+    wallet_id = models.ForeignKey(Wallet, default=None, null=True)
+
+
+class SpecialWallet(Wallet):
+    name = models.CharField(max_length=20)

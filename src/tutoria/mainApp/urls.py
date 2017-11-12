@@ -6,7 +6,6 @@ from . import views
 
 urlpatterns = [
     url(r'^index$', views.index, name='index'),
-   # url(r'^search$', ListView.as_view(queryset=Tutor.objects.all(), template_name='mainApp/search.html')),
     url(r'^search$', views.search, name='search' ),
     url(r'^profile$', views.profile, name='profile'),
     url(r'^bookings$', views.bookings, name='bookings'),
@@ -18,4 +17,5 @@ urlpatterns = [
     url(r'^book/confirmbooking$', views.confirmBooking),
     url(r'^profile/tutor/(?P<pk>\d+)$', views.tutorProfile),
     url(r'^cancel/(?P<pk>\d+)$', views.cancel, name='cancel'),
+    url(r'^transactionhistory$', views.transactionHistory),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -59,7 +59,7 @@
                     </div>
                 </a>
             {% endif %}
-            <a class="list-group-item list-group-item-action flex-column align-items-start" href="bookings">
+            <a class="list-group-item list-group-item-action flex-column align-items-start" href="/mainApp/bookings">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">View My Bookings</h5>
                 </div>
@@ -73,6 +73,11 @@
                data-target="#changeDetails">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Change Details</h5>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action flex-column align-items-start" href="/mainApp/transactionhistory">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">View Your Transaction History</h5>
                 </div>
             </a>
         </ul>
@@ -113,7 +118,8 @@
                             </div>
                         </fieldset>
                         <div class="alert alert-success" id="makeTutorSuccess" role="alert" style="display: none;">
-                            <strong>Success</strong> You are now also a tutor! You will now be redirected to your profile page where you can manage your courses and timetable.
+                            <strong>Success</strong> You are now also a tutor! You will now be redirected to your
+                            profile page where you can manage your courses and timetable.
                         </div>
                         <div class="alert alert-warning" id="makeTutorFail" role="alert" style="display: none;">
                             Failed!
@@ -181,11 +187,13 @@
                 isPrivate: isPrivate,
                 shortBio: $('#bioAdd').val(),
                 rate: $('#rateAdd').val()
-            }, function(response) {
+            }, function (response) {
                 if (response.status == 'success') {
                     $('#makeTutorSuccess').show();
                     $('#makeTutorSubmit').submit();
-                    setTimeout(function() {location.reload();}, 4000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 4000);
                 } else {
                     $('#makeTutorFail').show();
                 }
