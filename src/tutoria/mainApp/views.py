@@ -180,6 +180,8 @@ def search(request):
 
     if sort != "" and sort == "rateAsc":
         tutor_list = tutor_list.order_by('rate')
+    elif sort !="" and sort == "rateDesc":
+        tutor_list = tutor_list.order_by('-rate')
 
     context = {
         'tutor_list': tutor_list,
