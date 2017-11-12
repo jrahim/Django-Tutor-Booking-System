@@ -5,8 +5,13 @@ from django.db.models import Q
 
 class Command(BaseCommand):
     def handle(self, **options):
-        BookingsStarted = BookedSlot.objects.filter(Q(date=date.today(), time_start__gte=datetime.now().time(),
-                                                      status='BOOKED') | Q(date__lt=date.today(), status='BOOKED'))
+        BookingsToLock = BookedSlot.objects.filter(Q(date=date.today(), time_start__gt=datetime.now().time(),
+                                                     status='BOOKED') | Q(
+            date=(datetime.now() + timedelta(days=1)).date(), time_start__lte=datetime.now().time(), status='BOOKED'))
+        for booking in BookingsToLock:
+            booking.update_booking('LOCKED')
+
+        BookingsStarted = BookedSlot.objects.filter(Q(date=date.today(), time_start__lte=datetime.now().time(),
+                                                      status='LOCKED') | Q(date__lt=date.today(), status='LOCKED'))
         for booking in BookingsStarted:
-            booking.status = 'STARTED'
-            booking.save()
+            booking.update_booking('STARTED')

@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import ImageForm
 from .models import *
 import math
+from polymorphic.models import PolymorphicModel
 
 
 # functions
@@ -87,7 +88,7 @@ def index(request):
                             user.wallet = user.create_wallet()
                             user.save()  # save new user in db
                             # make wallet for new user
-                            user.become_student();
+                            user.become_student()
                             request.session['uid'] = user.id  # add user id to session
                             isTutor, isStudent = checkUserFromDB(user.id)
                             if isTutor:
@@ -362,34 +363,33 @@ def confirmBooking(request):
             return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
         if tutorBookings.filter(student=student, tutor=tutor, date=dt).exists():
             return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
-    # try:
-        if tutor.isPrivate:
-            booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor,
-                                             math.ceil(tutor.rate * 1.05))
-        else:
-            booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor, 0)
-        # SEND NOTIFICATION ON BOOKING TO TUTOR
-        message_subject = "New Booking"
-        message_body = "You have been booked by " + student.user.name + " on " + str(
-            parser.parse(request.GET.get('date'))) + "."
-        mail_to = str(tutor.user.email)
-        mail_from = "My Tutors"
+        try:
+            if tutor.isPrivate:
+                booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
+            else:
+                booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
+            # SEND NOTIFICATION ON BOOKING TO TUTOR
+            message_subject = "New Booking"
+            message_body = "You have been booked by " + student.user.name + " on " + str(
+                parser.parse(request.GET.get('date'))) + "."
+            mail_to = str(tutor.user.email)
+            mail_from = "My Tutors"
 
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
-        message_subject = "Booking Update"
-        message_body = "You booked  " + tutor.user.name + " on " + str(
-            parser.parse(request.GET.get('date'))) + ". $" + str(
-            tutor.rate) + " will be deducted from your wallet."
-        mail_to = str(student.user.email)
-        mail_from = "My Tutors"
+            # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
+            message_subject = "Booking Update"
+            message_body = "You booked  " + tutor.user.name + " on " + str(
+                parser.parse(request.GET.get('date'))) + ". $" + str(
+                tutor.rate) + " will be deducted from your wallet."
+            mail_to = str(student.user.email)
+            mail_from = "My Tutors"
 
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        return JsonResponse({'status': 'success', 'booking': booking.id})
-    # except:
-        return JsonResponse({'status': 'fail'})
+            return JsonResponse({'status': 'success', 'booking': booking.id})
+        except:
+            return JsonResponse({'status': 'fail'})
     else:
         return JsonResponse({'status': 'fail'})
 

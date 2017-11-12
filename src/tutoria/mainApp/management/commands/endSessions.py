@@ -9,7 +9,14 @@ class Command(BaseCommand):
         BookingsEnded = BookedSlot.objects.filter(
             Q(date=date.today(), time_end__lt=datetime.now().time(), status='STARTED') | Q(date__lt=date.today(),
                                                                                              status='STARTED'))
+        TempWallet = SpecialWallet.objects.get(name='Temporary')
+        MyTutorWallet = SpecialWallet.objects.get(name='MyTutor')
         for booking in BookingsEnded:
-            booking.status = "ENDED"
-            booking.save()
-        t = datetime.now().time()
+            try:
+                transaction = SessionTransaction.objects.get(booking_id=booking)
+                TempWallet.subtract_funds(transaction.amount)
+                booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
+                MyTutorWallet.add_funds(transaction.commission)
+                booking.update_booking('ENDED')
+            except:
+                pass

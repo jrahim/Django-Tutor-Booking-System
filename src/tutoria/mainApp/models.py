@@ -3,6 +3,7 @@ from datetime import date, time, datetime, timedelta
 from django.db.models import Q
 from django.core import mail
 from math import ceil
+from polymorphic.models import PolymorphicModel
 
 
 # Create your models here.
@@ -116,7 +117,6 @@ class Course(models.Model):
 
 
 class Tutor(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.OneToOneField(User)
     course = models.ManyToManyField(Course, blank=True)
     shortBio = models.CharField(max_length=300)
@@ -135,15 +135,14 @@ class Tutor(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User)
 
-    def create_booking(self, date, time_start, duration, tutor, charges):
+    def create_booking(self, date, time_start, duration, tutor):
         end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=duration)).time()
-        booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED",
-                             rate=charges)
-        self.user.wallet.subtract_funds(int(charges))
+        booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED")
+        self.user.wallet.subtract_funds(ceil(tutor.rate * 1.05))
         TempWallet = SpecialWallet.objects.get(name='Temporary')
-        TempWallet.add_funds(int(charges))
+        TempWallet.add_funds(ceil(tutor.rate * 1.05))
         booking.save()
-        booking.create_transaction_record("SESSIONBOOKED", True)
+        booking.create_transaction_record("SESSIONBOOKED", True, True)
         return booking
 
     def __str__(self):
@@ -156,7 +155,6 @@ class BookedSlot(models.Model):
     time_end = models.TimeField()
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    rate = models.PositiveIntegerField()
     STATUSES = (
         ('BOOKED', 'booked'),
         ('LOCKED', 'locked'),
@@ -174,16 +172,32 @@ class BookedSlot(models.Model):
             self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
 
-    def create_transaction_record(self, transactionNature, forStudent):
+    def create_transaction_record(self, transactionNature, forStudent, isCreated=False):
         if forStudent:
-            transaction = Transaction(amount=ceil(self.rate * 1.05), date=date.today(), time=datetime.now().time(),
-                                      party=self.tutor.user, nature=transactionNature, user=self.student.user,
-                                      booking_id=self)
-            transaction.save()
+            if isCreated:
+                transaction = SessionTransaction(amount=ceil(self.tutor.rate * 1.05), date=date.today(),
+                                                 time=datetime.now().time(),
+                                                 other_party=self.tutor.user, transaction_nature=transactionNature,
+                                                 user=self.student.user,
+                                                 booking_id=self, commission=ceil(self.tutor.rate * 0.05),
+                                                 tutorCharges=self.tutor.rate)
+                transaction.save()
+            else:
+                student_transaction = SessionTransaction.objects.get(booking_id=self)
+                transaction = SessionTransaction(amount=ceil(student_transaction.amount), date=date.today(),
+                                                 time=datetime.now().time(),
+                                                 other_party=self.tutor.user, transaction_nature=transactionNature,
+                                                 user=self.student.user,
+                                                 booking_id=self)
+                transaction.save()
         else:
-            transaction = Transaction(amount=self.rate, date=date.today(), time=datetime.now().time(),
-                                      party=self.student.user,
-                                      nature=transactionNature, user=self.tutor.user, booking_id=self)
+            student_transaction = SessionTransaction.objects.get(booking_id=self)
+            transaction = SessionTransaction(amount=student_transaction.tutorCharges, date=date.today(),
+                                             time=datetime.now().time(),
+                                             other_party=self.student.user,
+                                             transaction_nature=transactionNature, user=self.tutor.user,
+                                             booking_id=self, commission=student_transaction.commission,
+                                             tutorCharges=student_transaction.tutorCharges)
             transaction.save()
 
     def __str__(self):
@@ -200,19 +214,30 @@ class UnavailableSlot(models.Model):
 class Transaction(models.Model):
     user = models.ForeignKey(User)
     amount = models.PositiveIntegerField()
+    date = models.DateField()
+    time = models.TimeField()
+
+
+class SessionTransaction(Transaction):
     TransactionNatures = (
         ('SESSIONBOOKED', 'sessionBooked'),
-        ('SESSIONCANCELLED', 'sessionCancelled'),
+        ('SESSIONCANCELLED', 'sessionCancelled')
+    )
+    transaction_nature = models.CharField(max_length=20, choices=TransactionNatures)
+    booking_id = models.ForeignKey(BookedSlot, default=None)
+    tutorCharges = models.PositiveIntegerField()
+    commission = models.PositiveIntegerField()
+    other_party = models.ForeignKey(User, related_name='other_party')
+
+
+class WalletTransaction(Transaction):
+    TransactionNatures = (
         ('FUNDSADDED', 'fundsAdded'),
         ('FUNDSWITHDRAWN', 'fundsWithdrawn')
     )
-    nature = models.CharField(max_length=20, choices=TransactionNatures)
-    date = models.DateField()
-    time = models.TimeField()
-    party = models.ForeignKey(User, related_name='party')
-    booking_id = models.ForeignKey(BookedSlot, default=None, null=True)
-    wallet_id = models.ForeignKey(Wallet, default=None, null=True)
+    transaction_nature = models.CharField(max_length=20, choices=TransactionNatures)
+    wallet_id = models.ForeignKey(Wallet, default=None)
 
 
 class SpecialWallet(Wallet):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
