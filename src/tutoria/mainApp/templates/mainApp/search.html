@@ -85,19 +85,29 @@
                     </a>
                     <br>
                     (
-                    {% if tutor.isPrivate == True %}
+                    {% if tutor|isPrivate %}
                         Private
                     {% else %}
                         Contracted
                     {% endif %}
                     )
                 </div>
-                <div class="col-5" style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
-                        {{ tutor.shortBio }}
+                <div class="col-5"
+                     style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
+                    {{ tutor.shortBio }}
                 </div>
                 <div class="col-2">
                     <div style="display:inline-block; margin-left:3px;" class="centerAlign"> Rate per Session: <br>
-                        HKD{{ tutor.rate|mult:"1.05" }}</div>
+                        {% if tutor.rate %}
+                            {% if tutor.rate == 0 %}
+                                No Charge!
+                            {% else %}
+                                HKD{{ tutor.rate|mult:"1.05" }}
+                            {% endif %}
+                        {% else %}
+                            No Charge!
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-2">
                     <div style="display:inline-block; float:right; position: relative; top: 5px;">

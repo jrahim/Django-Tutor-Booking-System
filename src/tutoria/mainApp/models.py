@@ -8,7 +8,7 @@ from polymorphic.models import PolymorphicModel
 
 # Create your models here.
 
-class Wallet(models.Model):
+class Wallet(PolymorphicModel):
     balance = models.PositiveIntegerField()
 
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -33,13 +33,6 @@ class User(models.Model):
     contact = models.CharField(max_length=20, blank=True)
     wallet = models.OneToOneField(Wallet)
 
-    # @transaction.atomic
-    # def save(self, *args, **kwargs):
-    #     super(User, self).save(*args, **kwargs)
-    #     if not Wallet.objects.filter(user=self).exists():
-    #         w = Wallet(balance=0, user=self)
-    #         w.save()
-
     def create_wallet(self):
         w = Wallet(balance=0)
         w.save()
@@ -50,10 +43,13 @@ class User(models.Model):
         s.save()
         return s
 
-    def become_tutor(self, short_bio, rate, is_private):
-        t = Tutor(user=self, shortBio=short_bio, rate=rate,
-                  isPrivate=is_private)  # what to do about course
-        t.save()
+    def become_tutor(self, short_bio, is_private, rate=0):
+        if is_private:
+            t = PrivateTutor(user=self, shortBio=short_bio, session_rate=rate)
+            t.save()
+        else:
+            t = ContractedTutor(user=self, shortBio=short_bio)
+            t.save()
         return t
 
     def get_upcoming_bookings(self, isTutor, isStudent):
@@ -116,18 +112,28 @@ class Course(models.Model):
         return self.title
 
 
-class Tutor(models.Model):
+class Tutor(PolymorphicModel):
     user = models.OneToOneField(User)
     course = models.ManyToManyField(Course, blank=True)
     shortBio = models.CharField(max_length=300)
-    rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField(default=0)
-    isPrivate = models.BooleanField()
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
         unavailable.save()
 
+    def __str__(self):
+        return self.user.name
+
+
+class PrivateTutor(Tutor):
+    rate = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.user.name
+
+
+class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
 
@@ -211,7 +217,7 @@ class UnavailableSlot(models.Model):
     duration = models.FloatField()
 
 
-class Transaction(models.Model):
+class Transaction(PolymorphicModel):
     user = models.ForeignKey(User)
     amount = models.PositiveIntegerField()
     date = models.DateField()
@@ -219,11 +225,11 @@ class Transaction(models.Model):
 
 
 class SessionTransaction(Transaction):
-    TransactionNatures = (
+    SessionTransactionNatures = (
         ('SESSIONBOOKED', 'sessionBooked'),
         ('SESSIONCANCELLED', 'sessionCancelled')
     )
-    transaction_nature = models.CharField(max_length=20, choices=TransactionNatures)
+    transaction_nature = models.CharField(max_length=20, choices=SessionTransactionNatures)
     booking_id = models.ForeignKey(BookedSlot, default=None)
     tutorCharges = models.PositiveIntegerField()
     commission = models.PositiveIntegerField()
@@ -231,13 +237,16 @@ class SessionTransaction(Transaction):
 
 
 class WalletTransaction(Transaction):
-    TransactionNatures = (
+    WalletTransactionNatures = (
         ('FUNDSADDED', 'fundsAdded'),
         ('FUNDSWITHDRAWN', 'fundsWithdrawn')
     )
-    transaction_nature = models.CharField(max_length=20, choices=TransactionNatures)
+    transaction_nature = models.CharField(max_length=20, choices=WalletTransactionNatures)
     wallet_id = models.ForeignKey(Wallet, default=None)
 
 
 class SpecialWallet(Wallet):
     name = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
