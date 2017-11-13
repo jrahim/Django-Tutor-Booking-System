@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171113-174453-12243952.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171113-174453-12245744.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171114-000842-100300368.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171114-000847-76776784.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171114-000852-86741648.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171114-000852-86742000.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/admin.py" afterPath="$PROJECT_DIR$/mainApp/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/models.py" afterPath="$PROJECT_DIR$/mainApp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" afterPath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +46,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="125" column="92" lean-forward="false" selection-start-line="125" selection-start-column="92" selection-end-line="125" selection-end-column="92" />
+            <state relative-caret-position="589">
+              <caret line="467" column="82" lean-forward="false" selection-start-line="467" selection-start-column="82" selection-end-line="467" selection-end-column="82" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -154,6 +150,7 @@
       <find>delta</find>
       <find>POST</find>
       <find>isPrivate</find>
+      <find>timedelta</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -789,8 +786,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="125" column="92" lean-forward="false" selection-start-line="125" selection-start-column="92" selection-end-line="125" selection-end-column="92" />
+        <state relative-caret-position="589">
+          <caret line="467" column="82" lean-forward="false" selection-start-line="467" selection-start-column="82" selection-end-line="467" selection-end-column="82" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

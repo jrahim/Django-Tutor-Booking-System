@@ -464,5 +464,6 @@ def transactionHistory(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    transactions = Transaction.objects.filter(user=request.session['uid']).order_by("date", "time").reverse()
+    dt = date.today() - timedelta(days=30)
+    transactions = Transaction.objects.filter(user=request.session['uid'], date__gte=dt).order_by("date", "time").reverse()
     return render(request, 'mainApp/transactionHistory.html', {'user': user, 'transactions': transactions})
