@@ -15,10 +15,18 @@ class Wallet(PolymorphicModel):
 
     def add_funds(self, amount):
         self.balance += amount
+        user = User.objects.get(wallet=self)
+        transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
+                                        transaction_nature="FUNDSADDED", wallet_id=self)
+        transaction.save()
         self.save()
 
     def subtract_funds(self, amount):
         self.balance -= amount
+        user = User.objects.get(wallet=self)
+        transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
+                                        transaction_nature="FUNDSWITHDRAWN", wallet_id=self)
+        transaction.save()
         self.save()
 
     def __str__(self):

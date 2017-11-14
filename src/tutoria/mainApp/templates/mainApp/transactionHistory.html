@@ -45,11 +45,11 @@
                         {% else %}
                             You
                             {% if record.transaction_nature == "FUNDSADDED" %}
-                                added
+                                added funds to
                             {% else %}
-                                withdrew
+                                withdrew funds from
                             {% endif %}
-                            funds from your wallet:
+                            your wallet:
                             </div>
                             <p class="mb-1">{{ record.amount }}</p>
                         {% endif %}
