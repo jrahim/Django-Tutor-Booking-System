@@ -1,4 +1,3 @@
-import hashlib
 from datetime import datetime, timedelta, date
 
 from dateutil import parser
@@ -12,66 +11,7 @@ from .forms import ImageForm
 from .models import *
 import math
 from django.contrib.auth.hashers import make_password, check_password
-
-
-# functions
-
-def rateWithCommision(tutorRate):
-    return math.ceil(tutorRate * 1.05)
-
-
-def checkUser(uid, request):
-    isTutor = False
-    isStudent = False
-    if 'tid' in request.session:
-        isTutor = True
-    if 'sid' in request.session:
-        isStudent = True
-    return isTutor, isStudent
-
-
-def checkUserFromDB(uid):
-    isTutor = Tutor.objects.filter(user=uid)
-    isStudent = Student.objects.filter(user=uid)
-    return isTutor, isStudent
-
-
-def isAuthenticated(request):
-    if 'uid' not in request.session:
-        return False
-    else:
-        return True
-
-
-def getTutor(uid):
-    return Tutor.objects.get(user=uid)
-
-
-def getStudent(uid):
-    return Student.objects.get(user=uid)
-
-
-def getPrivateSlots():
-    slots = []
-    slotsToRender = ["07:00-08:00", "08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
-                     "13:00-14:00", "14:00-15:00"]
-    for t in slotsToRender:
-        slots.append(t.split('-')[0])
-    return slots, slotsToRender
-
-
-def getContractedSlots():
-    slots = []
-    slotsToRender = ["07:00-07:30", "07:30-08:00", "08:00-08:30", "08:30-09:00", "09:00-09:30", "09:30-10:00",
-                     "10:00-10:30", "10:30-11:00", "11:00-11:30", "11:30-12:00", "12:00-12:30", "12:30-13:00",
-                     "13:00-13:30", "13:30-14:00", "14:30-15:00"]
-    for t in slotsToRender:
-        slots.append(t.split('-')[0])
-    return slots, slotsToRender
-
-
-def checkIfTutorPrivate(tutor):
-    return isinstance(tutor, PrivateTutor)
+from .functions import *
 
 
 # views
@@ -306,11 +246,11 @@ def manageWallet(request):
     w = Wallet.objects.get(user=request.session['uid'])
     user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
-        w.add_funds(int(request.GET.get('amount', None)))
+        w.add_funds(int(request.GET.get('amount', None)), True)
         message_body = "You added $" + str(
             request.GET.get('amount', None)) + " to your wallet."  # notification for wallet
     else:
-        w.subtract_funds(int(request.GET.get('amount', None)))
+        w.subtract_funds(int(request.GET.get('amount', None)), True)
         message_body = "You subtracted $" + str(request.GET.get('amount', None)) + " from your wallet."
 
     message_subject = "Wallet Update"
@@ -350,6 +290,7 @@ def confirmBooking(request):
         tutorBookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED')
         tutorUnavailable = UnavailableSlot.objects.filter(tutor=tutor)
         dt = parser.parse(request.GET.get('date')).date()
+        print(request.GET.get('time'))
         slot = datetime.strptime(request.GET.get('time'), '%H:%M').time()
         today = date.today()
         if checkIfTutorPrivate(tutor):
@@ -373,35 +314,37 @@ def confirmBooking(request):
             return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
         if tutorBookings.filter(student=student, tutor=tutor, date=dt).exists():
             return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
-        try:
-            if checkIfTutorPrivate(tutor):
-                booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
-            else:
-                booking = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
-            # SEND NOTIFICATION ON BOOKING TO TUTOR
-            message_subject = "New Booking"
-            message_body = "You have been booked by " + student.user.name + " on " + str(
-                parser.parse(request.GET.get('date'))) + "."
-            mail_to = str(tutor.user.email)
-            mail_from = "My Tutors"
+        booking = None
+        transaction = None
+    # try:
+        if checkIfTutorPrivate(tutor):
+            booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
+        else:
+            booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
+        # SEND NOTIFICATION ON BOOKING TO TUTOR
+        message_subject = "New Booking"
+        message_body = "You have been booked by " + student.user.name + " on " + str(
+            parser.parse(request.GET.get('date'))) + "."
+        mail_to = str(tutor.user.email)
+        mail_from = "My Tutors"
 
-            user.send_mail(mail_to, mail_from, message_body, message_subject)
+        user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-            # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
-            message_subject = "Booking Update"
-            message_body = "You booked  " + tutor.user.name + " on " + str(
-                parser.parse(request.GET.get('date'))) + ". $" + str(
-                tutor.rate) + " will be deducted from your wallet."
-            mail_to = str(student.user.email)
-            mail_from = "My Tutors"
+        # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
+        message_subject = "Booking Update"
+        message_body = "You booked  " + tutor.user.name + " on " + str(
+            parser.parse(request.GET.get('date'))) + ". $" + str(
+            tutor.rate) + " will be deducted from your wallet."
+        mail_to = str(student.user.email)
+        mail_from = "My Tutors"
 
-            user.send_mail(mail_to, mail_from, message_body, message_subject)
+        user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-            return JsonResponse({'status': 'success', 'booking': booking.id})
-        except:
-            return JsonResponse({'status': 'fail'})
-    else:
+        return JsonResponse({'status': 'success', 'booking': booking.id})
+    # except:
         return JsonResponse({'status': 'fail'})
+    else:
+        return JsonResponse({'status': 'failed'})
 
 
 @csrf_exempt

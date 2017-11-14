@@ -13,20 +13,22 @@ class Wallet(PolymorphicModel):
 
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def add_funds(self, amount):
+    def add_funds(self, amount, isWalletManagement=False):
         self.balance += amount
-        user = User.objects.get(wallet=self)
-        transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
-                                        transaction_nature="FUNDSADDED", wallet_id=self)
-        transaction.save()
+        if isWalletManagement:
+            user = User.objects.get(wallet=self)
+            transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
+                                            transaction_nature="FUNDSADDED", wallet_id=self)
+            transaction.save()
         self.save()
 
-    def subtract_funds(self, amount):
+    def subtract_funds(self, amount, isWalletManagement=False):
         self.balance -= amount
-        user = User.objects.get(wallet=self)
-        transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
-                                        transaction_nature="FUNDSWITHDRAWN", wallet_id=self)
-        transaction.save()
+        if isWalletManagement:
+            user = User.objects.get(wallet=self)
+            transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
+                                            transaction_nature="FUNDSWITHDRAWN", wallet_id=self)
+            transaction.save()
         self.save()
 
     def __str__(self):
@@ -156,8 +158,8 @@ class Student(models.Model):
         TempWallet = SpecialWallet.objects.get(name='Temporary')
         TempWallet.add_funds(ceil(tutor.rate * 1.05))
         booking.save()
-        booking.create_transaction_record("SESSIONBOOKED", True, True)
-        return booking
+        transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
+        return booking, transaction
 
     def __str__(self):
         return self.user.name
@@ -196,6 +198,7 @@ class BookedSlot(models.Model):
                                                  booking_id=self, commission=ceil(self.tutor.rate * 0.05),
                                                  tutorCharges=self.tutor.rate)
                 transaction.save()
+                return transaction
             else:
                 student_transaction = SessionTransaction.objects.get(booking_id=self)
                 transaction = SessionTransaction(amount=ceil(student_transaction.amount), date=date.today(),
@@ -204,6 +207,7 @@ class BookedSlot(models.Model):
                                                  user=self.student.user,
                                                  booking_id=self)
                 transaction.save()
+                return transaction
         else:
             student_transaction = SessionTransaction.objects.get(booking_id=self)
             transaction = SessionTransaction(amount=student_transaction.tutorCharges, date=date.today(),
@@ -213,6 +217,7 @@ class BookedSlot(models.Model):
                                              booking_id=self, commission=student_transaction.commission,
                                              tutorCharges=student_transaction.tutorCharges)
             transaction.save()
+            return transaction
 
     def __str__(self):
         return self.student.user.name + self.tutor.user.name

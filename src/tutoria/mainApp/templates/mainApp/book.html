@@ -105,6 +105,7 @@
                 //alert($(this).attr('id').slice(3,));
                 selectedDay = $(this).attr('id').slice(0, 6);
                 selectedSlot = $(this).attr('id').slice(6,);
+{#                alert(selectedSlot.slice(1, 6));#}
                 if (selectedSlot == "") {
                     $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
                 } else {
