@@ -270,7 +270,7 @@ def makeTutor(request):
     user = User.objects.get(id=request.session['uid'])
     if Tutor.objects.filter(user=user).exists():
         return JsonResponse({'status': 'fail'})
-    t = 0
+    t = None
     if request.POST.get('isPrivate') == 'yes':
         t = user.become_tutor(request.POST.get('shortBio'), True, int(request.POST.get('rate')))
     else:
@@ -300,10 +300,10 @@ def confirmBooking(request):
         if request.GET.get('time') not in slots:
             return JsonResponse({'status': 'fail', 'message': "Please select a correct timeslot."})
         if abs(dt - today).days == 1:
-            if (datetime.now().time() >= slot):
+            if datetime.now().time() >= slot:
                 return JsonResponse({'status': 'fail', 'message': "Booking failed. This slot is now locked!"})
         elif abs(dt - today).days == 8:
-            if (datetime.now().time() < slot):
+            if datetime.now().time() < slot:
                 return JsonResponse({'status': 'fail', 'message': "Booking failed. Booking for slot not opened yet!"})
         elif abs(dt - today).days > 8:
             return JsonResponse({'status': 'fail', 'message': "Booking failed. Booking for slot not opened yet!"})
@@ -316,33 +316,33 @@ def confirmBooking(request):
             return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
         booking = None
         transaction = None
-        # try:
-        if checkIfTutorPrivate(tutor):
-            booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
-        else:
-            booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
-        # SEND NOTIFICATION ON BOOKING TO TUTOR
-        message_subject = "New Booking"
-        message_body = "You have been booked by " + student.user.name + " on " + str(
-            parser.parse(request.GET.get('date'))) + "."
-        mail_to = str(tutor.user.email)
-        mail_from = "My Tutors"
+        try:
+            if checkIfTutorPrivate(tutor):
+                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
+            else:
+                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
+            # SEND NOTIFICATION ON BOOKING TO TUTOR
+            message_subject = "New Booking"
+            message_body = "You have been booked by " + student.user.name + " on " + str(
+                parser.parse(request.GET.get('date'))) + "."
+            mail_to = str(tutor.user.email)
+            mail_from = "My Tutors"
 
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
-        message_subject = "Booking Update"
-        message_body = "You booked  " + tutor.user.name + " on " + str(
-            parser.parse(request.GET.get('date'))) + ". $" + str(
-            tutor.rate) + " will be deducted from your wallet."
-        mail_to = str(student.user.email)
-        mail_from = "My Tutors"
+            # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
+            message_subject = "Booking Update"
+            message_body = "You booked  " + tutor.user.name + " on " + str(
+                parser.parse(request.GET.get('date'))) + ". $" + str(
+                tutor.rate) + " will be deducted from your wallet."
+            mail_to = str(student.user.email)
+            mail_from = "My Tutors"
 
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
+            user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        return JsonResponse({'status': 'success', 'booking': booking.id})
-        # except:
-        return JsonResponse({'status': 'fail'})
+            return JsonResponse({'status': 'success', 'booking': booking.id})
+        except:
+            return JsonResponse({'status': 'fail'})
     else:
         return JsonResponse({'status': 'failed'})
 

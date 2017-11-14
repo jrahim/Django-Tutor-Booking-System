@@ -9,7 +9,7 @@ from polymorphic.models import PolymorphicModel
 # Create your models here.
 
 class Wallet(PolymorphicModel):
-    balance = models.PositiveIntegerField()
+    balance = models.FloatField()
 
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -38,7 +38,7 @@ class Wallet(PolymorphicModel):
 class User(models.Model):
     name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to='avatar')
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=200)
     contact = models.CharField(max_length=20, blank=True)
     wallet = models.OneToOneField(Wallet)
@@ -154,9 +154,10 @@ class Student(models.Model):
     def create_booking(self, date, time_start, duration, tutor):
         end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=duration)).time()
         booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED")
-        self.user.wallet.subtract_funds(ceil(tutor.rate * 1.05))
+        chargesWithCommission = round(tutor.rate * 1.05, 2)
+        self.user.wallet.subtract_funds(chargesWithCommission)
         TempWallet = SpecialWallet.objects.get(name='Temporary')
-        TempWallet.add_funds(ceil(tutor.rate * 1.05))
+        TempWallet.add_funds(chargesWithCommission)
         booking.save()
         transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
         return booking, transaction
@@ -195,17 +196,17 @@ class BookedSlot(models.Model):
     def create_transaction_record(self, transactionNature, forStudent, isCreated=False):
         if forStudent:
             if isCreated:
-                transaction = SessionTransaction(amount=ceil(self.tutor.rate * 1.05), date=date.today(),
+                transaction = SessionTransaction(amount=round(self.tutor.rate * 1.05, 2), date=date.today(),
                                                  time=datetime.now().time(),
                                                  other_party=self.tutor.user, transaction_nature=transactionNature,
                                                  user=self.student.user,
-                                                 booking_id=self, commission=ceil(self.tutor.rate * 0.05),
+                                                 booking_id=self, commission=round(self.tutor.rate * 0.05, 2),
                                                  tutorCharges=self.tutor.rate)
                 transaction.save()
                 return transaction
             else:
                 student_transaction = SessionTransaction.objects.get(booking_id=self)
-                transaction = SessionTransaction(amount=ceil(student_transaction.amount), date=date.today(),
+                transaction = SessionTransaction(amount=student_transaction.amount, date=date.today(),
                                                  time=datetime.now().time(),
                                                  other_party=self.tutor.user, transaction_nature=transactionNature,
                                                  user=self.student.user, commission=student_transaction.commission,
@@ -236,7 +237,7 @@ class UnavailableSlot(models.Model):
 
 class Transaction(PolymorphicModel):
     user = models.ForeignKey(User)
-    amount = models.PositiveIntegerField()
+    amount = models.FloatField()
     date = models.DateField()
     time = models.TimeField()
 
@@ -249,7 +250,7 @@ class SessionTransaction(Transaction):
     transaction_nature = models.CharField(max_length=20, choices=SessionTransactionNatures)
     booking_id = models.ForeignKey(BookedSlot, default=None)
     tutorCharges = models.PositiveIntegerField()
-    commission = models.PositiveIntegerField()
+    commission = models.FloatField()
     other_party = models.ForeignKey(User, related_name='other_party')
 
 

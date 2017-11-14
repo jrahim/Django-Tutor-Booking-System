@@ -4,7 +4,7 @@ import math
 # functions
 
 def rateWithCommision(tutorRate):
-    return math.ceil(tutorRate * 1.05)
+    return round(tutorRate * 1.05, 2)
 
 
 def checkUser(uid, request):

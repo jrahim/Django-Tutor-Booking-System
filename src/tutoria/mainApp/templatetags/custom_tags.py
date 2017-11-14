@@ -1,11 +1,10 @@
 from django import template
 register = template.Library()
-import math
 from mainApp.models import PrivateTutor, SessionTransaction
 
 @register.filter
 def mult(value, arg):
-    return math.ceil(int(value)*float(arg))
+    return round(int(value)*float(arg), 2)
 register.filter('mult', mult)
 
 @register.filter
