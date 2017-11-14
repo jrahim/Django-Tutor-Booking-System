@@ -1,7 +1,7 @@
 from django import template
 register = template.Library()
 import math
-from mainApp.models import PrivateTutor
+from mainApp.models import PrivateTutor, SessionTransaction
 
 @register.filter
 def mult(value, arg):
@@ -17,3 +17,9 @@ register.filter('firstname', firstname)
 def isPrivate(value):
     return isinstance(value, PrivateTutor)
 register.filter('isPrivate', isPrivate)
+
+
+@register.filter
+def isSessionTransaction(value):
+    return isinstance(value, SessionTransaction)
+register.filter('isSessionTransaction', isSessionTransaction)

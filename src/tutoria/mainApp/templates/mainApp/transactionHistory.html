@@ -15,18 +15,47 @@
         </div>
         {% if transactions|length == 0 %}
             <div class="alert alert-info" style="text-align: center">
-            <h1>No Transaction History</h1>
+                <h1>No Transaction History</h1>
             </div>
         {% endif %}
         <ul class="list-group" style="width:600px;">
             {% for record in transactions %}
                 <li class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ record.nature }}</h5>
-                    </div>
-                    <p class="mb-1">{{ record.amount }}</p>
+                        {% load custom_tags %}
+                        {% if record|isSessionTransaction %}
+                            {% if record.booking_id.tutor.user == user %}
+                                You taught {{ record.booking_id.student.user.name }} on {{ record.booking_id.date }} at
+                                {{ record.booking_id.time_start }}:
+                                </div>
+                                <p class="mb-1">{{ record.tutorCharges }}</p>
+                            {% else %}
+                                You
+                                {% if record.transaction_nature == "SESSIONBOOKED" %}
+                                    booked
+                                {% else %}
+                                    cancelled
+                                {% endif %}
+                                a session with {{ record.booking_id.tutor.user.name }} for {{ record.booking_id.date }}
+                                at
+                                {{ record.booking_id.time_start }}:
+                                </div>
+                                <p class="mb-1">{{ record.amount }}</p>
+                            {% endif %}
+                        {% else %}
+                            You
+                            {% if record.transaction_nature == "FUNDSADDED" %}
+                                added
+                            {% else %}
+                                withdrew
+                            {% endif %}
+                            funds from your wallet:
+                            </div>
+                            <p class="mb-1">{{ record.amount }}</p>
+                        {% endif %}
+
                 </li>
             {% endfor %}
-        </ul>
+    </ul>
     </div>
 {% endblock %}
