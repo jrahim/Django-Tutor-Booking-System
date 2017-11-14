@@ -31,7 +31,7 @@
                 <h5 class="mb-1">Session Charges:</h5>
             </div>
             {% load custom_tags %}
-            <p class="mb-1">{{ booking.tutor.rate|mult:"1.05" }}</p>
+            <p class="mb-1">{{ booking.tutor.rate|mult:"1.05" }} HKD</p>
         </li>
         {% else %}
             <li class="list-group-item">

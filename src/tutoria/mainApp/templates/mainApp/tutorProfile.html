@@ -48,7 +48,7 @@
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Tutor Type:</h5>
                 </div>
-                {% if tutor.isPrivate == True %}
+                {% if tutor|isPrivate == True %}
                     <p class="mb-1">Private</p>
                 {% else %}
                     <p class="mb-1">Contracted</p>
