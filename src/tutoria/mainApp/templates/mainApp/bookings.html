@@ -134,7 +134,7 @@
         function cancelBooking() {
             $.post(link, {}, function (response) {
                 if (response.status == 'fail') {
-                    $('#failmsg').html("<div class='alert alert-danger'> Could not cancel booking. <br> Please check that the booking you are trying to cancel is within the next 24 hours. </div>")
+                    $('#failmsg').html("<div class='alert alert-danger'>"+response.message+"</div>")
                 }
                 else {
                     $('#failmsg').html("<div class='alert alert-success'> Booking cancelled! Page will now be reloaded. </div>")

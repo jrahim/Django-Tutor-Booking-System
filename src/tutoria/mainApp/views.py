@@ -25,29 +25,29 @@ def index(request):
                 if form.is_valid():  # check if imageform is valid
                     try:
                         validate_email(request.POST.get('email'))  # validate email address
-                        if not User.objects.filter(email=request.POST.get(
-                                'email')).exists():  # if email not already used in another account
-                            user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
-                                        email=request.POST.get("email"), password=make_password(
-                                    request.POST.get("password")))  # make a new user with md5 hash of pwd
-                            # user.make_wallet()
-                            user.wallet = user.create_wallet()
-                            user.save()  # save new user in db
-                            # make wallet for new user
-                            user.become_student()
-                            request.session['uid'] = user.id  # add user id to session
-                            isTutor, isStudent = checkUserFromDB(user.id)
-                            if isTutor:
-                                request.session['tid'] = getTutor(user.id).id
-                            if isStudent:
-                                request.session['sid'] = getStudent(user.id).id
-                            return redirect('/mainApp/index?first=1')  # take user to landing page
-                        else:
-                            return render(request, 'mainApp/index.html',
-                                          {'form': form, 'emailError': 'Email Already Used'})  # else give error
                     except:
                         return render(request, 'mainApp/index.html', {'form': form,
                                                                       'emailError': 'Please Enter a Valid Email Address'})  # if email not valid, give error
+                    if not User.objects.filter(email=request.POST.get(
+                            'email')).exists():  # if email not already used in another account
+                        user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
+                                    email=request.POST.get("email"), password=make_password(
+                                request.POST.get("password")))  # make a new user with md5 hash of pwd
+                        # user.make_wallet()
+                        user.wallet = user.create_wallet()
+                        user.save()  # save new user in db
+                        # make wallet for new user
+                        user.become_student()
+                        request.session['uid'] = user.id  # add user id to session
+                        isTutor, isStudent = checkUserFromDB(user.id)
+                        if isTutor:
+                            request.session['tid'] = getTutor(user.id).id
+                        if isStudent:
+                            request.session['sid'] = getStudent(user.id).id
+                        return redirect('/mainApp/index?first=1')  # take user to landing page
+                    else:
+                        return render(request, 'mainApp/index.html',
+                                      {'form': form, 'emailError': 'Email Already Used'})  # else give error
                 else:
                     return render(request, 'mainApp/index.html', {'form': form})  # else take back to same page
             if 'login' in request.POST:  # if login request submitted
@@ -316,7 +316,7 @@ def confirmBooking(request):
             return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
         booking = None
         transaction = None
-    # try:
+        # try:
         if checkIfTutorPrivate(tutor):
             booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
         else:
@@ -341,7 +341,7 @@ def confirmBooking(request):
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
         return JsonResponse({'status': 'success', 'booking': booking.id})
-    # except:
+        # except:
         return JsonResponse({'status': 'fail'})
     else:
         return JsonResponse({'status': 'failed'})
@@ -363,21 +363,25 @@ def cancel(request, pk):
     booking = BookedSlot.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     if not booking.student.user.id == request.session['uid']:
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse(
+            {'status': 'fail', 'message': "The booking you are trying to cancel has not been made by you"})
     dt = booking.date
+    print(dt)
     today = date.today()
     if booking.status == 'CANCELLED':
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse(
+            {'status': 'fail', 'message': "The booking you are trying to cancel has already been cancelled"})
     if (dt < today):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail', 'message': "Cannot cancel past booking!"})
     if (abs(dt - today).days == 0):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail',
+                             'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     if (abs(dt - today).days == 1):
         if (datetime.now().time() > booking.time_start):
-            return JsonResponse({'status': 'fail'})
+            return JsonResponse({'status': 'fail',
+                                 'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     try:
         booking.update_booking('CANCELLED')
-        booking.student.user.wallet.add_funds(rateWithCommision(booking.tutor.rate))
 
         # NOTIFICATION ON Cancellation TO TUTOR
         message_subject = "Booking Cancellation"
@@ -408,5 +412,6 @@ def transactionHistory(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     dt = date.today() - timedelta(days=30)
-    transactions = Transaction.objects.filter(user=request.session['uid'], date__gte=dt).order_by("date", "time").reverse()
+    transactions = Transaction.objects.filter(user=request.session['uid'], date__gte=dt).order_by("date",
+                                                                                                  "time").reverse()
     return render(request, 'mainApp/transactionHistory.html', {'user': user, 'transactions': transactions})

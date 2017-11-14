@@ -183,6 +183,10 @@ class BookedSlot(models.Model):
     def update_booking(self, new_status):
         setattr(self, 'status', new_status)
         if new_status == "CANCELLED":
+            booking_transaction = SessionTransaction.objects.get(booking_id=self)
+            tempWallet = SpecialWallet.objects.get(name='Temporary')
+            tempWallet.subtract_funds(booking_transaction.amount)
+            self.student.user.wallet.add_funds(booking_transaction.amount)
             self.create_transaction_record("SESSIONCANCELLED", True)
         elif new_status == "ENDED":
             self.create_transaction_record("SESSIONBOOKED", False)
@@ -204,8 +208,8 @@ class BookedSlot(models.Model):
                 transaction = SessionTransaction(amount=ceil(student_transaction.amount), date=date.today(),
                                                  time=datetime.now().time(),
                                                  other_party=self.tutor.user, transaction_nature=transactionNature,
-                                                 user=self.student.user,
-                                                 booking_id=self)
+                                                 user=self.student.user, commission=student_transaction.commission,
+                                                 tutorCharges=student_transaction.tutorCharges, booking_id=self)
                 transaction.save()
                 return transaction
         else:
