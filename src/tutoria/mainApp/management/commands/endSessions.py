@@ -12,11 +12,8 @@ class Command(BaseCommand):
         TempWallet = SpecialWallet.objects.get(name='Temporary')
         MyTutorWallet = SpecialWallet.objects.get(name='MyTutor')
         for booking in BookingsEnded:
-            try:
-                transaction = SessionTransaction.objects.get(booking_id=booking)
-                TempWallet.subtract_funds(transaction.amount)
-                booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
-                MyTutorWallet.add_funds(transaction.commission)
-                booking.update_booking('ENDED')
-            except:
-                pass
+            transaction = SessionTransaction.objects.get(booking_id=booking)
+            TempWallet.subtract_funds(transaction.amount)
+            booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
+            MyTutorWallet.add_funds(transaction.commission)
+            booking.update_booking('ENDED')

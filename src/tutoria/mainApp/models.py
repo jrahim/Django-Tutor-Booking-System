@@ -55,7 +55,7 @@ class User(models.Model):
 
     def become_tutor(self, short_bio, is_private, rate=0):
         if is_private:
-            t = PrivateTutor(user=self, shortBio=short_bio, session_rate=rate)
+            t = PrivateTutor(user=self, shortBio=short_bio, rate=rate)
             t.save()
         else:
             t = ContractedTutor(user=self, shortBio=short_bio)
@@ -63,22 +63,23 @@ class User(models.Model):
         return t
 
     def get_upcoming_bookings(self, isTutor, isStudent):
+        statusesToGet = ['BOOKED', 'LOCKED', 'STARTED']
 
         if isTutor and isStudent:
             t = Tutor.objects.get(user=self)
             s = Student.objects.get(user=self)
-            array1 = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
-            array2 = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
+            array1 = BookedSlot.objects.filter(tutor=t, status__in=statusesToGet).order_by('date')
+            array2 = BookedSlot.objects.filter(student=s, status__in=statusesToGet).order_by('date')
             return array1, array2
 
         if isStudent and not isTutor:
             s = Student.objects.get(user=self)
-            array = BookedSlot.objects.filter(student=s, status='BOOKED').order_by('date')
+            array = BookedSlot.objects.filter(student=s, status__in=statusesToGet).order_by('date')
             return array
 
         if isTutor and not isStudent:
             t = Tutor.objects.get(user=self)
-            array = BookedSlot.objects.filter(tutor=t, status='BOOKED').order_by('date')
+            array = BookedSlot.objects.filter(tutor=t, status__in=statusesToGet).order_by('date')
             return array
 
     def get_past_bookings(self, isTutor, isStudent):
@@ -89,10 +90,10 @@ class User(models.Model):
                 Q(student=student, status='ENDED') | Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
         elif isStudent:
             student = Student.objects.get(user=self)
-            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED'))
+            a1 = BookedSlot.objects.filter(Q(student=student, status='ENDED')).order_by('date').reverse()
         else:
             tutor = Tutor.objects.filter(user=self)
-            a1 = BookedSlot.objects.filter(Q(tutor=tutor, status='ENDED'))
+            a1 = BookedSlot.objects.filter(Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
         return a1
 
     def send_mail(self, mail_to, mail_from, message_body, message_subject):
@@ -225,7 +226,7 @@ class BookedSlot(models.Model):
             return transaction
 
     def __str__(self):
-        return self.student.user.name + self.tutor.user.name
+        return str(self.id)+self.student.user.name + self.tutor.user.name
 
 
 class UnavailableSlot(models.Model):

@@ -5,10 +5,10 @@ from django.db.models import Q
 
 class Command(BaseCommand):
     def handle(self, **options):
-        BookingsToLock = BookedSlot.objects.filter(Q(date=date.today(), time_start__gt=datetime.now().time(),
-                                                     status='BOOKED') | Q(
+        BookingsToLock = BookedSlot.objects.filter(Q(date__lte=date.today(), status='BOOKED') | Q(
             date=(datetime.now() + timedelta(days=1)).date(), time_start__lte=datetime.now().time(), status='BOOKED'))
         for booking in BookingsToLock:
+            print('hi')
             booking.update_booking('LOCKED')
 
         BookingsStarted = BookedSlot.objects.filter(Q(date=date.today(), time_start__lte=datetime.now().time(),

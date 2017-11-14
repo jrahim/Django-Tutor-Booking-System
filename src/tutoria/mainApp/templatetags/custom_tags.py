@@ -22,3 +22,11 @@ register.filter('isPrivate', isPrivate)
 def isSessionTransaction(value):
     return isinstance(value, SessionTransaction)
 register.filter('isSessionTransaction', isSessionTransaction)
+
+@register.filter
+def isCancellable(value):
+    if value.status == "BOOKED":
+        return True
+    else:
+        return False
+register.filter('isCancellable', isCancellable)
