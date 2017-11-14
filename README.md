@@ -5,3 +5,4 @@
 Web application written in Django used for the booking of tutorial sessions with tutors.
 
 Dependency Pillow for image field: ```pip install Pillow```
+Django-polymorphic : ```pip install django-polymorphic```
