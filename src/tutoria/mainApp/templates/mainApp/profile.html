@@ -101,28 +101,31 @@
                         <input type="number" id="rateAdd" class="form-control" value="0">
                         <br>
                         <fieldset class="form-group">
-                            <h6>Are You a Private Tutor?</h6>
+                            <h6>Are You a Private Tutor or a Contracted Tutor?</h6>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" name="optionsRadios"
                                            id="optionsRadios1" value="option1" checked onclick="setYes()">
-                                    Yes
+                                    Private
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" name="optionsRadios"
                                            id="optionsRadios2" value="option2" onclick="setNo()">
-                                    No
+                                    Contracted
                                 </label>
                             </div>
                         </fieldset>
+                        <div class="alert alert-info">
+                            If you are a contracted tutor, your rate will be set to 0.
+                        </div>
                         <div class="alert alert-success" id="makeTutorSuccess" role="alert" style="display: none;">
                             <strong>Success</strong> You are now also a tutor! You will now be redirected to your
                             profile page where you can manage your courses and timetable.
                         </div>
-                        <div class="alert alert-warning" id="makeTutorFail" role="alert" style="display: none;">
-                            Failed!
+                        <div class="alert alert-danger" id="makeTutorFail" role="alert" style="display: none;">
+                            Failed! Please make sure that you add a short bio, and that your session rate is in multiples of 10.
                         </div>
 
                     </div>
@@ -183,21 +186,29 @@
 
         function addTutor() {
             $('#makeTutorFail').hide();
-            $.post('/mainApp/maketutor', {
-                isPrivate: isPrivate,
-                shortBio: $('#bioAdd').val(),
-                rate: $('#rateAdd').val()
-            }, function (response) {
-                if (response.status == 'success') {
-                    $('#makeTutorSuccess').show();
-                    $('#makeTutorSubmit').submit();
-                    setTimeout(function () {
-                        location.reload();
-                    }, 4000);
+            if ($('#bioAdd').val() != " " && $('#rateAdd').val() != "") {
+                if ((isPrivate=='yes' && $('#rateAdd').val() % 10 == 0) || isPrivate == 'no') {
+                    $.post('/mainApp/maketutor', {
+                        isPrivate: isPrivate,
+                        shortBio: $('#bioAdd').val(),
+                        rate: $('#rateAdd').val()
+                    }, function (response) {
+                        if (response.status == 'success') {
+                            $('#makeTutorSuccess').show();
+                            $('#makeTutorSubmit').submit();
+                            setTimeout(function () {
+                                location.reload();
+                            }, 4000);
+                        } else {
+                            $('#makeTutorFail').show();
+                        }
+                    });
                 } else {
                     $('#makeTutorFail').show();
                 }
-            });
+            } else {
+                $('#makeTutorFail').show();
+            }
         }
     </script>
 {% endblock %}
