@@ -18,4 +18,7 @@ urlpatterns = [
     url(r'^profile/tutor/(?P<pk>\d+)$', views.tutorProfile),
     url(r'^cancel/(?P<pk>\d+)$', views.cancel, name='cancel'),
     url(r'^transactionhistory$', views.transactionHistory),
+    url(r'^managecourses$', views.courses, name='courses'),
+    url(r'^addcourse$', views.addCourse),
+    url(r'^removecourses$', views.removeCourses),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

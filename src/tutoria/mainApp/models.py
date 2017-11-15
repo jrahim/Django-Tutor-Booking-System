@@ -15,6 +15,7 @@ class University(models.Model):
     def __str__(self):
         return self.name
 
+
 class Wallet(PolymorphicModel):
     balance = models.FloatField()
 
@@ -132,7 +133,6 @@ class Course(models.Model):
         return self.title
 
 
-
 class Tag(models.Model):
     tag_name = models.CharField(max_length=200)
 
@@ -150,6 +150,16 @@ class Tutor(PolymorphicModel):
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
         unavailable.save()
+
+    def add_course(self, courseCode):
+        c = Course.objects.get(code=courseCode)
+        self.course.add(c)
+        self.save()
+
+    def remove_course(self, courseCode):
+        c = Course.objects.get(code=courseCode)
+        self.course.remove(c)
+        self.save()
 
     def __str__(self):
         return self.user.name
@@ -244,7 +254,7 @@ class BookedSlot(models.Model):
             return transaction
 
     def __str__(self):
-        return str(self.id)+self.student.user.name + self.tutor.user.name
+        return str(self.id) + self.student.user.name + self.tutor.user.name
 
 
 class UnavailableSlot(models.Model):

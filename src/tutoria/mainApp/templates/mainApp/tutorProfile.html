@@ -58,7 +58,12 @@
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Courses:</h5>
                 </div>
-                <p class="mb-1">Course List Here</p>
+                <p>
+                    {% for course in courses %}
+                        {{ course.code }}: {{ course.title }}
+                        <br>
+                    {% endfor %}
+                </p>
             </li>
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
@@ -69,9 +74,9 @@
         </ul>
 
         <div style="text-align: center; margin-top: 25px; margin-bottom: 35px;">
-        <a href="/mainApp/book/{{ tutor.id }}" style="margin-right: auto; margin-left: auto;">
-            <button class="btn btn-success btn-lg">Book!</button>
-        </a>
+            <a href="/mainApp/book/{{ tutor.id }}" style="margin-right: auto; margin-left: auto;">
+                <button class="btn btn-success btn-lg">Book!</button>
+            </a>
         </div>
 
     </div>

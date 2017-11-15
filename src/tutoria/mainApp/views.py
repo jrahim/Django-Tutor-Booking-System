@@ -213,6 +213,7 @@ def bookings(request):
 
     return render(request, 'mainApp/bookings.html', context)
 
+
 @csrf_exempt
 def wallet(request):
     if not isAuthenticated(request):
@@ -402,7 +403,6 @@ def confirmBooking(request):
 
             user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
             return JsonResponse({'status': 'fail'})
@@ -417,6 +417,7 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+
 
 @csrf_exempt
 def cancel(request, pk):
@@ -453,7 +454,7 @@ def cancel(request, pk):
 
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        #SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
+        # SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
         message_subject = "Booking Update"
         message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(
             booking.tutor.rate) + " will be refunded to your wallet."
@@ -476,3 +477,62 @@ def transactionHistory(request):
     transactions = Transaction.objects.filter(user=request.session['uid'], date__gte=dt).order_by("date",
                                                                                                   "time").reverse()
     return render(request, 'mainApp/transactionHistory.html', {'user': user, 'transactions': transactions})
+
+
+@csrf_exempt
+def addCourse(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+    print("the course code value is " + str(request.POST.get('courseCode')))
+    courseRequested = Course.objects.get(code=request.POST.get('courseCode'))
+
+    courseRequestedCode = courseRequested.code
+
+    if (tutor.course.filter(code=courseRequestedCode).exists()):
+        message_body = "You already have " + str(courseRequestedCode) + " in your list of courses."
+        print(message_body)
+        return JsonResponse({'status': 'fail'})
+
+
+
+    else:
+        tutor.add_course(courseRequestedCode)
+        message_body = "You added " + str(courseRequestedCode) + " to your list of courses."
+        print(message_body)
+        return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def removeCourses(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+    listCourses = request.GET.getlist('listCourses[]')
+    for courseCode in listCourses:
+        tutor.remove_course(courseCode)
+
+    return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def courses(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+
+    presentCourses = tutor.course.all()
+    print(presentCourses)
+    allCourses = Course.objects.exclude(id__in=presentCourses)
+    context = {
+        'user': user,
+        'tutor': tutor,
+        'presentCourses': presentCourses,
+        'allCourses': allCourses
+    }
+    return render(request, 'mainApp/courses.html', context)

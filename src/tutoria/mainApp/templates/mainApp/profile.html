@@ -46,7 +46,8 @@
                         <h5 class="mb-1">Manage Available Timeslots</h5>
                     </div>
                 </a>
-                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                <a class="list-group-item list-group-item-action flex-column align-items-start"
+                   href="/mainApp/managecourses">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Manage Courses you Teach</h5>
                     </div>
@@ -75,7 +76,8 @@
                     <h5 class="mb-1">Change Details</h5>
                 </div>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start" href="/mainApp/transactionhistory">
+            <a class="list-group-item list-group-item-action flex-column align-items-start"
+               href="/mainApp/transactionhistory">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">View Your Transaction History</h5>
                 </div>
@@ -125,7 +127,8 @@
                             profile page where you can manage your courses and timetable.
                         </div>
                         <div class="alert alert-danger" id="makeTutorFail" role="alert" style="display: none;">
-                            Failed! Please make sure that you add a short bio, and that your session rate is in multiples of 10.
+                            Failed! Please make sure that you add a short bio, and that your session rate is in
+                            multiples of 10.
                         </div>
 
                     </div>
@@ -187,7 +190,7 @@
         function addTutor() {
             $('#makeTutorFail').hide();
             if ($('#bioAdd').val() != " " && $('#rateAdd').val() != "") {
-                if ((isPrivate=='yes' && $('#rateAdd').val() % 10 == 0) || isPrivate == 'no') {
+                if ((isPrivate == 'yes' && $('#rateAdd').val() % 10 == 0) || isPrivate == 'no') {
                     $.post('/mainApp/maketutor', {
                         isPrivate: isPrivate,
                         shortBio: $('#bioAdd').val(),
