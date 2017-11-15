@@ -39,8 +39,10 @@
                                 a session with {{ record.booking_id.tutor.user.name }} for {{ record.booking_id.date }}
                                 at
                                 {{ record.booking_id.time_start }}:
+
                                 </div>
-                                <p class="mb-1">{{ record.amount }}</p>
+                                <p>Transaction Date and Time:{{ record.date }} {{ record.time }}
+                                    <br>Transaction Amount: HKD {{ record.amount }}</p>
                             {% endif %}
                         {% else %}
                             You
@@ -51,7 +53,8 @@
                             {% endif %}
                             your wallet:
                             </div>
-                            <p class="mb-1">{{ record.amount }}</p>
+                            <p>Transaction Date and Time:{{ record.date }} {{ record.time }}
+                            <br>Transaction Amount: HKD {{ record.amount }}</span>
                         {% endif %}
 
                 </li>

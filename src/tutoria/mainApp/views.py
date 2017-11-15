@@ -9,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
 from .models import *
-import math
 from django.contrib.auth.hashers import make_password, check_password
 from .functions import *
 
@@ -301,7 +300,7 @@ def confirmation(request, pk):
     booking = BookedSlot.objects.get(id=pk)
     charges = 0
     if checkIfTutorPrivate(booking.tutor):
-        charges = math.ceil(booking.tutor.rate * 1.05)
+        charges = rateWithCommision(booking.tutor.rate)
     return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking, 'charges': charges})
 
 
@@ -457,10 +456,9 @@ def cancel(request, pk):
 
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        # SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
+        # SEND NOTIFICATION ON Cancellation TO STUDENT ABOUT WALLET
         message_subject = "Booking Update"
-        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(
-            booking.tutor.rate) + " will be refunded to your wallet."
+        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date)
         mail_to = str(booking.student.user.email)
         mail_from = "My Tutors"
 

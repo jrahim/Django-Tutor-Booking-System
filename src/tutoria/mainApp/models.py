@@ -3,7 +3,6 @@ from datetime import date, time, datetime, timedelta
 from django.db.models import Q
 
 from django.core import mail
-from math import ceil
 from polymorphic.models import PolymorphicModel
 
 
@@ -183,13 +182,14 @@ class Student(models.Model):
     def create_booking(self, date, time_start, duration, tutor):
         end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=duration)).time()
         booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED")
+        booking.save()
+        transaction = None
         if isinstance(tutor, PrivateTutor):
             chargesWithCommission = round(tutor.rate * 1.05, 2)
             self.user.wallet.subtract_funds(chargesWithCommission)
             TempWallet = SpecialWallet.objects.get(name='Temporary')
             TempWallet.add_funds(chargesWithCommission)
-        booking.save()
-        transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
+            transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
         return booking, transaction
 
     def __str__(self):
@@ -214,11 +214,12 @@ class BookedSlot(models.Model):
     def update_booking(self, new_status):
         setattr(self, 'status', new_status)
         if new_status == "CANCELLED":
-            booking_transaction = SessionTransaction.objects.get(booking_id=self)
-            tempWallet = SpecialWallet.objects.get(name='Temporary')
-            tempWallet.subtract_funds(booking_transaction.amount)
-            self.student.user.wallet.add_funds(booking_transaction.amount)
-            self.create_transaction_record("SESSIONCANCELLED", True)
+            if isinstance(self.tutor, PrivateTutor):
+                booking_transaction = SessionTransaction.objects.get(booking_id=self)
+                tempWallet = SpecialWallet.objects.get(name='Temporary')
+                tempWallet.subtract_funds(booking_transaction.amount)
+                self.student.user.wallet.add_funds(booking_transaction.amount)
+                self.create_transaction_record("SESSIONCANCELLED", True)
         elif new_status == "ENDED":
             self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
