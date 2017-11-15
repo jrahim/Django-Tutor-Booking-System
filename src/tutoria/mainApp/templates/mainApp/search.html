@@ -121,50 +121,63 @@
 
     <hr>
 
-    {% load custom_tags %}
-    {% for tutor in tutor_list %}
-    <div class="row" style="margin-left: 0px;">
-        <div class="col-1" style="padding:0px;">
-            <img src="{{ MEDIA_URL }}{{ tutor.user.avatar }}" alt="" class="tutorPic"
-                 style="position: relative; top:0px !important;">
-        </div>
-        <div class="col-2" style="padding: 0px;">
-            <a href="profile/tutor/{{ tutor.id }}"
-               style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
-                {{tutor.user.last_name}}
-            </a>
+        <!--<img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">-->
+
+        <!--<img src="/static/assets/img/zuko.png" alt="" class="tutorPic">-->
+
+        {% load custom_tags %}
+        {% for tutor in tutor_list %}
+            <div class="row" style="margin-left: 0px;">
+                <div class="col-1" style="padding:0px;">
+                    <img src="{{ MEDIA_URL }}{{ tutor.user.avatar }}" alt="" class="tutorPic"
+                         style="position: relative; top:0px !important;">
+                </div>
+                <div class="col-2" style="padding: 0px;">
+                    <a href="profile/tutor/{{ tutor.id }}"
+                       style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
+                    </a>
+                    <br>
+                    (
+                    {% if tutor|isPrivate %}
+                        Private
+                    {% else %}
+                        Contracted
+                    {% endif %}
+                    )
+                </div>
+                <div class="col-5"
+                     style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
+                    {{ tutor.shortBio }}
+                </div>
+                <div class="col-2">
+                    <div style="display:inline-block; margin-left:3px;" class="centerAlign"> Rate per Session: <br>
+                        {% if tutor.rate %}
+                            {% if tutor.rate == 0 %}
+                                No Charge!
+                            {% else %}
+                                HKD{{ tutor.rate|mult:"1.05" }}
+                            {% endif %}
+                        {% else %}
+                            No Charge!
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div style="display:inline-block; float:right; position: relative; top: 5px;">
+                        <a href="book/{{ tutor.id }}">
+                            <button class="btn btn-success btn-md">Book!</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <br>
-            (
-            {% if tutor.isPrivate == True %}
-            Private
-            {% else %}
-            Contracted
-            {% endif %}
-            )
-        </div>
-        <div class="col-5" style="display:inline-block; border:solid black 1px; position:relative; padding:3px;">
-            {{ tutor.shortBio }}
-        </div>
-        <div class="col-2">
-            <div style="display:inline-block; margin-left:3px;" class="centerAlign"> Rate per Session: <br>
-                HKD{{ tutor.rate|mult:"1.05" }}
-            </div>
-        </div>
-        <div class="col-2">
-            <div style="display:inline-block; float:right; position: relative; top: 5px;">
-                <a href="book/{{ tutor.id }}">
-                    <button class="btn btn-success btn-md">Book!</button>
-                </a>
-            </div>
-        </div>
+
+        {% endfor %}
+
     </div>
-    <br>
 
-    {% endfor %}
+    <!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
-</div>
-
-<!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
 
 {% endblock %}

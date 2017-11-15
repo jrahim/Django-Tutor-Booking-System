@@ -9,8 +9,7 @@
 {% block content %}
     <div class="container-fluid" style="margin-top:115px; width:800px;">
 
-
-
+        {% load custom_tags %}
         {% if isStudent == 1 %}
             <h2 class="centerAlign">Your Upcoming Learning Sessions:</h2>
             {% if student_bookings|length == 0 %}
@@ -21,9 +20,12 @@
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1">{{ booking.date }}:</h6>
-                            <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn" data-toggle="modal" data-target="#myModal">
-                                <small style="color:green">Cancel</small>
-                            </a>
+                            {% if booking|isCancellable %}
+                                <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn"
+                                   data-toggle="modal" data-target="#myModal">
+                                    <small style="color:green">Cancel</small>
+                                </a>
+                            {% endif %}
                         </div>
                         <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.tutor.user.avatar }}" alt=""
                                              id="tutorPic"> <a href=""><span
@@ -46,11 +48,9 @@
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1">{{ booking.date }}:</h6>
-                            <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn" data-toggle="modal" data-target="#myModal">
-                                <small style="color:green">Cancel</small>
-                            </a>
                         </div>
-                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt="" id="tutorPic">
+                        <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt=""
+                                             id="tutorPic">
                             <a href=""><span
                                     style="margin-left:20px;">{{ booking.student.user.name }}:</span></a><span
                                     style="margin-left:20px;">{{ booking.time_start }}</span>
@@ -134,7 +134,7 @@
         function cancelBooking() {
             $.post(link, {}, function (response) {
                 if (response.status == 'fail') {
-                    $('#failmsg').html("<div class='alert alert-danger'> Could not cancel booking. <br> Please check that the booking you are trying to cancel is within the next 24 hours. </div>")
+                    $('#failmsg').html("<div class='alert alert-danger'>" + response.message + "</div>")
                 }
                 else {
                     $('#failmsg').html("<div class='alert alert-success'> Booking cancelled! Page will now be reloaded. </div>")

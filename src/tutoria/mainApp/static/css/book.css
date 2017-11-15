@@ -5,5 +5,13 @@
 
 
 .unavailable {
-  background-color: black !important;
+  background-color: grey !important;
+}
+
+.notopen {
+  background-color: grey !important;
+}
+
+.closed {
+  background-color: grey !important;
 }

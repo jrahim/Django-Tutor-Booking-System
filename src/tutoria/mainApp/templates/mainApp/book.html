@@ -7,12 +7,13 @@
 
 
 {% block content %}
-    <div class="container-fluid centerAlign" style="margin-top: 130px;">
+
+    <div class="container-fluid centerAlign" style="margin-top: 100px;">
 
         <div style="margin-bottom: 25px !important; overflow: hidden;">
             <div style="float: left;">
-            <img src="/static/assets/img/{{ tutor.user.avatar }}" alt=""
-                 style="width:50px; height: 50px; border-radius: 50%;">
+                <img src="/static/assets/img/{{ tutor.user.avatar }}" alt=""
+                     style="width:50px; height: 50px; border-radius: 50%;">
                 <span style="margin-left: 15px;"><strong>{{ tutor.user.name }}</strong></span>
             </div>
             {% load custom_tags %}
@@ -33,9 +34,9 @@
             {% for date in dates %}
                 <tr>
                     <th scope="row" style="text-align: center">
-{#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
-{#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
-{#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
+                        {#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
                         {{ date.weekday }}, {{ date.day }} {{ date.month }}
                     </th>
                     {{ date.row | safe }}
@@ -70,7 +71,8 @@
                         <h6>Time:</h6>
                         <p id="bookingTime"></p>
                         <br>
-                        <div class="alert alert-info"><strong>Please confirm if you want to book. The charges will also be deducted from your wallet once you confirm and book.</strong></div>
+                        <div class="alert alert-info"><strong>Please confirm if you want to book. The charges will also
+                            be deducted from your wallet once you confirm and book.</strong></div>
 
                     </div>
                     <div class="modal-footer">
@@ -82,7 +84,6 @@
             </div>
         </div>
 
-
     </div>
 
 {% endblock %}
@@ -93,9 +94,9 @@
         var selectedSlot = "";
         $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
         $('.table td').click(function () {
-            if ($(this).attr('class') != "unavailable") {
+            if ($(this).attr('class') == "available") {
                 $('.table td').each(function (i, obj) {
-                    if ($(this).attr('class') != "unavailable") {
+                    if ($(this).attr('class') == "available") {
                         $(this).css('background-color', 'inherit');
                     }
                 });
@@ -104,37 +105,41 @@
                 //alert($(this).attr('id').slice(3,));
                 selectedDay = $(this).attr('id').slice(0, 6);
                 selectedSlot = $(this).attr('id').slice(6,);
-                {% if tutor.isPrivate == True %}
-                    $('#bookingTime').html(selectedDay + ", " +selectedSlot.slice(1,3)+":00 - "+(parseInt(selectedSlot.slice(1,3))+1)+":00");
-                {% else %}
-                    if(selectedSlot.slice(4,6)=="00") {
-                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3))) + ":30");
-                    } else {
-                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":30 - " + (parseInt(selectedSlot.slice(1, 3))+1) + ":00");
-                    }
-                {% endif %}
+{#                alert(selectedSlot.slice(1, 6));#}
+                if (selectedSlot == "") {
+                    $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
+                } else {
+                    {% if tutor|isPrivate == True %}
+                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3)) + 1) + ":00");
+                    {% else %}
+                        if (selectedSlot.slice(4, 6) == "00") {
+                            $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3))) + ":30");
+                        } else {
+                            $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":30 - " + (parseInt(selectedSlot.slice(1, 3)) + 1) + ":00");
+                        }
+                    {% endif %}
+                }
             }
         });
 
         function confirm() {
             if (selectedSlot != "") {
-                $.post('confirmbooking', {
+                $.get('confirmbooking', {
                     tutorid: "{{ tutor.id }}",
                     date: selectedDay,
-                    time: selectedSlot.slice(1,3),
-                    {% if tutor.isPrivate == True %}
-                    isPrivate: '1',
-                    {% else %}
-                    isPrivate: '0',
-                    {% endif %}
+                    time: selectedSlot.slice(1, 6)
                 }, function (response) {
                     if (response.status == 'success') {
-                        window.location.replace('confirmation/'+response.booking);
+                        window.location.replace('confirmation/' + response.booking);
                     }
                     if (response.status == 'fail') {
-                        alert('hi');
+                        alert(response.message);
+                        window.location.reload();
                     }
                 });
+            } else {
+                alert("Please Select a timeslot!");
+                window.location.reload();
             }
 
         }

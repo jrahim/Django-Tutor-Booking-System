@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: New Booking
+From: My Tutors
+To: jamal@gmail.com
+Date: Mon, 13 Nov 2017 14:32:34 -0000
+Message-ID: <20171113143234.17644.36234@LAPTOP-PRMIHQM0.hku.hk>
+
+You have been booked by jamal2 on 2017-11-19 00:00:00.
+-------------------------------------------------------------------------------
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Booking Update
+From: My Tutors
+To: jamal@gmail.com2
+Date: Mon, 13 Nov 2017 14:32:34 -0000
+Message-ID: <20171113143234.17644.19430@LAPTOP-PRMIHQM0.hku.hk>
+
+You booked  jamal on 2017-11-19 00:00:00. $250 will be deducted from your wallet.
+-------------------------------------------------------------------------------

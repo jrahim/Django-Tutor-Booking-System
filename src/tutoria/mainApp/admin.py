@@ -14,3 +14,10 @@ admin.site.register(models.Student)
 admin.site.register(models.University)
 admin.site.register(models.Tag)
 
+
+admin.site.register(models.Transaction)
+admin.site.register(models.SpecialWallet)
+admin.site.register(models.SessionTransaction)
+admin.site.register(models.WalletTransaction)
+admin.site.register(models.PrivateTutor)
+admin.site.register(models.ContractedTutor)

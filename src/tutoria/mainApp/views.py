@@ -1,5 +1,3 @@
-import hashlib
-import math
 from datetime import datetime, timedelta, date
 
 from dateutil import parser
@@ -11,43 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
 from .models import *
-
-
-# functions
-
-def rateWithCommision(tutorRate):
-    return math.ceil(tutorRate * 1.05)
-
-
-def checkUser(uid, request):
-    isTutor = False
-    isStudent = False
-    if 'tid' in request.session:
-        isTutor = True
-    if 'sid' in request.session:
-        isStudent = True
-    return isTutor, isStudent
-
-
-def checkUserFromDB(uid):
-    isTutor = Tutor.objects.filter(user=uid).exists()
-    isStudent = Student.objects.filter(user=uid).exists()
-    return isTutor, isStudent
-
-
-def isAuthenticated(request):
-    if 'uid' not in request.session:
-        return False
-    else:
-        return True
-
-
-def getTutor(uid):
-    return Tutor.objects.get(user=uid)
-
-
-def getStudent(uid):
-    return Student.objects.get(user=uid)
+import math
+from django.contrib.auth.hashers import make_password, check_password
+from .functions import *
 
 
 # views
@@ -61,42 +25,45 @@ def index(request):
                 if form.is_valid():  # check if imageform is valid
                     try:
                         validate_email(request.POST.get('email'))  # validate email address
-                        if not User.objects.filter(email=request.POST.get(
-                                'email')).exists():  # if email not already used in another account
-                            user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
-                                        email=request.POST.get("email"), password=hashlib.md5(
-                                    request.POST.get("password").encode(
-                                        'utf-8')).hexdigest())  # make a new user with md5 hash of pwd
-                            # user.make_wallet()
-                            user.wallet = user.create_wallet()
-                            user.save()  # save new user in db
-                            # make wallet for new user
-                            user.become_student();
-                            request.session['uid'] = user.id  # add user id to session
-                            isTutor, isStudent = checkUserFromDB(user.id)
-                            if isTutor:
-                                request.session['tid'] = getTutor(user.id).id
-                            if isStudent:
-                                request.session['sid'] = getStudent(user.id).id
-                            return redirect('/mainApp/index?first=1')  # take user to landing page
-                        else:
-                            return render(request, 'mainApp/index.html',
-                                          {'form': form, 'emailError': 'Email Already Used'})  # else give error
                     except:
                         return render(request, 'mainApp/index.html', {'form': form,
                                                                       'emailError': 'Please Enter a Valid Email Address'})  # if email not valid, give error
+                    if not User.objects.filter(email=request.POST.get(
+                            'email')).exists():  # if email not already used in another account
+                        user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
+                                    email=request.POST.get("email"), password=make_password(
+                                request.POST.get("password")))  # make a new user with md5 hash of pwd
+                        # user.make_wallet()
+                        user.wallet = user.create_wallet()
+                        user.save()  # save new user in db
+                        # make wallet for new user
+                        user.become_student()
+                        request.session['uid'] = user.id  # add user id to session
+                        isTutor, isStudent = checkUserFromDB(user.id)
+                        if isTutor:
+                            request.session['tid'] = getTutor(user.id).id
+                        if isStudent:
+                            request.session['sid'] = getStudent(user.id).id
+                        return redirect('/mainApp/index?first=1')  # take user to landing page
+                    else:
+                        return render(request, 'mainApp/index.html',
+                                      {'form': form, 'emailError': 'Email Already Used'})  # else give error
                 else:
                     return render(request, 'mainApp/index.html', {'form': form})  # else take back to same page
             if 'login' in request.POST:  # if login request submitted
-                if User.objects.filter(email=request.POST.get('email'), password=hashlib.md5(
-                        request.POST.get("password").encode('utf-8')).hexdigest()).exists():
-                    request.session['uid'] = User.objects.get(email=request.POST.get('email')).id
-                    isTutor, isStudent = checkUserFromDB(request.session['uid'])
-                    if isTutor:
-                        request.session['tid'] = getTutor(request.session['uid']).id
-                    if isStudent:
-                        request.session['sid'] = getStudent(request.session['uid']).id
-                    return redirect('/mainApp/index')
+                if User.objects.filter(email=request.POST.get('email')).exists():
+                    user = User.objects.get(email=request.POST.get('email'))
+                    if check_password(request.POST.get("password"), user.password):
+                        request.session['uid'] = User.objects.get(email=request.POST.get('email')).id
+                        isTutor, isStudent = checkUserFromDB(request.session['uid'])
+                        if isTutor:
+                            request.session['tid'] = getTutor(request.session['uid']).id
+                        if isStudent:
+                            request.session['sid'] = getStudent(request.session['uid']).id
+                        return redirect('/mainApp/index')
+                    else:
+                        return render(request, 'mainApp/index.html',
+                                      {'form': form, 'loginError': 'Incorrect Combination'})
                 else:
                     return render(request, 'mainApp/index.html', {'form': form, 'loginError': 'Incorrect Combination'})
 
@@ -190,7 +157,6 @@ def search(request):
         'tag_list': tags,
         'university_list': universities
     }
-
     return render(request, 'mainApp/search.html', context)
 
 
@@ -231,7 +197,7 @@ def bookings(request):
         if isStudent:
             context = {
                 'user': user,
-                'tutor_bookings': bookings,
+                'student_bookings': bookings,
                 'isStudent': isStudent,
                 'isTutor': isTutor,
                 'past_bookings': pb
@@ -239,14 +205,13 @@ def bookings(request):
         else:
             context = {
                 'user': user,
-                'student_bookings': bookings,
+                'tutor_bookings': bookings,
                 'isStudent': isStudent,
                 'isTutor': isTutor,
                 'past_bookings': pb
             }
 
     return render(request, 'mainApp/bookings.html', context)
-
 
 @csrf_exempt
 def wallet(request):
@@ -266,6 +231,7 @@ def book(request, pk):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     tutor = Tutor.objects.get(id=pk)
+    isPrivate = checkIfTutorPrivate(tutor)
     user = User.objects.get(id=request.session['uid'])
     if tutor.user == user:
         return render(request, 'mainApp/error.html', {'user': user, 'error': "You can not book yourself!"})
@@ -277,20 +243,14 @@ def book(request, pk):
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
     today = date.today()
     slots = []
-    if tutor.isPrivate:
-        slots = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00"]
-        slotsToRender = ["07:00-08:00", "08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
-                         "13:00-14:00", "14:00-15:00"]
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
     else:
-        slots = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00",
-                 "12:30", "13:00", "13:30", "14:00"]
-        slotsToRender = ["07:00-07:30", "07:30-08:00", "08:00-08:30", "08:30-09:00", "09:00-09:30", "09:30-10:00",
-                         "10:00-10:30", "10:30-11:00", "11:00-11:30", "11:30-12:00", "12:00-12:30", "12:30-13:00",
-                         "13:00-13:30", "13:30-14:00", "14:30-15:00"]
+        slots, slotsToRender = getContractedSlots()
     weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     BookableDates = []
-    for i in range(0, 7):
+    for i in range(1, 9):
         nextDay = today + timedelta(days=i)
         BookableDates.append(
             {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
@@ -300,16 +260,23 @@ def book(request, pk):
         weekday = d['weekday']
         for slot in slots:
             isUnavailable = False
-            for booking in tutorBookings:
-                if booking.date == dt and booking.time_start == datetime.strptime(slot, '%H:%M').time():
+            today = date.today()
+            if abs(dt - today).days == 1:
+                if (datetime.now().time() >= datetime.strptime(slot, '%H:%M').time()):
+                    isUnavailable = True
+                    d['row'] = d['row'] + "<td class='closed' id=''></td>"
+            elif abs(dt - today).days == 8:
+                if (datetime.now().time() < datetime.strptime(slot, '%H:%M').time()):
+                    isUnavailable = True
+                    d['row'] = d['row'] + "<td class='notopen' id=''></td>"
+            if not isUnavailable:
+                if tutorBookings.filter(date=dt, time_start=datetime.strptime(slot, '%H:%M').time()).exists():
                     isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
-                for unavailable in tutorUnavailable:
-                    if unavailable.day == weekday and unavailable.time_start == datetime.strptime(slot,
-                                                                                                  '%H:%M').time():
-                        isUnavailable = True
-                        d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
+                if tutorUnavailable.filter(day=weekday, time_start=datetime.strptime(slot, '%H:%M').time()):
+                    isUnavailable = True
+                    d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
                 day = d['day']
                 month = d['month']
@@ -318,7 +285,7 @@ def book(request, pk):
                 else:
                     day = str(day)
                 tdid = month + "-" + day + "_" + slot
-                d['row'] = d['row'] + "<td id='" + tdid + "'></td>"
+                d['row'] = d['row'] + "<td class='available' id='" + tdid + "'></td>"
 
     context = {'dates': BookableDates, 'user': user, 'tutor': tutor, 'today': today, 'slotsToRender': slotsToRender}
     return render(request, 'mainApp/book.html', context)
@@ -338,14 +305,14 @@ def confirmation(request, pk):
 def manageWallet(request):
     if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
-    w = Wallet.objects.get(user=request.session['uid']);
+    w = Wallet.objects.get(user=request.session['uid'])
     user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
-        w.add_funds(int(request.GET.get('amount', None)))
+        w.add_funds(int(request.GET.get('amount', None)), True)
         message_body = "You added $" + str(
             request.GET.get('amount', None)) + " to your wallet."  # notification for wallet
     else:
-        w.subtract_funds(int(request.GET.get('amount', None)))
+        w.subtract_funds(int(request.GET.get('amount', None)), True)
         message_body = "You subtracted $" + str(request.GET.get('amount', None)) + " from your wallet."
 
     message_subject = "Wallet Update"
@@ -365,11 +332,11 @@ def makeTutor(request):
     user = User.objects.get(id=request.session['uid'])
     if Tutor.objects.filter(user=user).exists():
         return JsonResponse({'status': 'fail'})
-    t = 0;
+    t = None
     if request.POST.get('isPrivate') == 'yes':
-        t = user.become_tutor(request.POST.get('shortBio'), int(request.POST.get('rate')), True)
+        t = user.become_tutor(request.POST.get('shortBio'), True, int(request.POST.get('rate')))
     else:
-        t = user.become_tutor(request.POST.get('shortBio'), 0, False)
+        t = user.become_tutor(request.POST.get('shortBio'), False)
     request.session['tid'] = t.id
     return JsonResponse({'status': 'success'})
 
@@ -377,26 +344,49 @@ def makeTutor(request):
 @csrf_exempt
 def confirmBooking(request):
     if not isAuthenticated(request):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail', 'message': "Not logged in!"})
     user = User.objects.get(id=request.session['uid'])
     student = Student.objects.get(user=request.session['uid'])
-    if request.method == 'POST':
-        tutor = Tutor.objects.get(id=request.POST.get('tutorid'))
+    if request.method == 'GET':
+        tutor = Tutor.objects.get(id=request.GET.get('tutorid'))
+        tutorBookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED')
+        tutorUnavailable = UnavailableSlot.objects.filter(tutor=tutor)
+        dt = parser.parse(request.GET.get('date')).date()
+        print(request.GET.get('time'))
+        slot = datetime.strptime(request.GET.get('time'), '%H:%M').time()
+        today = date.today()
+        if checkIfTutorPrivate(tutor):
+            slots, _ = getPrivateSlots()
+        else:
+            slots, _ = getContractedSlots()
+        if request.GET.get('time') not in slots:
+            return JsonResponse({'status': 'fail', 'message': "Please select a correct timeslot."})
+        if abs(dt - today).days == 1:
+            if datetime.now().time() >= slot:
+                return JsonResponse({'status': 'fail', 'message': "Booking failed. This slot is now locked!"})
+        elif abs(dt - today).days == 8:
+            if datetime.now().time() < slot:
+                return JsonResponse({'status': 'fail', 'message': "Booking failed. Booking for slot not opened yet!"})
+        elif abs(dt - today).days > 8:
+            return JsonResponse({'status': 'fail', 'message': "Booking failed. Booking for slot not opened yet!"})
+        if tutorBookings.filter(date=dt, time_start=slot).exists():
+            return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
+        weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        if tutorUnavailable.filter(day=weekDays[dt.weekday()], time_start=slot):
+            return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
+        if tutorBookings.filter(student=student, tutor=tutor, date=dt).exists():
+            return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
+        booking = None
+        transaction = None
         try:
-            if tutor.isPrivate:
-                booking = student.create_booking(parser.parse(request.POST.get('date')),
-                                                 datetime.strptime(request.POST.get('time') + ":00:00",
-                                                                   '%H:%M:%S').time(), 1.0,
-                                                 tutor, math.ceil(tutor.rate * 1.05))
+            if checkIfTutorPrivate(tutor):
+                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
             else:
-                booking = student.create_booking(parser.parse(request.POST.get('date')),
-                                                 datetime.strptime(request.POST.get('time') + ":00", '%H:%M').time(),
-                                                 0.5,
-                                                 tutor, 0)
+                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
             # SEND NOTIFICATION ON BOOKING TO TUTOR
             message_subject = "New Booking"
             message_body = "You have been booked by " + student.user.name + " on " + str(
-                parser.parse(request.POST.get('date'))) + "."
+                parser.parse(request.GET.get('date'))) + "."
             mail_to = str(tutor.user.email)
             mail_from = "My Tutors"
 
@@ -405,12 +395,13 @@ def confirmBooking(request):
             # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
             message_subject = "Booking Update"
             message_body = "You booked  " + tutor.user.name + " on " + str(
-                parser.parse(request.POST.get('date'))) + ". $" + str(
+                parser.parse(request.GET.get('date'))) + ". $" + str(
                 tutor.rate) + " will be deducted from your wallet."
             mail_to = str(student.user.email)
             mail_from = "My Tutors"
 
             user.send_mail(mail_to, mail_from, message_body, message_subject)
+
 
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
@@ -427,7 +418,6 @@ def tutorProfile(request, pk):
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
 
-
 @csrf_exempt
 def cancel(request, pk):
     if not isAuthenticated(request):
@@ -435,21 +425,24 @@ def cancel(request, pk):
     booking = BookedSlot.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     if not booking.student.user.id == request.session['uid']:
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse(
+            {'status': 'fail', 'message': "The booking you are trying to cancel has not been made by you"})
     dt = booking.date
     today = date.today()
     if booking.status == 'CANCELLED':
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse(
+            {'status': 'fail', 'message': "The booking you are trying to cancel has already been cancelled"})
     if (dt < today):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail', 'message': "Cannot cancel past booking!"})
     if (abs(dt - today).days == 0):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail',
+                             'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     if (abs(dt - today).days == 1):
         if (datetime.now().time() > booking.time_start):
-            return JsonResponse({'status': 'fail'})
+            return JsonResponse({'status': 'fail',
+                                 'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     try:
         booking.update_booking('CANCELLED')
-        booking.student.user.wallet.add_funds(rateWithCommision(booking.tutor.rate))
 
         # NOTIFICATION ON Cancellation TO TUTOR
         message_subject = "Booking Cancellation"
@@ -460,7 +453,7 @@ def cancel(request, pk):
 
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        # SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
+        #SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
         message_subject = "Booking Update"
         message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(
             booking.tutor.rate) + " will be refunded to your wallet."
@@ -472,3 +465,14 @@ def cancel(request, pk):
         return JsonResponse({'status': 'success'})
     except:
         return JsonResponse({'status': 'fail'})
+
+
+@csrf_exempt
+def transactionHistory(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    dt = date.today() - timedelta(days=30)
+    transactions = Transaction.objects.filter(user=request.session['uid'], date__gte=dt).order_by("date",
+                                                                                                  "time").reverse()
+    return render(request, 'mainApp/transactionHistory.html', {'user': user, 'transactions': transactions})
