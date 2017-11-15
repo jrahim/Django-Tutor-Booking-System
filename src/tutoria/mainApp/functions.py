@@ -18,8 +18,8 @@ def checkUser(uid, request):
 
 
 def checkUserFromDB(uid):
-    isTutor = Tutor.objects.filter(user=uid)
-    isStudent = Student.objects.filter(user=uid)
+    isTutor = Tutor.objects.filter(user=uid).exists()
+    isStudent = Student.objects.filter(user=uid).exists()
     return isTutor, isStudent
 
 

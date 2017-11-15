@@ -88,11 +88,74 @@ def search(request):
     if not isAuthenticated(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
-    isTutor, isStudent = checkUser(user.id, request)
+    tags = Tag.objects.all()
+
+    # search
+    universities = University.objects.all()
+    given_name = request.POST.get('givenName', "")
+    last_name = request.POST.get('lastName', "")
+    tutor_type = request.POST.get('tutorType', "")
+    university_name = request.POST.get('universityName', "")
+    if university_name == "0":
+        university_name = ""
+    course = request.POST.get('course', "")
+    tag = request.POST.get('tag', "")
+    if tag == "0":
+        tag = ""
+    max_rate = request.POST.get('maxRate', "")
+    min_rate = request.POST.get('minRate', "")
+
+    # sort
+    sort = request.POST.get('sort', "")
+
+    if tutor_type == "tutorPrivate":
+        tutor_type = True
+    elif tutor_type == "tutorContracted":
+        tutor_type = False
     tutor_list = Tutor.objects.all()
+
+    # # if given_name == "" and tutor_type == "":
+    # #     tutor_list = Tutor.objects.all()
+    #
+    if given_name != "":
+        user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
+        tutor_list = tutor_list.filter(user__in=user_list)
+
+    if last_name != "":
+        user_list = User.objects.filter(last_name__iexact=last_name)  # case insensitive matching - exact matching
+        tutor_list = tutor_list.filter(user__in=user_list)
+
+    if tutor_type != "":
+        tutor_list = tutor_list.filter(isPrivate=tutor_type)
+
+    # TODO fix university check - check via courses
+    if university_name != "":
+        university_list = University.objects.filter(
+            name__icontains=university_name)  # contains to allow custom input search
+        tutor_list = tutor_list.filter(university__in=university_list)
+
+    if course != "":
+        course_list = Course.objects.filter(code=course)  # course code
+        tutor_list = tutor_list.filter(course__in=course_list)
+
+    if tag != "":
+        tag_list = Tag.objects.filter(tag_name=tag)
+        tutor_list = tutor_list.filter(subject_tags__in=tag_list)
+
+    # TODO handle exceptions of one being entered and other not
+    if max_rate != "" and min_rate != "":
+        tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
+
+    if sort != "" and sort == "rateAsc":
+        tutor_list = tutor_list.order_by('rate')
+    elif sort != "" and sort == "rateDesc":
+        tutor_list = tutor_list.order_by('-rate')
+
     context = {
         'tutor_list': tutor_list,
-        'user': user
+        'user': user,
+        'tag_list': tags,
+        'university_list': universities
     }
     return render(request, 'mainApp/search.html', context)
 
@@ -149,7 +212,6 @@ def bookings(request):
             }
 
     return render(request, 'mainApp/bookings.html', context)
-
 
 @csrf_exempt
 def wallet(request):
@@ -340,11 +402,12 @@ def confirmBooking(request):
 
             user.send_mail(mail_to, mail_from, message_body, message_subject)
 
+
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
             return JsonResponse({'status': 'fail'})
     else:
-        return JsonResponse({'status': 'failed'})
+        return JsonResponse({'status': 'fail'})
 
 
 @csrf_exempt
@@ -354,7 +417,6 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
-
 
 @csrf_exempt
 def cancel(request, pk):
@@ -366,7 +428,6 @@ def cancel(request, pk):
         return JsonResponse(
             {'status': 'fail', 'message': "The booking you are trying to cancel has not been made by you"})
     dt = booking.date
-    print(dt)
     today = date.today()
     if booking.status == 'CANCELLED':
         return JsonResponse(
@@ -392,7 +453,7 @@ def cancel(request, pk):
 
         user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-        # SEND NOTIFICATION ON Cancellation TO STUDENT ABOUT WALLET
+        #SEND NOTIFICATION ON Cancellatio TO STUDENT ABOUT WALLET
         message_subject = "Booking Update"
         message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date) + ". $" + str(
             booking.tutor.rate) + " will be refunded to your wallet."

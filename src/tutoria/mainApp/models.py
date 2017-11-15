@@ -1,12 +1,19 @@
 from django.db import models
 from datetime import date, time, datetime, timedelta
 from django.db.models import Q
+
 from django.core import mail
 from math import ceil
 from polymorphic.models import PolymorphicModel
 
 
 # Create your models here.
+
+class University(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 class Wallet(PolymorphicModel):
     balance = models.FloatField()
@@ -36,7 +43,8 @@ class Wallet(PolymorphicModel):
 
 
 class User(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)  # given name
+    last_name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=200)
@@ -118,9 +126,18 @@ class User(models.Model):
 class Course(models.Model):
     code = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
+    university = models.ForeignKey(University, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title
+
+
+
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tag_name
 
 
 class Tutor(PolymorphicModel):
@@ -128,6 +145,7 @@ class Tutor(PolymorphicModel):
     course = models.ManyToManyField(Course, blank=True)
     shortBio = models.CharField(max_length=300)
     rating = models.FloatField(default=0)
+    subject_tags = models.ManyToManyField(Tag, blank=True)
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
