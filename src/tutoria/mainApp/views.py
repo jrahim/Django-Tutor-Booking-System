@@ -418,7 +418,8 @@ def tutorProfile(request, pk):
         return redirect('/mainApp/index')
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+    courses = tutor.course.all()
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses})
 
 
 @csrf_exempt

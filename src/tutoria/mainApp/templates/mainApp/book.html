@@ -92,6 +92,7 @@
                         <br>
                         <div class="alert alert-info"><strong>Please confirm if you want to book. The charges will also
                             be deducted from your wallet once you confirm and book.</strong></div>
+                        <div class="alert alert-info" style="display: none", id="processing">Processing Request</div>
 
                     </div>
                     <div class="modal-footer">
@@ -143,6 +144,7 @@
 
         function confirm() {
             if (selectedSlot != "") {
+                $('#processing').show();
                 $.get('confirmbooking', {
                     tutorid: "{{ tutor.id }}",
                     date: selectedDay,
