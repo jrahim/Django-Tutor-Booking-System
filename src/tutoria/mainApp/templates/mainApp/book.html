@@ -17,7 +17,17 @@
                 <span style="margin-left: 15px;"><strong>{{ tutor.user.name }}</strong></span>
             </div>
             {% load custom_tags %}
-            <span style="float: right; margin-top: 15px;"><strong> Charges: {{ tutor.rate|mult:"1.05" }} HKD</strong></span>
+            <span style="float: right; margin-top: 15px;"><strong> Charges:
+                {% if tutor.rate %}
+                    {% if tutor.rate == 0 %}
+                        No Charge!
+                    {% else %}
+                        HKD{{ tutor.rate|mult:"1.05" }}
+                    {% endif %}
+                {% else %}
+                    No Charge!
+                {% endif %}
+            </strong></span>
         </div>
 
         <table class="table table-sm table-bordered table-hover">
@@ -66,8 +76,17 @@
                         <p>{{ tutor.user.name }}</p>
 
                         <h6>Charges:</h6>
-                        <p>{{ tutor.rate|mult:"1.05" }} HKD</p>
-
+                        <p>
+                            {% if tutor.rate %}
+                                {% if tutor.rate == 0 %}
+                                    No Charge!
+                                {% else %}
+                                    HKD{{ tutor.rate|mult:"1.05" }}
+                                {% endif %}
+                            {% else %}
+                                No Charge!
+                            {% endif %}
+                        </p>
                         <h6>Time:</h6>
                         <p id="bookingTime"></p>
                         <br>
@@ -105,7 +124,7 @@
                 //alert($(this).attr('id').slice(3,));
                 selectedDay = $(this).attr('id').slice(0, 6);
                 selectedSlot = $(this).attr('id').slice(6,);
-{#                alert(selectedSlot.slice(1, 6));#}
+                {#                alert(selectedSlot.slice(1, 6));#}
                 if (selectedSlot == "") {
                     $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
                 } else {

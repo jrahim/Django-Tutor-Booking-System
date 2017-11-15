@@ -1,125 +1,137 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="/static/css/search.css">
-<link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
-    <div style="float:left;">
-        <h2 class="tealText">Your search returned {{ tutor_list | length }}
-            {% if tutor_list|length == 1 %}
-            result:
-            {% else %}
-            results:
-            {% endif %}
-        </h2>
+    <div class="container-fluid" style="margin-top: 155px; overflow:hidden;">
+        <div>
+            <h2 class="tealText">Your search returned {{ tutor_list | length }}
+                {% if tutor_list|length == 1 %}
+                    result:
+                {% else %}
+                    results:
+                {% endif %}
+            </h2>
+        </div>
+
+        <form action="/mainApp/search" method="post" style="width: 970px;">
+            <br>
+            <div class="card" style="width: inherit">
+                <div class="card-header" role="tab" id="headingOne">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false"
+                           aria-controls="collapseOne" style="color: black">
+                            Advanced Search
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="card-body" style="padding: 20px;">
+                        <div class="row">
+                            <div class="col-6">
+                                <fieldset class="form-group">
+                                    <legend>Search By Name</legend>
+                                    <label for="familyName">Family Name</label>
+                                    <input type="text" name="familyName" id="familyName" class="form-control">
+                                    <label for="givenName">Given Name</label>
+                                    <input type="text" name="givenName" id="givenName" class="form-control">
+                                </fieldset>
+
+                                <fieldset class="form-group">
+                                    <legend>Search by Type</legend>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="tutorType"
+                                                   id="tutorTypePrivate"
+                                                   value="tutorPrivate">
+                                            Private
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="tutorType"
+                                                   id="tutorTypeContracted"
+                                                   value="tutorContracted">
+                                            Contracted
+                                        </label>
+                                    </div>
+                                </fieldset>
+
+
+                                <div class="form-group">
+                                    <legend>Search by price range</legend>
+                                    <label for="minRate">Minimum</label>
+                                    <input type="text" name="minRate" id="minRate" class="form-control">
+                                    to
+                                    <br>
+                                    <label for="maxRate">Maximum</label>
+                                    <input type="text" name="maxRate" id="maxRate" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <legend>Search by University</legend>
+                                    <label for="universityName">University Name</label>
+                                    <select class="form-control" name="universityName" id="universityName">
+                                        <option value="0">---------</option>
+                                        {% for university in university_list %}
+                                            <option value="{{ university.name }}">{{ university.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <legend for="course">Search by Course</legend>
+                                    <label for="course">Course Name</label>
+                                    <select class="form-control" name="course" id="course">
+                                        <!--TODO Populate list through ajax-->
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <legend for="tag">Search by Tag</legend>
+                                    <label for="tag">Tag Name</label>
+                                    <select class="form-control" name="tag" id="tag">
+                                        <option value="0">---------</option>
+                                        {% for tag in tag_list %}
+                                            <option value="{{ tag.tag_name }}">{{ tag.tag_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <legend for="sort">Sort</legend>
+                            <label for="sort">Sorting order</label>
+                            <select class="form-control" name="sort" id="sort">
+                                <option>Select</option>
+                                <option value="rateAsc">Cheap to Expensive</option>
+                                <option value="rateDesc">Expensive to Cheap</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
     </div>
 
-    <form action="/mainApp/search" method="post">
-        <br>
-        <h2>Advanced Search</h2>
+    <div class="container-fluid" style="width:1000px;margin-top:0px">
 
-        <div style="float: left; width: 400px; height: 560px;">
-            <fieldset class="form-group">
-                <legend>Search By Name</legend>
-                <label for="familyName">Family Name</label>
-                <input type="text" name="familyName" id="familyName" class="form-control">
-                <label for="givenName">Given Name</label>
-                <input type="text" name="givenName" id="givenName" class="form-control">
-            </fieldset>
-
-            <fieldset class="form-group">
-                <legend>Search by Type</legend>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="tutorType" id="tutorTypePrivate"
-                               value="tutorPrivate">
-                        Private
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="tutorType" id="tutorTypeContracted"
-                               value="tutorContracted">
-                        Contracted
-                    </label>
-                </div>
-            </fieldset>
-
-
-            <div class="form-group">
-                <legend>Search by price range</legend>
-                <label for="minRate">Minimum</label>
-                <input type="text" name="minRate" id="minRate" class="form-control">
-                to
-                <br>
-                <label for="maxRate">Maximum</label>
-                <input type="text" name="maxRate" id="maxRate" class="form-control">
-            </div>
-
-
-        </div>
-
-        <div style="float: right; width: 400px; margin-left: 20px;height: 560px;">
-
-            <div class="form-group">
-                <legend>Search by University</legend>
-                <label for="universityName">University Name</label>
-                <select class="form-control" name="universityName" id="universityName">
-                    <option value="0">---------</option>
-                    {% for university in university_list %}
-                    <option value="{{university.name}}">{{university.name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <legend for="course">Search by Course</legend>
-                <label for="course">Course Name</label>
-                <select class="form-control" name="course" id="course">
-                    <!--TODO Populate list through ajax-->
-                </select>
-            </div>
-
-            <div class="form-group">
-                <legend for="tag">Search by Tag</legend>
-                <label for="tag">Tag Name</label>
-                <select class="form-control" name="tag" id="tag">
-                    <option value="0">---------</option>
-                    {% for tag in tag_list %}
-                    <option value="{{tag.tag_name}}">{{tag.tag_name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <legend for="sort">Sort</legend>
-            <label for="sort">Sorting order</label>
-            <select class="form-control" name="sort" id="sort">
-                <option>Select</option>
-                <option value="rateAsc">Cheap to Expensive</option>
-                <option value="rateDesc">Expensive to Cheap</option>
-            </select>
-        </div>
-
-        <br>
-
-        <div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-
-    </form>
-
-</div>
-
-<div class="container-fluid" style="width:1000px;margin-top:0px">
-
-    <hr>
+        <hr>
 
         <!--<img src="{{MEDIA_URL}}avatar/20160516_164722.jpg" alt="" class="tutorPic">-->
 

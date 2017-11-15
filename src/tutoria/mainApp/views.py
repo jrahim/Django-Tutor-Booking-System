@@ -236,9 +236,10 @@ def book(request, pk):
     user = User.objects.get(id=request.session['uid'])
     if tutor.user == user:
         return render(request, 'mainApp/error.html', {'user': user, 'error': "You can not book yourself!"})
-    if user.wallet.balance < rateWithCommision(tutor.rate):
-        return render(request, 'mainApp/error.html', {'user': user,
-                                                      'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
+    if isPrivate:
+        if user.wallet.balance < rateWithCommision(tutor.rate):
+            return render(request, 'mainApp/error.html', {'user': user,
+                                                          'error': "You do not have enough balance in your wallet.<br>You can go to your <a href='/mainApp/wallet'>Wallet page here</a>"})
 
     tutorBookings = BookedSlot.objects.filter(tutor=pk, status='BOOKED')
     tutorUnavailable = UnavailableSlot.objects.filter(tutor=pk)
@@ -298,7 +299,9 @@ def confirmation(request, pk):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     booking = BookedSlot.objects.get(id=pk)
-    charges = math.ceil(booking.tutor.rate * 1.05)
+    charges = 0
+    if checkIfTutorPrivate(booking.tutor):
+        charges = math.ceil(booking.tutor.rate * 1.05)
     return render(request, 'mainApp/confirmation.html', {'user': user, 'booking': booking, 'charges': charges})
 
 
@@ -396,8 +399,7 @@ def confirmBooking(request):
             # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
             message_subject = "Booking Update"
             message_body = "You booked  " + tutor.user.name + " on " + str(
-                parser.parse(request.GET.get('date'))) + ". $" + str(
-                tutor.rate) + " will be deducted from your wallet."
+                parser.parse(request.GET.get('date')))
             mail_to = str(student.user.email)
             mail_from = "My Tutors"
 

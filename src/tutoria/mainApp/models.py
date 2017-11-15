@@ -183,10 +183,11 @@ class Student(models.Model):
     def create_booking(self, date, time_start, duration, tutor):
         end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=duration)).time()
         booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=tutor, student=self, status="BOOKED")
-        chargesWithCommission = round(tutor.rate * 1.05, 2)
-        self.user.wallet.subtract_funds(chargesWithCommission)
-        TempWallet = SpecialWallet.objects.get(name='Temporary')
-        TempWallet.add_funds(chargesWithCommission)
+        if isinstance(tutor, PrivateTutor):
+            chargesWithCommission = round(tutor.rate * 1.05, 2)
+            self.user.wallet.subtract_funds(chargesWithCommission)
+            TempWallet = SpecialWallet.objects.get(name='Temporary')
+            TempWallet.add_funds(chargesWithCommission)
         booking.save()
         transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
         return booking, transaction
@@ -225,12 +226,19 @@ class BookedSlot(models.Model):
     def create_transaction_record(self, transactionNature, forStudent, isCreated=False):
         if forStudent:
             if isCreated:
-                transaction = SessionTransaction(amount=round(self.tutor.rate * 1.05, 2), date=date.today(),
+                amount = 0
+                tutorRate = 0
+                commission = 0
+                if isinstance(self.tutor, PrivateTutor):
+                    amount = round(self.tutor.rate * 1.05, 2)
+                    tutorRate = self.tutor.rate
+                    commission = round(self.tutor.rate * 0.05, 2)
+                transaction = SessionTransaction(amount=amount, date=date.today(),
                                                  time=datetime.now().time(),
                                                  other_party=self.tutor.user, transaction_nature=transactionNature,
                                                  user=self.student.user,
-                                                 booking_id=self, commission=round(self.tutor.rate * 0.05, 2),
-                                                 tutorCharges=self.tutor.rate)
+                                                 booking_id=self, commission=commission,
+                                                 tutorCharges=tutorRate)
                 transaction.save()
                 return transaction
             else:

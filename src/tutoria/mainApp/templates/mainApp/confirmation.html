@@ -25,13 +25,13 @@
             <br>
             <p class="mb-1">{{booking.time_start}}</p>
         </li>
-        {% if booking.tutor.rate != 0 %}
+        {% if booking.tutor.rate %}
         <li class="list-group-item">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Session Charges:</h5>
             </div>
             {% load custom_tags %}
-            <p class="mb-1">{{ booking.tutor.rate|mult:"1.05" }} HKD</p>
+            <p class="mb-1">{{ charges }} HKD</p>
         </li>
         {% else %}
             <li class="list-group-item">
@@ -41,7 +41,7 @@
         </li>
         {% endif %}
     </ul>
-    {% if booking.tutor.rate != 0 %}
+    {% if booking.tutor.rate %}
     <div class="alert alert-success" style="text-align: center; width: 600px;"><strong>The respective charges have been deducted from your wallet.</strong></div>
     {% endif %}
 </div>
