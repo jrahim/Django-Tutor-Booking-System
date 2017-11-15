@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+
 from .forms import ImageForm
 from .models import *
 import math
@@ -144,6 +145,26 @@ def profile(request):
         isTutor = '0'
     return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
+
+
+@csrf_exempt
+def courses(request):
+	if not isAuthenticated(request):
+		return redirect('/mainApp/index')
+
+
+	tutor = Tutor.objects.get(user=request.session['uid'])
+	
+	presentCourses=tutor.course.all()
+	print(presentCourses)
+	allCourses=Course.objects.all()
+	context={
+		
+		'tutor': tutor,
+    	'presentCourses': presentCourses,
+    	'allCourses': allCourses
+    }
+	return render(request,'mainApp/courses.html', context)
 
 @csrf_exempt
 def bookings(request):
@@ -307,6 +328,46 @@ def makeTutor(request):
     request.session['tid'] = t.id
     return JsonResponse({'status': 'success'})
 
+@csrf_exempt
+def addCourse(request):
+	if not isAuthenticated(request):
+		return JsonResponse({'status': 'fail'})
+
+	user=User.objects.get(id=request.session['uid'])
+	tutor=Tutor.objects.get(user=user) 
+	print("the course code value is " + str(request.POST.get('courseCode')))
+	courseRequested=Course.objects.get(code=request.POST.get('courseCode'))
+
+	courseRequestedCode=courseRequested.code
+
+	if (tutor.course.filter(code=courseRequestedCode).exists()):
+		message_body="You already have " + str(courseRequestedCode) + " in your list of courses." 
+		print(message_body)
+		return JsonResponse({'status' : 'fail'})
+
+
+
+	else:
+		tutor.add_course(courseRequestedCode)
+		message_body="You added " + str(courseRequestedCode)+" to your list of courses."
+		print(message_body)
+		return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def removeCourses(request):
+	if not isAuthenticated(request):
+		return JsonResponse({'status' : 'fail'})
+
+	user=User.objects.get(id=request.session['uid'])
+	tutor=Tutor.objects.get(user=user) 
+	listCourses=request.GET.getlist('listCourses[]')
+	for courseCode in listCourses:
+		tutor.remove_course(courseCode)
+
+	return JsonResponse({'status': 'success'})
+
+
+
 
 @csrf_exempt
 def confirmBooking(request):
@@ -357,7 +418,8 @@ def tutorProfile(request, pk):
         return redirect('/mainApp/index')
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
-    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user})
+    courses = tutor.course.all()
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses':courses})
 
 @csrf_exempt
 def cancel(request, pk):

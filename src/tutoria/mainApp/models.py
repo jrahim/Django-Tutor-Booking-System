@@ -52,6 +52,8 @@ class User(models.Model):
         t.save()
         return t
 
+
+
     def get_upcoming_bookings(self, isTutor, isStudent):
 
         if isTutor and isStudent:
@@ -120,6 +122,20 @@ class Tutor(models.Model):
     rate = models.PositiveIntegerField(default=0)
     rating = models.FloatField(default=0)
     isPrivate = models.BooleanField()
+
+
+
+    def add_course(self, courseCode):
+
+        c= Course.objects.get(code=courseCode)
+        self.course.add(c)
+        self.save()
+
+    def remove_course(self, courseCode):
+
+        c=Course.objects.get(code=courseCode)
+        self.course.remove(c)
+        self.save()
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)

@@ -1,0 +1,139 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid" style="margin-top:115px; width:800px;">
+
+		<h2 class="centerAlign">Your current courses:</h2>
+		<br></br>
+			
+			{% if presentCourses %}
+
+			
+
+			<ul class="list-group" style="width:800px; margin-bottom: 50px;">
+                {% for course in presentCourses.all %}
+                    <li class="list-group-item">
+                    	
+
+                        <p>{{course.code}}: {{course.title}} 
+						<input type="checkbox"  value={{course.code}}>
+                      </p>
+                     </li>
+                {% endfor %}
+                <input id="removeButton" type="button" class="btn btn-primary" value="Remove selected courses"></input>
+                <div>
+
+                
+            </div>
+
+            </ul>
+				
+
+			{% else %}
+				<div style="text-align: center"><h3>You are not registered to teach any courses yet.</h3></div>
+
+			{% endif %}
+
+	</div>
+
+	<div class="container-fluid" style="margin-top:115px; width:800px;">
+
+		<h2 class="centerAlign">Add Courses:</h2>
+
+		<br></br>
+
+		<form name="addCourseForm" id="addCourseForm" method="post">
+  		<select name="courseCode" id="courseCode">
+  		{% for course in allCourses %}
+    	<option value={{course.code}}>{{course.code}}: {{course.title}}</option>
+    	
+    	{% endfor %}
+  		</select>
+  	
+
+  		<input type="submit" class="btn btn-primary"  value="Add selected course"> 
+		</form>
+		
+
+	</div>
+
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+
+    	
+
+    	
+
+
+    	 document.getElementById("addCourseForm").onsubmit = function() {
+    	 	
+
+    	 	$.post('/mainApp/addcourse', {
+                courseCode: $('#courseCode').val()
+				},function (response) {
+					
+                if (response.status == 'success') {
+                	
+                	window.location.reload()
+                }
+
+                else {
+                    
+                    
+                }
+                } );
+
+    	 	return true;
+
+
+            } 
+
+            document.getElementById("removeButton").onclick = function() {
+            	
+            	var inputs = document.getElementsByTagName("input");
+            	var listCourses=new Array();
+            	var k=0;
+				for(var i = 0; i < inputs.length; i++) {
+    				if(inputs[i].type == "checkbox") {
+        				if (inputs[i].checked == true) {
+
+
+        					listCourses.push(inputs[i].value);
+        					
+        					k=k+1;
+        				}
+    				}  
+				}
+
+				
+
+				$.get('/mainApp/removecourses', {
+                listCourses
+				},function (response) {
+                if (response.status == 'success') {
+
+                	location.reload()
+
+                    $('#removeCourseSuccess').show();
+
+                }
+
+                else {
+                    $('#removeCourseFail').show();
+                }
+                } );
+            }
+
+        
+
+
+</script>
+{% endblock %}
