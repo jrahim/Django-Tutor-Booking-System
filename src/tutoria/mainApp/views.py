@@ -161,6 +161,7 @@ def search(request):
     if tutor_type != "":
         tutor_list = tutor_list.filter(isPrivate=tutor_type)
 
+    # TODO fix university check - check via courses
     if university_name != "":
         university_list = University.objects.filter(
             name__icontains=university_name)  # contains to allow custom input search
@@ -180,7 +181,7 @@ def search(request):
 
     if sort != "" and sort == "rateAsc":
         tutor_list = tutor_list.order_by('rate')
-    elif sort !="" and sort == "rateDesc":
+    elif sort != "" and sort == "rateDesc":
         tutor_list = tutor_list.order_by('-rate')
 
     context = {
