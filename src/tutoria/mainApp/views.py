@@ -92,10 +92,12 @@ def search(request):
     given_name = request.POST.get('givenName', "")
     last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
-    university_name = request.POST.get('universityName', "")
-    if university_name == "0":
-        university_name = ""
+    university = request.POST.get('universityName', "")
+    if university == "0":
+        university = ""
     course = request.POST.get('course', "")
+    if course == "0":
+        course = ""
     tag = request.POST.get('tag', "")
     if tag == "0":
         tag = ""
@@ -122,17 +124,17 @@ def search(request):
     if tutor_type != "":
         tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
-    if university_name != "":
+    if university != "":
         university_list = University.objects.filter(
-            name__icontains=university_name)  # contains to allow custom input search
+            id=university)  # contains to allow custom input search
         tutor_list = tutor_list.filter(university__in=university_list)
 
     if course != "":
-        course_list = Course.objects.filter(code=course)  # course code
+        course_list = Course.objects.filter(id=course)  # course code
         tutor_list = tutor_list.filter(course__in=course_list)
 
     if tag != "":
-        tag_list = Tag.objects.filter(tag_name=tag)
+        tag_list = Tag.objects.filter(id=tag)
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
     if max_rate != "" and min_rate != "":

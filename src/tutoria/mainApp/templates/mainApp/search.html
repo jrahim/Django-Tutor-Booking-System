@@ -90,6 +90,7 @@
                                 <legend for="course">Search by Course</legend>
                                 <label for="course">Course Name</label>
                                 <select class="form-control" name="course" id="course">
+                                    <option value="0">---------</option>
                                 </select>
                             </div>
 
@@ -99,7 +100,7 @@
                                 <select class="form-control" name="tag" id="tag">
                                     <option value="0">---------</option>
                                     {% for tag in tag_list %}
-                                    <option value="{{ tag.tag_name }}">{{ tag.tag_name }}</option>
+                                    <option value="{{ tag.id }}">{{ tag.tag_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -207,7 +208,7 @@
                 var $el = $("#course");
                 $el.empty(); // remove old options
                 $el.append($("<option></option>")
-                    .attr("value", '').text('Please Select'));
+                    .attr("value", '0').text('---------'));
                 $.each(json, function(value, key) {
                     $el.append($("<option></option>")
                         .attr("value", value).text(key));
