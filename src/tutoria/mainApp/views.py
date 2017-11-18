@@ -111,9 +111,6 @@ def search(request):
         tutor_type = ContractedTutor
     tutor_list = Tutor.objects.all()
 
-    # # if given_name == "" and tutor_type == "":
-    # #     tutor_list = Tutor.objects.all()
-    #
     if given_name != "":
         user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
@@ -125,7 +122,6 @@ def search(request):
     if tutor_type != "":
         tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
-    # TODO fix university check - check via courses
     if university_name != "":
         university_list = University.objects.filter(
             name__icontains=university_name)  # contains to allow custom input search
@@ -177,6 +173,17 @@ def search(request):
         'university_list': universities
     }
     return render(request, 'mainApp/search.html', context)
+
+
+@csrf_exempt
+def get_uni_courses(request):
+    university_id = request.POST.get('university')
+    course_list = Course.objects.filter(university=university_id)
+    result = {}
+    for course in course_list:
+        result[course.id] = course.title
+    print(result)
+    return JsonResponse(result)
 
 
 @csrf_exempt

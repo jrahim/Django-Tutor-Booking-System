@@ -145,6 +145,7 @@ class Tutor(PolymorphicModel):
     shortBio = models.CharField(max_length=300)
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
+    university = models.ManyToManyField(University, blank=True)
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
