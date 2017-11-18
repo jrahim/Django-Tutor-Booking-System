@@ -1,15 +1,13 @@
-from datetime import datetime, timedelta, date
-
 from dateutil import parser
+from django.contrib.auth.hashers import make_password, check_password
 from django.core.validators import validate_email
+from django.db.models import Max
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
-from .models import *
-from django.contrib.auth.hashers import make_password, check_password
 from .functions import *
 
 
@@ -108,9 +106,9 @@ def search(request):
     sort = request.POST.get('sort', "")
 
     if tutor_type == "tutorPrivate":
-        tutor_type = True
+        tutor_type = PrivateTutor
     elif tutor_type == "tutorContracted":
-        tutor_type = False
+        tutor_type = ContractedTutor
     tutor_list = Tutor.objects.all()
 
     # # if given_name == "" and tutor_type == "":
@@ -125,7 +123,7 @@ def search(request):
         tutor_list = tutor_list.filter(user__in=user_list)
 
     if tutor_type != "":
-        tutor_list = tutor_list.filter(isPrivate=tutor_type)
+        tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
     # TODO fix university check - check via courses
     if university_name != "":
@@ -141,14 +139,36 @@ def search(request):
         tag_list = Tag.objects.filter(tag_name=tag)
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
-    # TODO handle exceptions of one being entered and other not
     if max_rate != "" and min_rate != "":
-        tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate == "" and min_rate != "":
+        max_query = Tutor.objects.all().aggregate(maxvalue=Max('PrivateTutor___rate'))
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate != "" and min_rate == "":
+        tutor_list = tutor_list.filter(
+            Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
+                instance_of=ContractedTutor))
+
+    # TODO only display tutors with an available slot in the coming 7 days
 
     if sort != "" and sort == "rateAsc":
-        tutor_list = tutor_list.order_by('rate')
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
     elif sort != "" and sort == "rateDesc":
-        tutor_list = tutor_list.order_by('-rate')
+        tutor_list = tutor_list.order_by('-PrivateTutor___rate')
+    else:
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
 
     context = {
         'tutor_list': tutor_list,
