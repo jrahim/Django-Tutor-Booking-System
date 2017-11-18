@@ -63,20 +63,17 @@
                             </fieldset>
 
 
-                            <div class="form-group">
+                            <div class="form-group form-inline">
                                 <legend>Search by price range</legend>
-                                <label for="minRate">Minimum</label>
-                                <input type="text" name="minRate" id="minRate" class="form-control">
-                                to
-                                <br>
-                                <label for="maxRate">Maximum</label>
-                                <input type="text" name="maxRate" id="maxRate" class="form-control">
+                                <input type="text" name="minRate" id="minRate" class="form-control" placeholder="Minimum">
+                                <span style="margin-left: 5px; margin-right: 5px">to</span>
+                                <input type="text" name="maxRate" id="maxRate" class="form-control" placeholder="Maximum">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group">
-                                <legend>Search by University</legend>
+                                <legend>Search by University Or Course</legend>
                                 <label for="universityName">University Name</label>
                                 <select class="form-control" name="universityName" id="universityName">
                                     <option value="0">---------</option>
@@ -84,10 +81,7 @@
                                     <option value="{{ university.id }}">{{ university.name }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
 
-                            <div class="form-group">
-                                <legend for="course">Search by Course</legend>
                                 <label for="course">Course Name</label>
                                 <select class="form-control" name="course" id="course">
                                     <option value="0">---------</option>
