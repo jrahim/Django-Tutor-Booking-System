@@ -36,10 +36,17 @@
                         <div class="col-6">
                             <fieldset class="form-group">
                                 <legend>Search By Name</legend>
-                                <label for="familyName">Family Name</label>
-                                <input type="text" name="familyName" id="familyName" class="form-control">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" name="lastName" id="lastName" class="form-control">
                                 <label for="givenName">Given Name</label>
                                 <input type="text" name="givenName" id="givenName" class="form-control">
+                            </fieldset>
+
+                            <fieldset class="form-group form-inline">
+                                <legend>Search by price range</legend>
+                                <input type="text" name="minRate" id="minRate" class="form-control" placeholder="Minimum">
+                                <span style="margin-left: 15px; margin-right: 15px">to</span>
+                                <input type="text" name="maxRate" id="maxRate" class="form-control" placeholder="Maximum">
                             </fieldset>
 
                             <fieldset class="form-group">
@@ -62,13 +69,6 @@
                                 </div>
                             </fieldset>
 
-
-                            <div class="form-group form-inline">
-                                <legend>Search by price range</legend>
-                                <input type="text" name="minRate" id="minRate" class="form-control" placeholder="Minimum">
-                                <span style="margin-left: 5px; margin-right: 5px">to</span>
-                                <input type="text" name="maxRate" id="maxRate" class="form-control" placeholder="Maximum">
-                            </div>
                         </div>
 
                         <div class="col-6">
@@ -90,7 +90,6 @@
 
                             <div class="form-group">
                                 <legend for="tag">Search by Tag</legend>
-                                <label for="tag">Tag Name</label>
                                 <select class="form-control" name="tag" id="tag">
                                     <option value="0">---------</option>
                                     {% for tag in tag_list %}
@@ -106,7 +105,7 @@
                         <legend for="sort">Sort</legend>
                         <label for="sort">Sorting order</label>
                         <select class="form-control" name="sort" id="sort">
-                            <option>Select</option>
+                            <option value="">Select</option>
                             <option value="rateAsc">Cheap to Expensive</option>
                             <option value="rateDesc">Expensive to Cheap</option>
                         </select>
@@ -189,7 +188,22 @@
 
 {% block extra_script %}
 <script type="text/javascript">
-    $(document).on("change", '#universityName', function(e) {
+    document.getElementById('givenName').value="{{params.given_name}}";
+    document.getElementById('lastName').value="{{params.last_name}}";
+    document.getElementById('universityName').value="{{params.university}}";
+    if("{{params.tutor_type}}"=="tutorPrivate"){
+        document.getElementById('tutorTypePrivate').checked=true;
+    }else if ("{{params.tutor_type}}"=="tutorContracted"){
+        document.getElementById('tutorTypeContracted').checked=true;
+    }
+    document.getElementById('sort').value="{{params.sort}}";
+    document.getElementById('tag').value="{{params.tag}}";
+    document.getElementById('minRate').value="{{params.min_rate}}";
+    document.getElementById('maxRate').value="{{params.max_rate}}";
+    // TODO fix this course doesnt work
+    document.getElementById('course').value="{{params.course}}";
+
+    $(document).on("click", '#universityName', function(e) {
         var university = $(this).val();
 
         $.ajax({

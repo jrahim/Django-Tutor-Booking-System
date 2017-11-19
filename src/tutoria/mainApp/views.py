@@ -111,6 +111,7 @@ def search(request):
         tutor_type = PrivateTutor
     elif tutor_type == "tutorContracted":
         tutor_type = ContractedTutor
+
     tutor_list = Tutor.objects.all()
 
     if given_name != "":
@@ -168,11 +169,16 @@ def search(request):
     else:
         tutor_list = tutor_list.order_by('PrivateTutor___rate')
 
+    params = {'given_name': given_name, 'last_name': last_name, 'university': university,
+              'tutor_type': request.POST.get('tutorType', ""), 'course': course, 'tag': tag, 'sort': sort,
+              'max_rate': request.POST.get('maxRate', ""), 'min_rate': request.POST.get('minRate', "")}
+
     context = {
         'tutor_list': tutor_list,
         'user': user,
         'tag_list': tags,
-        'university_list': universities
+        'university_list': universities,
+        'params': params
     }
     return render(request, 'mainApp/search.html', context)
 
