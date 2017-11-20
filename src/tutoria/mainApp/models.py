@@ -27,7 +27,10 @@ class Wallet(PolymorphicModel):
             transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
                                             transaction_nature="FUNDSADDED", wallet_id=self)
             transaction.save()
+            self.save()
+            return transaction
         self.save()
+
 
     def subtract_funds(self, amount, isWalletManagement=False):
         self.balance -= amount
@@ -36,6 +39,8 @@ class Wallet(PolymorphicModel):
             transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
                                             transaction_nature="FUNDSWITHDRAWN", wallet_id=self)
             transaction.save()
+            self.save()
+            return transaction
         self.save()
 
     def __str__(self):
@@ -104,20 +109,7 @@ class User(models.Model):
             a1 = BookedSlot.objects.filter(Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
         return a1
 
-    def send_mail(self, mail_to, mail_from, message_body, message_subject):
-        connection = mail.get_connection()
-        connection.open()
-        email = mail.EmailMessage(
-            message_subject,
-            message_body,
-            mail_from,
-            [mail_to],
-            connection=connection,
-        )
-        email.send()  # Send the email
-        # We need to manually close the connection.
-        connection.close()
-        return
+
 
     def __str__(self):
         return self.name

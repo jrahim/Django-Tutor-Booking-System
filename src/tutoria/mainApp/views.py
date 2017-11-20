@@ -311,18 +311,12 @@ def manageWallet(request):
     w = Wallet.objects.get(user=request.session['uid'])
     user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
-        w.add_funds(int(request.GET.get('amount', None)), True)
-        message_body = "You added $" + str(
-            request.GET.get('amount', None)) + " to your wallet."  # notification for wallet
+        transaction = w.add_funds(int(request.GET.get('amount', None)), True)
+        wallet_mail_add(user, int(request.GET.get('amount', None)),w, transaction)
     else:
-        w.subtract_funds(int(request.GET.get('amount', None)), True)
-        message_body = "You subtracted $" + str(request.GET.get('amount', None)) + " from your wallet."
+        transaction = w.subtract_funds(int(request.GET.get('amount', None)), True)
+        wallet_mail_subtract(user, int(request.GET.get('amount', None)),w, transaction)
 
-    message_subject = "Wallet Update"
-    mail_to = str(user.email)
-    mail_from = "My Tutors"
-
-    user.send_mail(mail_to, mail_from, message_body, message_subject)
 
     data = {'status': 'success'}
     return JsonResponse(data)
@@ -384,25 +378,10 @@ def confirmBooking(request):
         try:
             if checkIfTutorPrivate(tutor):
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
+                private_mail_book(student,tutor,dt,slot,booking.time_end,transaction);
             else:
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
-            # SEND NOTIFICATION ON BOOKING TO TUTOR
-            message_subject = "New Booking"
-            message_body = "You have been booked by " + student.user.name + " on " + str(
-                parser.parse(request.GET.get('date'))) + "."
-            mail_to = str(tutor.user.email)
-            mail_from = "My Tutors"
-
-            user.send_mail(mail_to, mail_from, message_body, message_subject)
-
-            # SEND NOTIFICATION ON BOOKING TO STUDENT ABOUT WALLET
-            message_subject = "Booking Update"
-            message_body = "You booked  " + tutor.user.name + " on " + str(
-                parser.parse(request.GET.get('date')))
-            mail_to = str(student.user.email)
-            mail_from = "My Tutors"
-
-            user.send_mail(mail_to, mail_from, message_body, message_subject)
+                contracted_mail_book(student,tutor,dt,slot,booking.time_end);
 
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
@@ -446,23 +425,11 @@ def cancel(request, pk):
                                  'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     try:
         booking.update_booking('CANCELLED')
-
-        # NOTIFICATION ON Cancellation TO TUTOR
-        message_subject = "Booking Cancellation"
-        message_body = "Your booking on " + str(
-            booking.date) + " have been cancelled by " + booking.student.user.name + ". "
-        mail_to = str(booking.tutor.user.email)
-        mail_from = "My Tutors"
-
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
-
-        # SEND NOTIFICATION ON Cancellation TO STUDENT ABOUT WALLET
-        message_subject = "Booking Update"
-        message_body = "You cancelled  " + booking.tutor.user.name + " on " + str(booking.date)
-        mail_to = str(booking.student.user.email)
-        mail_from = "My Tutors"
-
-        user.send_mail(mail_to, mail_from, message_body, message_subject)
+        if(checkIfTutorPrivate(booking.tutor)):
+            transaction = SessionTransaction.objects.get(booking_id = booking, transaction_nature='SESSIONCANCELLED')
+            private_mail_cancel(booking.student, booking.tutor, booking.date, booking.time_start, booking.time_end, transaction)
+        else:
+            contracted_mail_cancel(booking.student, booking.tutor, booking.date, booking.time_start, booking.time_end)
 
         return JsonResponse({'status': 'success'})
     except:
