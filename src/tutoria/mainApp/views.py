@@ -94,6 +94,8 @@ def search(request):
     last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
     university = request.POST.get('universityName', "")
+    availability = request.POST.get('available', "")
+
     if university == "0":
         university = ""
     course = request.POST.get('course', "")
@@ -161,7 +163,18 @@ def search(request):
             Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
                 instance_of=ContractedTutor))
 
-        # TODO only display tutors with an available slot in the coming 7 days
+    # TODO only display tutors with an available slot in the coming 7 days
+    if availability != "":
+        for tutor in tutor_list:
+            upcoming_bookings = tutor.user.get_upcoming_bookings(True, False).count()
+            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor)).count()
+            full_slots = upcoming_bookings + unavailable_slots
+            if isinstance(tutor, PrivateTutor):
+                if full_slots == 8 * 8:
+                    tutor_list = tutor_list.exclude(tutor=tutor)
+            elif isinstance(tutor, ContractedTutor):
+                if full_slots == 8 * 15:
+                    tutor_list = tutor_list.exclude(tutor=tutor)
 
     tutor_list = tutor_list.filter(isActivated=True)
 
