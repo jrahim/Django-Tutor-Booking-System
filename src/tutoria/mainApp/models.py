@@ -1,8 +1,8 @@
-from django.db import models
-from datetime import date, time, datetime, timedelta
-from django.db.models import Q
+from datetime import date, datetime, timedelta
 
 from django.core import mail
+from django.db import models
+from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 
@@ -146,6 +146,7 @@ class Tutor(PolymorphicModel):
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
     university = models.ManyToManyField(University, blank=True)
+    isActivated = models.BooleanField(default=True)
 
     def create_unavailable_slot(self, day, time_start, duration):
         unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
@@ -160,6 +161,14 @@ class Tutor(PolymorphicModel):
         c = Course.objects.get(code=courseCode)
         self.course.remove(c)
         self.save()
+
+    def activate_deactivate(self):
+        if self.isActivated:
+            self.isActivated = False
+            self.save()
+        else:
+            self.isActivated = True
+            self.save()
 
     def __str__(self):
         return self.user.name

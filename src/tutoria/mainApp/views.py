@@ -160,7 +160,9 @@ def search(request):
             Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
                 instance_of=ContractedTutor))
 
-    # TODO only display tutors with an available slot in the coming 7 days
+        # TODO only display tutors with an available slot in the coming 7 days
+
+    tutor_list = tutor_list.filter(isActivated=True)
 
     if sort != "" and sort == "rateAsc":
         tutor_list = tutor_list.order_by('PrivateTutor___rate')
@@ -572,3 +574,10 @@ def courses(request):
         'allCourses': allCourses
     }
     return render(request, 'mainApp/courses.html', context)
+
+
+@csrf_exempt
+def activate_deactivate_tutor(request):
+    tutor = Tutor.objects.get(id=request.session['tid'])
+    tutor.activate_deactivate()
+    return JsonResponse({'status': 'success'})
