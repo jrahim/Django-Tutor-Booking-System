@@ -1,7 +1,7 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="/static/css/book.css">
+    <link rel="stylesheet" href="/static/css/managetimes.css">
     <link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
@@ -56,6 +56,18 @@
             </tbody>
         </table>
 
+        <div class="booked" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= booked and available for next week</span>
+
+        <div class="bookedunavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= booked and not available for next week</span>
+
+        <div class="unavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= unavailable</span>
+
+        <div class="available" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= available</span>
+
         <div class="alert alert-info" style="display: none"><strong>Processing request...</strong></div>
         <div class="alert alert-success" style="display: none"><strong>Schedule successfully updated</strong></div>
         <div class="alert alert-danger" style="display: none"><strong>An error occurred. Please refresh the page and try
@@ -69,6 +81,7 @@
     <script type="text/javascript">
         var selectedDay = "";
         var selectedSlot = "";
+
         $('.table td').click(function () {
             if ($(this).attr('class') == "available") {
                 $('.alert-danger').hide();
@@ -117,28 +130,6 @@
             }
         });
 
-        function confirm() {
-            if (selectedSlot != "") {
-                $('#processing').show();
-                $.get('confirmbooking', {
-                    tutorid: "{{ tutor.id }}",
-                    date: selectedDay,
-                    time: selectedSlot.slice(1, 6)
-                }, function (response) {
-                    if (response.status == 'success') {
-                        window.location.replace('confirmation/' + response.booking);
-                    }
-                    if (response.status == 'fail') {
-                        alert(response.message);
-                        window.location.reload();
-                    }
-                });
-            } else {
-                alert("Please Select a timeslot!");
-                window.location.reload();
-            }
-
-        }
     </script>
 {% endblock %}
 

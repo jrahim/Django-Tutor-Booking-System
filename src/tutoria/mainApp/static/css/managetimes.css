@@ -1,17 +1,20 @@
-.table, .table td, .table th{
-  border: solid 1px;
-  border-color: black !important;
+.table, .table td, .table th {
+    border: solid 1px;
+    border-color: black !important;
 }
 
-
 .unavailable {
-  background-color: grey !important;
+    background-color: grey !important;
 }
 
 .bookedunavailable {
-  background-color: grey !important;
+    background-color: darkgrey !important;
+}
+
+.bookedunavailable {
+    background-color: black !important;
 }
 
 .booked {
-  background-color: grey !important;
+    background-color: brown !important;
 }
