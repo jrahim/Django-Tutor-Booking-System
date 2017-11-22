@@ -557,16 +557,53 @@ def manageSchedule(request):
     upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
     unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
     schedule = []
-    for index, day in enumerate(weekdays):
+    for idx, day in enumerate(weekdays):
         row = ""
         for slot in slots:
             slot_time = datetime.strptime(slot, '%H:%M').time()
-            if upcoming_bookings.filter(date__week_day=index + 1, time_start=slot_time).exists():
-                row = row + "<td class='booked' id=''></td>"
-            elif unavailable_slots.filter(day=day, time_start=slot_time).exists():
-                row = row + "<td class='unavailable' id=''></td>"
+            booked = upcoming_bookings.filter(date__week_day=idx + 1, time_start=slot_time).exists()
+            unavailable = unavailable_slots.filter(day=day, time_start=slot_time).exists()
+            if booked and unavailable:
+                row = row + "<td class='bookedunavailable' id='" + day + "_" + slot + "'></td>"
+            elif booked:
+                row = row + "<td class='booked' id='" + day + "_" + slot + "'></td>"
+            elif unavailable:
+                row = row + "<td class='unavailable' id='" + day + "_" + slot + "'></td>"
             else:
                 row = row + "<td class='available' id='" + day + "_" + slot + "'></td>"
         schedule.append({'weekday': day, 'row': row})
     return render(request, 'mainApp/managetimes.html',
                   {'user': user, 'tutor': tutor, 'schedule': schedule, 'slotsToRender': slotsToRender})
+
+@csrf_exempt
+def addUnavailable(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+    weekdays = getQuerySetWeekdays()
+    isPrivate = checkIfTutorPrivate(tutor)
+    slots = []
+    slotsToRender = []
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
+    else:
+        slots, slotsToRender = getContractedSlots()
+    addTime = request.POST.get('time')
+    addDay = request.POST.get('day')
+    if addTime not in slots:
+        return JsonResponse({'status': 'fail'})
+    if addDay not in weekdays:
+        return JsonResponse({'status': 'fail'})
+    upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    slot_time = datetime.strptime(addTime, '%H:%M').time()
+    booked = upcoming_bookings.filter(date__week_day=weekdays.index(addDay)+1, time_start=slot_time).exists()
+    unavailable = unavailable_slots.filter(day=addDay, time_start=slot_time).exists()
+    if booked and unavailable:
+        return JsonResponse({'status': 'fail'})
+    elif unavailable:
+        return JsonResponse({'status': 'fail'})
+    tutor.create_unavailable_slot(addDay, addTime)
+    return JsonResponse({'status': 'success'})

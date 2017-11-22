@@ -146,9 +146,8 @@ class Tutor(PolymorphicModel):
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
 
-    def create_unavailable_slot(self, day, time_start, duration):
-        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
-        unavailable.save()
+    def create_unavailable_slot(self, day, time_start):
+        pass
 
     def add_course(self, courseCode):
         c = Course.objects.get(code=courseCode)
@@ -170,10 +169,18 @@ class PrivateTutor(Tutor):
     def __str__(self):
         return self.user.name
 
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=1.0)
+        unavailable.save()
+
 
 class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
+
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=0.5)
+        unavailable.save()
 
 
 class Student(models.Model):
