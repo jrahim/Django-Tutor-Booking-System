@@ -63,12 +63,17 @@
         <h1 class="tealHeading">Sign Up!</h1><br>
         <h4>Register as a tutor from your profile after this!</h4>
         <form class="form" id="signUpForm" action="/mainApp/index" method="post" enctype="multipart/form-data">
-            <input type="text" id="nameinput" class="form-control signUpInput" name="name" value="" placeholder="Full Name">
+            <input type="text" id="nameinput" class="form-control signUpInput" name="name" value="" placeholder="Given Name">
             <p id="nameError" style="color:red;"></p>
+            <input type="text" id="lastnameinput" class="form-control signUpInput" name="lastName" value="" placeholder="Last Name">
+            <p id="lastNameError" style="color:red;"></p>
             <input type="email" id="emailinput" class="form-control signUpInput" name="email" value="" placeholder="Email Address">
             <p id="emailError" style="color:red;">{{ emailError }}</p>
             <input type="password" id="pwdinput" class="form-control signUpInput" name="password" value="" placeholder="New Password">
             <p id="pwdError" style="color:red;"></p>
+            <input type="text" id="contactinput" class="form-control signUpInput" name="contact" value="" placeholder="Contact Number">
+            <p id="contactError" style="color:red;"></p>
+
             <p>{{ form.non_field_errors }}</p>
             <p>{{ form.docfile.label_tag }} </p>
             <p>
@@ -98,16 +103,27 @@
         $('#nameError').html('');
         $('#emailError').html('');
         $('#pwdError').html('');
+        $('#contactError').html('');
+        $('#lastNameError').html('');
+
         if ($('#nameinput').val()=="") {
-            $('#nameError').html('Please Enter Your Name')
+            $('#nameError').html('Please Enter Your Name');
             e.preventDefault();
         }
         if ($('#emailinput').val()=="") {
-            $('#emailError').html('Please Enter Your Email Address')
+            $('#emailError').html('Please Enter Your Email Address');
             e.preventDefault();
         }
         if ($('#pwdinput').val()=="") {
-            $('#pwdError').html('Please Enter A Password')
+            $('#pwdError').html('Please Enter A Password');
+            e.preventDefault();
+        }
+        if ($('#contactinput').val()=="") {
+            $('#contactError').html('Please Enter A Contact Number');
+            e.preventDefault();
+        }
+        if ($('#lastnameinput').val()=="") {
+            $('#lastNameError').html('Please Enter A Last Name');
             e.preventDefault();
         }
     });

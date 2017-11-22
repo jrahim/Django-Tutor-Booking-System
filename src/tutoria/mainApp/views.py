@@ -29,7 +29,8 @@ def index(request):
                             'email')).exists():  # if email not already used in another account
                         user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
                                     email=request.POST.get("email"), password=make_password(
-                                request.POST.get("password")))  # make a new user with md5 hash of pwd
+                                request.POST.get("password")), contact=request.POST.get("contact"),
+                                    last_name=request.POST.get("lastName"))  # make a new user with md5 hash of pwd
                         # user.make_wallet()
                         user.wallet = user.create_wallet()
                         user.save()  # save new user in db
@@ -578,6 +579,8 @@ def courses(request):
 
 @csrf_exempt
 def activate_deactivate_tutor(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
     tutor = Tutor.objects.get(id=request.session['tid'])
     tutor.activate_deactivate()
     return JsonResponse({'status': 'success'})

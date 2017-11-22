@@ -9,7 +9,7 @@
 <div class="container-fluid" style="margin-top:115px; width:600px !important;">
     <div class="centerAlign">
         <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
-        <h1>{{ user.name }}</h1>
+        <h1>{{ user.name }} {{user.last_name}}</h1>
         <br>
     </div>
     <ul class="list-group" style="width:600px; margin-bottom: 50px;">
@@ -29,7 +29,7 @@
                     <small style="color:green">change</small>
                 </a>
             </div>
-            <p class="mb-1"></p>
+            <p class="mb-1">{{user.contact}}</p>
         </li>
         {% if isTutor == '1' %}
         <li class="list-group-item">

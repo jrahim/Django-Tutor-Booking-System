@@ -44,7 +44,7 @@ class Wallet(PolymorphicModel):
 
 class User(models.Model):
     name = models.CharField(max_length=200)  # given name
-    last_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=200)
