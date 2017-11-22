@@ -9,7 +9,7 @@
     <div class="container-fluid" style="margin-top:115px; width:600px !important;">
         <div class="centerAlign">
             <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
-            <h1>{{ user.name }}</h1>
+            <h1>{{ user.name }} {{ user.last_name }}</h1>
             <br>
         </div>
         <ul class="list-group" style="width:600px; margin-bottom: 50px;">
@@ -41,7 +41,8 @@
                     </div>
                     <p class="mb-1">{{ tutor.shortBio }}</p>
                 </li>
-                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                <a class="list-group-item list-group-item-action flex-column align-items-start"
+                   href="/mainApp/manageschedule">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Manage Available Timeslots</h5>
                     </div>

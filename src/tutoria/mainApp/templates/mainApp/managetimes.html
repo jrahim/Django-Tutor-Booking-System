@@ -1,0 +1,125 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/book.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container-fluid centerAlign" style="margin-top: 100px;">
+
+        <div style="margin-bottom: 25px !important; overflow: hidden;">
+            <div style="float: left;">
+                <img src="/static/assets/img/{{ user.avatar }}" alt=""
+                     style="width:50px; height: 50px; border-radius: 50%;">
+                <span style="margin-left: 15px;"><strong>{{ user.name }} {{ user.last_name }}</strong></span>
+            </div>
+            {% load custom_tags %}
+            <span style="float: right; margin-top: 15px;"><strong> Charges:
+                {% if tutor.rate %}
+                    {% if tutor.rate == 0 %}
+                        No Charge!
+                    {% else %}
+                        HKD{{ tutor.rate }}
+                    {% endif %}
+                {% else %}
+                    No Charge!
+                {% endif %}
+            </strong></span>
+        </div>
+
+        <table class="table table-sm table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Day</th>
+                {% for slot in slotsToRender %}
+                    <th>{{ slot }}</th>
+                {% endfor %}
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for day in schedule %}
+                <tr>
+                    <th scope="row" style="text-align: center">
+                        {#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
+                        {{ day.weekday }}
+                    </th>
+                    {{ day.row | safe }}
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="alert alert-info" style="display: none"><strong>Processing request...</strong></div>
+        <div class="alert alert-success" style="display: none"><strong>Schedule successfully updated</strong></div>
+        <div class="alert alert-danger" style="display: none"><strong>An error occurred. Please refresh the page and try again.</strong></div>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+        var selectedDay = "";
+        var selectedSlot = "";
+        $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
+        $('.table td').click(function () {
+            if ($(this).attr('class') == "available") {
+                $('.table td').each(function (i, obj) {
+                    if ($(this).attr('class') == "available") {
+                        $(this).css('background-color', 'inherit');
+                    }
+                });
+                $(this).css('background-color', 'grey');
+                //alert($(this).attr('id').slice(0,3));
+                //alert($(this).attr('id').slice(3,));
+                selectedDay = $(this).attr('id').slice(0, 6);
+                selectedSlot = $(this).attr('id').slice(6,);
+                {#                alert(selectedSlot.slice(1, 6));#}
+                if (selectedSlot == "") {
+                    $('#bookingTime').html("<div class='alert alert-danger' role='alert'><strong>No Time Slot Selected</strong></div>");
+                } else {
+                    {% if tutor|isPrivate == True %}
+                        $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3)) + 1) + ":00");
+                    {% else %}
+                        if (selectedSlot.slice(4, 6) == "00") {
+                            $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":00 - " + (parseInt(selectedSlot.slice(1, 3))) + ":30");
+                        } else {
+                            $('#bookingTime').html(selectedDay + ", " + selectedSlot.slice(1, 3) + ":30 - " + (parseInt(selectedSlot.slice(1, 3)) + 1) + ":00");
+                        }
+                    {% endif %}
+                }
+            }
+        });
+
+        function confirm() {
+            if (selectedSlot != "") {
+                $('#processing').show();
+                $.get('confirmbooking', {
+                    tutorid: "{{ tutor.id }}",
+                    date: selectedDay,
+                    time: selectedSlot.slice(1, 6)
+                }, function (response) {
+                    if (response.status == 'success') {
+                        window.location.replace('confirmation/' + response.booking);
+                    }
+                    if (response.status == 'fail') {
+                        alert(response.message);
+                        window.location.reload();
+                    }
+                });
+            } else {
+                alert("Please Select a timeslot!");
+                window.location.reload();
+            }
+
+        }
+    </script>
+{% endblock %}
+

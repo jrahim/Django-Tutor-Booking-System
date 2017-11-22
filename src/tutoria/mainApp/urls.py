@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^managecourses$', views.courses, name='courses'),
     url(r'^addcourse$', views.addCourse),
     url(r'^removecourses$', views.removeCourses),
+    url(r'^manageschedule$', views.manageSchedule),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

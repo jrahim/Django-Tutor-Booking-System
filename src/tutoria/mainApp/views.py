@@ -248,8 +248,8 @@ def book(request, pk):
         slots, slotsToRender = getPrivateSlots()
     else:
         slots, slotsToRender = getContractedSlots()
-    weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    weekDays = getWeekdays()
+    months = getMonths()
     BookableDates = []
     for i in range(1, 9):
         nextDay = today + timedelta(days=i)
@@ -537,3 +537,36 @@ def courses(request):
         'allCourses': allCourses
     }
     return render(request, 'mainApp/courses.html', context)
+
+
+@csrf_exempt
+def manageSchedule(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+    weekdays = getQuerySetWeekdays()
+    isPrivate = checkIfTutorPrivate(tutor)
+    slots = []
+    slotsToRender = []
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
+    else:
+        slots, slotsToRender = getContractedSlots()
+    upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    schedule = []
+    for index, day in enumerate(weekdays):
+        row = ""
+        for slot in slots:
+            slot_time = datetime.strptime(slot, '%H:%M').time()
+            if upcoming_bookings.filter(date__week_day=index + 1, time_start=slot_time).exists():
+                row = row + "<td class='booked' id=''></td>"
+            elif unavailable_slots.filter(day=day, time_start=slot_time).exists():
+                row = row + "<td class='unavailable' id=''></td>"
+            else:
+                row = row + "<td class='available' id='" + day + "_" + slot + "'></td>"
+        schedule.append({'weekday': day, 'row': row})
+    return render(request, 'mainApp/managetimes.html',
+                  {'user': user, 'tutor': tutor, 'schedule': schedule, 'slotsToRender': slotsToRender})

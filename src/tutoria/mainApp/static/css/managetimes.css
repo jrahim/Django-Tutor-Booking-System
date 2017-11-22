@@ -1,0 +1,17 @@
+.table, .table td, .table th{
+  border: solid 1px;
+  border-color: black !important;
+}
+
+
+.unavailable {
+  background-color: grey !important;
+}
+
+.notopen {
+  background-color: grey !important;
+}
+
+.booked {
+  background-color: grey !important;
+}
