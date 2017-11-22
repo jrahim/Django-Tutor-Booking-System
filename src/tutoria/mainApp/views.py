@@ -254,9 +254,12 @@ def wallet(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     wallet = Wallet.objects.get(user=request.session['uid'])
+    isTutor, isStudent = checkUser('uid', request);
     context = {
         'wallet': wallet,
-        'user': user
+        'user': user,
+        'isTutor': isTutor,
+        'isStudent': isStudent
     }
     return render(request, 'mainApp/wallet.html', context)
 
