@@ -127,6 +127,50 @@
                         $('.alert-danger').show();
                     }
                 });
+            } else if ($(this).attr('class') == "unavailable") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/removeunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("unavailable");
+                        $(element).addClass("available");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
+            } else if ($(this).attr('class') == "bookedunavailable") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/removeunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("bookedunavailable");
+                        $(element).addClass("booked");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
             }
         });
 

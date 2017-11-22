@@ -149,6 +149,9 @@ class Tutor(PolymorphicModel):
     def create_unavailable_slot(self, day, time_start):
         pass
 
+    def remove_unavailable_slot(self, day, time_start):
+        UnavailableSlot.objects.get(tutor=self, day=day, time_start=time_start).delete()
+
     def add_course(self, courseCode):
         c = Course.objects.get(code=courseCode)
         self.course.add(c)
