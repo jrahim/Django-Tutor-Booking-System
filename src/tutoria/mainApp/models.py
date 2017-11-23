@@ -146,9 +146,11 @@ class Tutor(PolymorphicModel):
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
 
-    def create_unavailable_slot(self, day, time_start, duration):
-        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
-        unavailable.save()
+    def create_unavailable_slot(self, day, time_start):
+        pass
+
+    def remove_unavailable_slot(self, day, time_start):
+        UnavailableSlot.objects.get(tutor=self, day=day, time_start=time_start).delete()
 
     def add_course(self, courseCode):
         c = Course.objects.get(code=courseCode)
@@ -160,6 +162,9 @@ class Tutor(PolymorphicModel):
         self.course.remove(c)
         self.save()
 
+    def create_booking(self, date, time_start, student):
+        pass
+
     def __str__(self):
         return self.user.name
 
@@ -170,10 +175,37 @@ class PrivateTutor(Tutor):
     def __str__(self):
         return self.user.name
 
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=1.0)
+        unavailable.save()
+
+    def create_booking(self, date, time_start, student):
+        end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=1.0)).time()
+        booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=self, student=student, status="BOOKED")
+        booking.save()
+        chargesWithCommission = round(self.rate * 1.05, 2)
+        self.user.wallet.subtract_funds(chargesWithCommission)
+        TempWallet = SpecialWallet.objects.get(name='Temporary')
+        TempWallet.add_funds(chargesWithCommission)
+        transaction = booking.create_transaction_record("SESSIONBOOKED", True, True)
+        return booking, transaction
+
 
 class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
+
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=0.5)
+        unavailable.save()
+
+    def create_booking(self, date, time_start, student):
+        end = (datetime.strptime(str(time_start), '%H:%M:%S') + timedelta(hours=0.5)).time()
+        booking = BookedSlot(date=date, time_start=time_start, time_end=end, tutor=self, student=student,
+                             status="BOOKED")
+        booking.save()
+        transaction = None
+        return booking, transaction
 
 
 class Student(models.Model):
@@ -221,7 +253,8 @@ class BookedSlot(models.Model):
                 self.student.user.wallet.add_funds(booking_transaction.amount)
                 self.create_transaction_record("SESSIONCANCELLED", True)
         elif new_status == "ENDED":
-            self.create_transaction_record("SESSIONBOOKED", False)
+            if isinstance(self.tutor, PrivateTutor):
+                self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
 
     def create_transaction_record(self, transactionNature, forStudent, isCreated=False):

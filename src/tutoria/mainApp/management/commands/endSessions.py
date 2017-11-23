@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from mainApp.models import *
 from django.db.models import Q
 from datetime import timedelta
+from mainApp.functions import checkIfTutorPrivate
 
 
 class Command(BaseCommand):
@@ -12,8 +13,12 @@ class Command(BaseCommand):
         TempWallet = SpecialWallet.objects.get(name='Temporary')
         MyTutorWallet = SpecialWallet.objects.get(name='MyTutor')
         for booking in BookingsEnded:
-            transaction = SessionTransaction.objects.get(booking_id=booking)
-            TempWallet.subtract_funds(transaction.amount)
-            booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
-            MyTutorWallet.add_funds(transaction.commission)
+            if checkIfTutorPrivate(booking.tutor):
+                try:
+                    transaction = SessionTransaction.objects.get(booking_id=booking)
+                    TempWallet.subtract_funds(transaction.amount)
+                    booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
+                    MyTutorWallet.add_funds(transaction.commission)
+                except:
+                    pass
             booking.update_booking('ENDED')

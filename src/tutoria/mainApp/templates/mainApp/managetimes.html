@@ -1,0 +1,179 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/managetimes.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container-fluid centerAlign" style="margin-top: 100px;">
+
+        <div style="margin-bottom: 25px !important; overflow: hidden;">
+            <div style="float: left;">
+                <img src="/static/assets/img/{{ user.avatar }}" alt=""
+                     style="width:50px; height: 50px; border-radius: 50%;">
+                <span style="margin-left: 15px;"><strong>{{ user.name }} {{ user.last_name }}</strong></span>
+            </div>
+            {% load custom_tags %}
+            <span style="float: right; margin-top: 15px;"><strong> Charges:
+                {% if tutor.rate %}
+                    {% if tutor.rate == 0 %}
+                        No Charge!
+                    {% else %}
+                        HKD{{ tutor.rate }}
+                    {% endif %}
+                {% else %}
+                    No Charge!
+                {% endif %}
+            </strong></span>
+        </div>
+
+        <table class="table table-sm table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Day</th>
+                {% for slot in slotsToRender %}
+                    <th>{{ slot }}</th>
+                {% endfor %}
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for day in schedule %}
+                <tr>
+                    <th scope="row" style="text-align: center">
+                        {#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
+                        {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
+                        {{ day.weekday }}
+                    </th>
+                    {{ day.row | safe }}
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="booked" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= booked and available for next week</span>
+
+        <div class="bookedunavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= booked and not available for next week</span>
+
+        <div class="unavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= unavailable</span>
+
+        <div class="available" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
+        <span style="position: relative; top: -8px">= available</span>
+
+        <div class="alert alert-info" style="display: none"><strong>Processing request...</strong></div>
+        <div class="alert alert-success" style="display: none"><strong>Schedule successfully updated</strong></div>
+        <div class="alert alert-danger" style="display: none"><strong>An error occurred. Please refresh the page and try
+            again.</strong></div>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+        var selectedDay = "";
+        var selectedSlot = "";
+
+        $('.table td').click(function () {
+            if ($(this).attr('class') == "available") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/addunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("available");
+                        $(element).addClass("unavailable");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
+            } else if ($(this).attr('class') == "booked") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/addunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("booked");
+                        $(element).addClass("bookedunavailable");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
+            } else if ($(this).attr('class') == "unavailable") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/removeunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("unavailable");
+                        $(element).addClass("available");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
+            } else if ($(this).attr('class') == "bookedunavailable") {
+                $('.alert-danger').hide();
+                $('.alert-info').hide();
+                $('.alert-success').hide();
+                selectedDay = $(this).attr('id').slice(0, 3);
+                selectedSlot = $(this).attr('id').slice(4,);
+                $('.alert-info').show();
+                var element = this;
+                $.post('/mainApp/removeunavailable', {
+                    time: selectedSlot,
+                    day: selectedDay,
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        $(element).removeClass("bookedunavailable");
+                        $(element).addClass("booked");
+                    } else {
+                        $('.alert-info').hide();
+                        $('.alert-danger').show();
+                    }
+                });
+            }
+        });
+
+    </script>
+{% endblock %}
+
