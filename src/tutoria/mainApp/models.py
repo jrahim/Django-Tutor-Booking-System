@@ -231,7 +231,8 @@ class BookedSlot(models.Model):
                 self.student.user.wallet.add_funds(booking_transaction.amount)
                 self.create_transaction_record("SESSIONCANCELLED", True)
         elif new_status == "ENDED":
-            self.create_transaction_record("SESSIONBOOKED", False)
+            if isinstance(self.tutor, PrivateTutor):
+                self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
 
     def create_transaction_record(self, transactionNature, forStudent, isCreated=False):
