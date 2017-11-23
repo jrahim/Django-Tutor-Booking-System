@@ -1,0 +1,96 @@
+{% extends 'mainApp/topBarWithSearch.html' %}M
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid centerAlign" style="margin-top:115px; width:600px !important;">
+        
+        <h2 class="centerAlign">Review for your session:</h2>
+        <br></br>
+
+
+        <form name="reviewForm" id="reviewForm" method="post" >
+
+  <div class="form-group">
+    <label for="exampleSelect1">How was your experience on a scale of 0 to 5?</label>
+    <select class="form-control" name="starRating" id="starRating">
+    <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleTextarea">Please write a few words and tell us about your experience?</label>
+    <textarea class="form-control" id="reviewBody" rows="3"></textarea>
+  </div>
+  
+  <fieldset class="form-group">
+    <legend>Would you like your review to be anonymous?</legend>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="no" checked>
+        No
+      </label>
+    </div>
+    <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="yes">
+        Yes
+      </label>
+    </div>
+    
+  </fieldset>
+  
+  <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
+
+
+        </div>
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+
+    	document.getElementById("reviewForm").onsubmit = function () {
+    		var type = "";
+    		if ($('input:checked').val() == "yes") {
+    			type = "ANONYMOUS";
+    		} else {
+    			type = "NONANONYMOUS";
+    		}
+
+
+    		$.get('/mainApp/addreview/{{ bookingID }}', {
+
+    			rating : $('#starRating').val(),
+    			content : $('#reviewBody').val(),
+    			type : type
+    		}, function(response) {
+    			if (response.status=='success') {
+    				alert('it was a success')
+    			}
+
+    			else {
+    				alert('fail!')
+    			}
+
+
+    		});
+
+    		return false;
+
+    		} 
+    	</script>
+    {% endblock extra_script %}
+
+
+

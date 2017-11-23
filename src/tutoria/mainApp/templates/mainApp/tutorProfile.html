@@ -31,28 +31,82 @@
                 </div>
                 <p class="mb-1">{{ tutor.shortBio }}</p>
             </li>
+           
+            
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Session Rate:</h5>
-                </div>
-                {% load custom_tags %}
-                <p class="mb-1">{{ tutor.rate|mult:"1.05" }}</p>
+                <h5 class="mb-1">Student reviews:</h5>
+            </div>
+                {% if reviews %}
+
+                 <ul class="list-group" style="width:600px;">
+                
+                 
+                
+                
+                {% for review in reviews %}
+                <li class="list-group-item">
+                
+                {% if review.reviewtype == "ANONYMOUS" %}
+                <img src="/static/assets/img/anon.png" id="AvatarPic" alt="">
+                
+                <p><b>Anonymous:</b> 
+                
+
+                {% else %}
+                <img src="/static/assets/img/{{review.student.user.avatar}}" id="AvatarPic" alt="">
+
+                
+                <p><b>{{ review.student.user.name }}:</b>
+
+                {% endif %}
+
+                <i> {{ review.content }}</i><br>Score: {{ review.rating }}/5 </p>
+
+          
+                </li>
+                
+                {% endfor %}
+            </ul>
+
+            {% else %}
+            <p class="mb-1">This tutor has not been reviewed yet</p>
+            {% endif %}
+
             </li>
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Rating:</h5>
+                    <h5 class="mb-1">Average review score:</h5>
                 </div>
-                <p class="mb-1">{{ tutor.rating }}</p>
+                {% if rating == -1 %}
+                <p class="mb-1">N/A</p>
+                {% else %}
+                <p class="mb-1">{{ rating|floatformat:2 }} out of 5</p>
+                {% endif %}
             </li>
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Tutor Type:</h5>
                 </div>
+               {% load custom_tags %}
                 {% if tutor|isPrivate == True %}
                     <p class="mb-1">Private</p>
                 {% else %}
                     <p class="mb-1">Contracted</p>
                 {% endif %}
+            </li>
+             <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Session Rate:</h5>
+                </div>
+                
+                {% if tutor|isPrivate == True %}
+                <p class="mb-1">{{ tutor.rate|mult:"1.05" }}</p>
+                {% else %}
+                <p class="mb-1">No charge!</p>
+                {% endif %}
+             
+               
             </li>
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">

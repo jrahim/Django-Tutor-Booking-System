@@ -173,6 +173,25 @@ def profile(request):
         isTutor = '0'
     return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
+@csrf_exempt
+def review(request, pk):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    booking = BookedSlot.objects.filter(id=pk, status='ENDED')
+    if not booking.exists():
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'This link is invalid!'})
+    else:
+        booking = booking[0]
+    student = Student.objects.get(id=booking.student.id);
+    if not student.user == user:
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'You can only review your bookings!'})
+    review = Review.objects.filter(booking=booking)
+    if review.exists():
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'You have already submitted a review for this session!'})
+
+    return render(request, 'mainApp/review.html', {'user': user, 'bookingID': pk})
+
 
 @csrf_exempt
 def bookings(request):
@@ -418,7 +437,20 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     courses = tutor.course.all()
-    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses})
+    reviews = Review.objects.filter(tutor=tutor)
+    total=float(0)
+    
+    if (reviews.count()>0):
+        
+        
+        for r in reviews:
+            total=total + r.rating
+            
+        avgRating=total / reviews.count()
+    
+    else:
+        avgRating=float(-1.0)
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses, 'reviews' : reviews, 'rating' : avgRating })
 
 
 @csrf_exempt
@@ -537,3 +569,27 @@ def courses(request):
         'allCourses': allCourses
     }
     return render(request, 'mainApp/courses.html', context)
+
+@csrf_exempt
+def addReview(request, pk):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    user = User.objects.get(id=request.session['uid'])
+    booking = BookedSlot.objects.filter(id=pk, status='ENDED')
+    if not booking.exists():
+        return JsonResponse({'status': 'fail'})
+    else:
+        booking = booking[0]
+    student = Student.objects.get(id=booking.student.id);
+    if not student.user == user:
+        return JsonResponse({'status': 'fail'})
+    review = Review.objects.filter(booking=booking)
+    if review.exists():
+        return JsonResponse({'status': 'fail'})
+    print (request.GET.get('rating'));
+    review = Review(tutor=booking.tutor, student=booking.student, rating=request.GET.get('rating'), content=request.GET.get('content'), reviewtype=request.GET.get('type'), booking=booking)
+    review.save()
+    return JsonResponse({'status': 'success'})
+
+def test(request):
+    return render(request, 'mainApp/review.html')
