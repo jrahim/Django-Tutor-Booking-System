@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" afterPath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="661">
-              <caret line="326" column="53" lean-forward="false" selection-start-line="326" selection-start-column="53" selection-end-line="326" selection-end-column="53" />
+            <state relative-caret-position="-824">
+              <caret line="343" column="46" lean-forward="true" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -49,33 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="endSessions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="wallet.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="616">
               <caret line="99" column="32" lean-forward="true" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/profile.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="11" column="57" lean-forward="true" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -96,6 +74,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-491">
               <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2673">
+              <caret line="21" column="75" lean-forward="false" selection-start-line="21" selection-start-column="75" selection-end-line="21" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="custom_tags.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templatetags/custom_tags.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="661">
+              <caret line="56" column="41" lean-forward="false" selection-start-line="56" selection-start-column="41" selection-end-line="56" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -132,16 +130,6 @@
                 <element signature="n#style#0;n#div#6;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#7;n#div#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="managetimes.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/static/css/managetimes.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="10" column="14" lean-forward="false" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -208,13 +196,11 @@
         <option value="$PROJECT_DIR$/mainApp/management/commands/ploymorphic migrations.py" />
         <option value="$PROJECT_DIR$/mainApp/management/commands/polyMig.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
-        <option value="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/courses.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html" />
         <option value="$PROJECT_DIR$/mainApp/functions.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
@@ -226,6 +212,8 @@
         <option value="$PROJECT_DIR$/mainApp/models.py" />
         <option value="$PROJECT_DIR$/mainApp/views.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" />
+        <option value="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
       </list>
     </option>
   </component>
@@ -295,6 +283,12 @@
               <item name="mainApp" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="mainApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tutoria" type="462c0819:PsiDirectoryNode" />
+              <item name="mainApp" type="462c0819:PsiDirectoryNode" />
+              <item name="templatetags" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tutoria" type="b2602c69:ProjectViewProjectNode" />
@@ -650,14 +644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templatetags/custom_tags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="661">
-          <caret line="31" column="30" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -721,24 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="25" column="50" lean-forward="false" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="69" column="12" lean-forward="false" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="526">
@@ -784,16 +752,8 @@
         <state relative-caret-position="621">
           <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
           <folding>
-            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/lockSessions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -802,16 +762,6 @@
         <state relative-caret-position="-491">
           <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1174">
-          <caret line="187" column="60" lean-forward="true" selection-start-line="187" selection-start-column="60" selection-end-line="187" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -852,10 +802,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/views.py">
+    <entry file="file://$PROJECT_DIR$/mainApp/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="61" column="60" lean-forward="true" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#21#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/lockSessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1174">
+          <caret line="187" column="60" lean-forward="true" selection-start-line="187" selection-start-column="60" selection-end-line="187" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templatetags/custom_tags.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="661">
-          <caret line="326" column="53" lean-forward="false" selection-start-line="326" selection-start-column="53" selection-end-line="326" selection-end-column="53" />
+          <caret line="56" column="41" lean-forward="false" selection-start-line="56" selection-start-column="41" selection-end-line="56" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2673">
+          <caret line="21" column="75" lean-forward="false" selection-start-line="21" selection-start-column="75" selection-end-line="21" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-824">
+          <caret line="343" column="46" lean-forward="true" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
           <folding />
         </state>
       </provider>

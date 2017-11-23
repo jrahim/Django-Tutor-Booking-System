@@ -19,7 +19,7 @@
                 {% for booking in student_bookings %}
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1">{{ booking.date }}:</h6>
+                            <h6 class="mb-1">{{ booking.date|getWeekDay }}, {{ booking.date }}:</h6>
                             {% if booking|isCancellable %}
                                 <a href="" data-link="/mainApp/cancel/{{ booking.id }}" class="cancelbtn"
                                    data-toggle="modal" data-target="#myModal">
@@ -47,7 +47,7 @@
                 {% for booking in tutor_bookings %}
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1">{{ booking.date }}:</h6>
+                            <h6 class="mb-1">{{ booking.date|getWeekDay }}, {{ booking.date }}:</h6>
                         </div>
                         <p class="mb-1"><img src="{{ MEDIA_URL }}{{ booking.student.user.avatar }}" alt=""
                                              id="tutorPic">
