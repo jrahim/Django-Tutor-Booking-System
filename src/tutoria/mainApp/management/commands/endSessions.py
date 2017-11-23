@@ -17,3 +17,4 @@ class Command(BaseCommand):
             booking.tutor.user.wallet.add_funds(transaction.tutorCharges)
             MyTutorWallet.add_funds(transaction.commission)
             booking.update_booking('ENDED')
+            review_email(booking)

@@ -135,6 +135,11 @@ def private_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd, tra
 
     return
 
+
+
+
+
+
 def wallet_mail_add(user, amount, wallet, transaction):
 
     hour = transaction.time.hour
@@ -151,8 +156,6 @@ def wallet_mail_add(user, amount, wallet, transaction):
     message_subject = "Wallet Update"
     mail_from = "My Tutors"
     message_body = "Funds added to wallet: " + str(amount) + "\nNew Balance: " + str(wallet.balance) + "\nTransactionID: " + str(transaction.id) + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
-    mail_to = [str(user.email)]
-    mail_to = [str(user.email)]
     mail_to = [str(user.email)]
 
 
@@ -190,6 +193,22 @@ def wallet_mail_subtract(user, amount, wallet, transaction):
 
     return
 
+def review_email(booking):
+
+    link = "http://localhost:8000/mainApp/review/"+str(booking.id)
+    message_subject = "Submit Review Invitation"
+    mail_from = "My Tutors"
+    message_body = "This is an invitation to submit a review of the learning session with: " + booking.tutor.user.name + "\nDate: " + str(booking.date) + "\nPlease click on the link to submit the review: " + link
+    mail_to = [str(booking.student.user.email)]
+
+
+    with mail.get_connection() as connection:
+        mail.EmailMessage(
+            message_subject, message_body, mail_from, [mail_to],
+            connection=connection,
+        ).send()
+
+    return
 
 
 
