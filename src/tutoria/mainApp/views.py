@@ -382,10 +382,11 @@ def confirmBooking(request):
         booking = None
         transaction = None
         try:
-            if checkIfTutorPrivate(tutor):
-                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
-            else:
-                booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
+            # if checkIfTutorPrivate(tutor):
+            #     booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
+            # else:
+            #     booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
+            booking, transaction = tutor.create_booking(parser.parse(request.GET.get('date')), slot, student)
             # SEND NOTIFICATION ON BOOKING TO TUTOR
             message_subject = "New Booking"
             message_body = "You have been booked by " + student.user.name + " on " + str(

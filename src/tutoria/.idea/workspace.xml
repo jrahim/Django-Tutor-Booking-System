@@ -2,10 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155334-19879824.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155334-19880048.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155341-19891792.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155341-19892496.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155421-20253552.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155421-20254224.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155428-20288240.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155428-20288720.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155516-20068048.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155533-73846320.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155533-73929936.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155600-90887376.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155815-64099536.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155936-80264496.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155936-80264848.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" afterPath="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/management/commands/lockSessions.py" afterPath="$PROJECT_DIR$/mainApp/management/commands/lockSessions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/models.py" afterPath="$PROJECT_DIR$/mainApp/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,11 +45,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="715">
-              <caret line="282" column="34" lean-forward="true" selection-start-line="282" selection-start-column="34" selection-end-line="282" selection-end-column="34" />
+            <state relative-caret-position="486">
+              <caret line="388" column="56" lean-forward="false" selection-start-line="388" selection-start-column="56" selection-end-line="388" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -54,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="621">
-              <caret line="23" column="43" lean-forward="false" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+              <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -102,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-491">
-              <caret line="234" column="70" lean-forward="true" selection-start-line="234" selection-start-column="70" selection-end-line="234" selection-end-column="70" />
+            <state relative-caret-position="1174">
+              <caret line="187" column="60" lean-forward="true" selection-start-line="187" selection-start-column="60" selection-end-line="187" selection-end-column="60" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -222,11 +237,11 @@
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
         <option value="$PROJECT_DIR$/mainApp/static/css/managetimes.css" />
         <option value="$PROJECT_DIR$/mainApp/urls.py" />
-        <option value="$PROJECT_DIR$/mainApp/views.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/managetimes.html" />
         <option value="$PROJECT_DIR$/mainApp/management/commands/lockSessions.py" />
         <option value="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
         <option value="$PROJECT_DIR$/mainApp/models.py" />
+        <option value="$PROJECT_DIR$/mainApp/views.py" />
       </list>
     </option>
   </component>
@@ -449,11 +464,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py</url>
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
@@ -780,14 +790,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-491">
-          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/managetimes.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="607">
@@ -817,11 +819,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/views.py">
+    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="282" column="34" lean-forward="true" selection-start-line="282" selection-start-column="34" selection-end-line="282" selection-end-column="34" />
-          <folding />
+        <state relative-caret-position="621">
+          <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -833,23 +837,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="23" column="43" lean-forward="false" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-491">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-491">
-          <caret line="234" column="70" lean-forward="true" selection-start-line="234" selection-start-column="70" selection-end-line="234" selection-end-column="70" />
+        <state relative-caret-position="1174">
+          <caret line="187" column="60" lean-forward="true" selection-start-line="187" selection-start-column="60" selection-end-line="187" selection-end-column="60" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="388" column="56" lean-forward="false" selection-start-line="388" selection-start-column="56" selection-end-line="388" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>
