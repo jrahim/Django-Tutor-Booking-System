@@ -324,7 +324,7 @@ def manageWallet(request):
 
     user.send_mail(mail_to, mail_from, message_body, message_subject)
 
-    data = {'status': 'success'}
+    data = {'status': 'success', 'balance':w.balance}
     return JsonResponse(data)
 
 
