@@ -25,7 +25,7 @@
                         </p>
                     </li>
                 {% endfor %}
-                <input id="removeButton" type="button" class="btn btn-primary" value="Remove selected courses"></input>
+                <input id="removeButton" type="button" class="btn btn-primary" value="Remove selected courses" onclick=removeCourse()></input>
                 <div>
 
 
@@ -91,7 +91,7 @@
 
         }
 
-        document.getElementById("removeButton").onclick = function () {
+        function removeCourse () {
 
             var inputs = document.getElementsByTagName("input");
             var listCourses = new Array();

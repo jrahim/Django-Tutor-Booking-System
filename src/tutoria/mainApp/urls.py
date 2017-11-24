@@ -29,4 +29,9 @@ urlpatterns = [
     url(r'^resetpwdtoken$', views.getResetPwdToken),
     url(r'^resetpwd$', views.resetPwd),
     url(r'^setnewpwd$', views.setNewPwd),
+    url(r'^managetags$', views.tags, name='tags'),
+    url(r'^addtag$', views.addTag),
+    url(r'^removetags$', views.removeTags),
+    url(r'^review/(?P<pk>\d+)$', views.review, name='review'),
+    url(r'^addreview/(?P<pk>\d+)$', views.addReview),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -231,6 +231,25 @@ def profile(request):
         isTutor = '0'
     return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
+@csrf_exempt
+def review(request, pk):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    booking = BookedSlot.objects.filter(id=pk, status='ENDED')
+    if not booking.exists():
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'This link is invalid!'})
+    else:
+        booking = booking[0]
+    student = Student.objects.get(id=booking.student.id);
+    if not student.user == user:
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'You can only review your bookings!'})
+    review = Review.objects.filter(booking=booking)
+    if review.exists():
+        return render(request, 'mainApp/error.html', {'user': user, 'error': 'You have already submitted a review for this session!'})
+
+    return render(request, 'mainApp/review.html', {'user': user, 'bookingID': pk})
+
 
 @csrf_exempt
 def bookings(request):
@@ -457,7 +476,12 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     courses = tutor.course.all()
-    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses})
+    reviews = Review.objects.filter(tutor=tutor)
+    if reviews.count()>=3:
+        avgRating= tutor.rating
+    else:
+        avgRating= -1
+    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses, 'reviews' : reviews, 'rating' : avgRating })
 
 
 @csrf_exempt
@@ -707,3 +731,87 @@ def setNewPwd(request):
         user.save()
         pwdtkn.delete()
         return JsonResponse({'status': 'success'})
+@csrf_exempt
+def tags(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+
+    presentTags = tutor.subject_tags.all()
+    print("the present tags are", presentTags)
+    allTags = Tag.objects.exclude(id__in=presentTags)
+    print("all tags: ", allTags)
+    context = {
+        'user': user,
+        'tutor': tutor,
+        'presentTags': presentTags,
+        'allTags': allTags
+    }
+    return render(request, 'mainApp/tags.html', context)
+
+@csrf_exempt
+def addTag(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+
+    tagRequestedName = request.POST.get('tagName')
+
+    create = request.POST.get('create')
+
+    if create=="true":
+        create=True
+    else:
+        create=False
+
+    tutor.add_tag(tagRequestedName, create)
+    message_body = "You added " + str(tagRequestedName) + " to your list of tags."
+    print(message_body)
+    return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def removeTags(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+    listTags = request.GET.getlist('listTags[]')
+    for tagName in listTags:
+        tutor.remove_tag(tagName)
+
+    return JsonResponse({'status': 'success'})
+
+
+
+
+
+@csrf_exempt
+def addReview(request, pk):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail1'})
+    user = User.objects.get(id=request.session['uid'])
+    booking = BookedSlot.objects.filter(id=pk, status='ENDED')
+    if not booking.exists():
+        return JsonResponse({'status': 'fail2'})
+    else:
+        booking = booking[0]
+    student = Student.objects.get(id=booking.student.id);
+    if not student.user == user:
+        return JsonResponse({'status': 'fail3'})
+    review = Review.objects.filter(booking=booking)
+    if review.exists():
+        return JsonResponse({'status': 'fail4'})
+    print (request.GET.get('rating'));
+    review = Review(tutor=booking.tutor, student=booking.student, rating=request.GET.get('rating'), content=request.GET.get('content'), reviewtype=request.GET.get('type'), booking=booking)
+    review.save()
+
+    booking.tutor.update_rating()
+    return JsonResponse({'status': 'success'})
+
+def test(request):
+    return render(request, 'mainApp/review.html')

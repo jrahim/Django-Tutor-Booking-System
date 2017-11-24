@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
-from django.core import mail
 from django.db import models
+from django.db.models import Avg
 from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
@@ -161,6 +161,30 @@ class Tutor(PolymorphicModel):
         else:
             self.isActivated = True
             self.save()
+
+    def add_tag(self, tagName, create):
+        if create:
+            t = Tag(tag_name=tagName)
+            t.save()
+
+        t2 = Tag.objects.get(tag_name=tagName)
+        self.subject_tags.add(t2)
+        self.save()
+
+    def remove_tag(self, tagName):
+        t = Tag.objects.get(tag_name=tagName)
+        self.subject_tags.remove(t)
+        self.save()
+
+    def update_rating(self):
+
+
+        newRating=Review.objects.filter(tutor=self).aggregate(Avg('rating'))
+        print(newRating)
+        setattr(self, 'rating', newRating['rating__avg'])
+
+        self.save()
+
 
     def __str__(self):
         return self.user.name
@@ -326,3 +350,18 @@ class PasswordToken(models.Model):
     def __str__(self):
         return self.user.name
 
+
+
+class Review(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    content = models.CharField(max_length=400)
+    rating = models.PositiveIntegerField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    booking = models.OneToOneField(BookedSlot, on_delete=models.CASCADE)
+
+    TYPES = (
+        ('ANONYMOUS', 'anonymous'),
+        ('NONANONYMOUS', 'nonanonymous'),
+
+    )
+    reviewtype = models.CharField(max_length=9, choices=TYPES)
