@@ -129,9 +129,11 @@ def search(request):
         tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
     if university != "":
-        university_list = University.objects.filter(
-            id=university)  # contains to allow custom input search
-        tutor_list = tutor_list.filter(university__in=university_list)
+        # university_list = University.objects.filter(
+        #     id=university)  # contains to allow custom input search
+        # tutor_list = tutor_list.filter(university__in=university_list)
+        courses = Course.objects.filter(university=university)
+        tutor_list= tutor_list.filter(course__in=courses)
 
     if course != "":
         course_list = Course.objects.filter(id=course)  # course code
@@ -166,15 +168,17 @@ def search(request):
     # TODO only display tutors with an available slot in the coming 7 days
     if availability != "":
         for tutor in tutor_list:
-            upcoming_bookings = tutor.user.get_upcoming_bookings(True, False).count()
+            upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED').count()
             unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor)).count()
             full_slots = upcoming_bookings + unavailable_slots
+            print('checking')
+            print(full_slots)
             if isinstance(tutor, PrivateTutor):
-                if full_slots == 8 * 8:
-                    tutor_list = tutor_list.exclude(tutor=tutor)
+                if full_slots >= 7 * 8:
+                    tutor_list = tutor_list.exclude(id=tutor.id)
             elif isinstance(tutor, ContractedTutor):
-                if full_slots == 8 * 15:
-                    tutor_list = tutor_list.exclude(tutor=tutor)
+                if full_slots >= 7 * 15:
+                    tutor_list = tutor_list.exclude(id=tutor.id)
 
     tutor_list = tutor_list.filter(isActivated=True)
 
