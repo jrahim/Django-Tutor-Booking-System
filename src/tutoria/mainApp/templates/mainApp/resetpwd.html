@@ -34,18 +34,24 @@
 
 
 <div class="container-fluid animated bounceInUp" id="mainContainer">
-    {% if invalid %}
-        <form onsubmit="reset()" style="text-align: center">
-            <div class="form-group">
-                <label for="exampleInputEmail1">New Password</label>
-                <input name="pwd1" type="text" class="form-control" id="pwd1" placeholder="Enter New Password">
+    {% if not invalid %}
+        <div id="main">
+            <form style="text-align: center">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">New Password</label>
+                    <input name="pwd1" type="text" class="form-control" id="pwd1" placeholder="Enter New Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Confirm Password</label>
+                    <input name="pwd2" type="text" class="form-control" id="pwd2" placeholder="Confirm New Password">
+                </div>
+
+            </form>
+            <div style="text-align: center">
+                <button class="btn btn-primary" onclick="reset()">Set New Password!</button>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Confirm Password</label>
-                <input name="pwd2" type="text" class="form-control" id="pwd2" placeholder="Confirm New Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Set New Password!</button>
-        </form>
+            <div class="alert alert-danger" style="display: none"></div>
+        </div>
     {% else %}
         <div class="alert alert-danger"><strong>Link is invalid!</strong></div>
     {% endif %}
@@ -63,8 +69,25 @@
 <script type="text/javascript">
 
     function reset() {
-        alert('hi');
-        return false;
+        $('.alert-danger').hide();
+        pwd1 = $('#pwd1').val();
+        pwd2 = $('#pwd2').val();
+        if (pwd1 != pwd2) {
+            $('.alert-danger').html("Passwords do not match!");
+            $('.alert-danger').show();
+        } else {
+            $.post('/mainApp/setnewpwd', {
+                token: "{{ token }}",
+                newpwd: pwd1,
+            }, function (response) {
+                if (response.status=='success'){
+                    $('#main').html("<div class='alert alert-success'>Success!</div>");
+                } else {
+                    $('.alert-danger').html("There was an error! Please try again later!");
+                    $('.alert-danger').show();
+                }
+            });
+        }
     }
 
 </script>

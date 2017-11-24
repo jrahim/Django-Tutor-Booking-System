@@ -678,7 +678,8 @@ def removeUnavailable(request):
 
 
 def getResetPwdToken(request):
-    token = PasswordToken.makeToken(request.POST.get('email'))
+    token = makeToken(request.GET.get('email'))
+    print(token)
     if token is None:
         return JsonResponse({'status': 'fail'})
     else:
@@ -696,12 +697,13 @@ def resetPwd(request):
         else:
             return render(request, 'mainApp/resetpwd.html', {'invalid': 1})
 
+@csrf_exempt
 def setNewPwd(request):
-    user, pwdtkn = checkToken(request.GET.get('token'))
-    if user is not None:
+    user, pwdtkn = checkToken(request.POST.get('token'))
+    if user is None:
         return JsonResponse({'status': 'fail'})
     else:
-        setattr(user, 'password', make_password(request.GET.get('newpwd')))
+        setattr(user, 'password', make_password(request.POST.get('newpwd')))
         user.save()
         pwdtkn.delete()
         return JsonResponse({'status': 'success'})

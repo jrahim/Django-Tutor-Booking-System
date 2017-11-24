@@ -28,5 +28,5 @@ urlpatterns = [
     url(r'^removeunavailable$', views.removeUnavailable),
     url(r'^resetpwdtoken$', views.getResetPwdToken),
     url(r'^resetpwd$', views.resetPwd),
-    url(r'^setNewPwd$', views.setNewPwd),
+    url(r'^setnewpwd$', views.setNewPwd),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

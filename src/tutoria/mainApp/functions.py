@@ -4,7 +4,7 @@ from datetime import time
 import math
 import string
 import random
-from django.contrib.auth.hashers import make_password, check_password
+import hashlib
 
 
 # functions
@@ -282,6 +282,7 @@ def getQuerySetWeekdays():
 def checkIfTutorPrivate(tutor):
     return isinstance(tutor, PrivateTutor)
 
+
 def makeToken(email_address):
     not_hashed = None
     if User.objects.filter(email=email_address).exists():
@@ -290,15 +291,18 @@ def makeToken(email_address):
             not_hashed = ""
             for i in range(8):
                 not_hashed = not_hashed + random.SystemRandom().choice(string.ascii_uppercase + string.digits)
-            if not PasswordToken.objects.filter(token=make_password(not_hashed)).exists():
-                new_token = PasswordToken(user=user, token=make_password(not_hashed))
-                new_token.save()
-                break
+            hashed = hashlib.md5(not_hashed.encode('utf-8')).hexdigest()
+            if not PasswordToken.objects.filter(token=hashed).exists():
+                new_token = PasswordToken(user=user, token=hashed)
+            new_token.save()
+            break
     return not_hashed
 
+
 def checkToken(token):
-    if not PasswordToken.objects.filter(token=make_password(token)).exists():
+    hashed = hashlib.md5(token.encode('utf-8')).hexdigest()
+    if not PasswordToken.objects.filter(token=hashed).exists():
         return None, None
     else:
-        pwdtkn = PasswordToken.objects.get(token=make_password(token))
+        pwdtkn = PasswordToken.objects.get(token=hashed)
         return User.objects.get(id=pwdtkn.user.id), pwdtkn

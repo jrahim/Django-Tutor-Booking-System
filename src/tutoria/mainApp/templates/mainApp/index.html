@@ -168,7 +168,7 @@
         if ($('#pwdResetEmail').val() != "") {
             $('#resetFail').hide();
             $('#resetSuccess').hide();
-            $.post('/mainApp/resetpwdtoken', {
+            $.get('/mainApp/resetpwdtoken', {
                 email: $('#pwdResetEmail').val()
             }, function (response) {
                 if (response.status == "success") {
