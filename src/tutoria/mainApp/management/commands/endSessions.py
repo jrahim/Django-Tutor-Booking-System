@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from mainApp.models import *
 from django.db.models import Q
 from datetime import timedelta
-from mainApp.functions import checkIfTutorPrivate
+from mainApp.functions import checkIfTutorPrivate, review_email
 
 
 class Command(BaseCommand):
