@@ -34,4 +34,6 @@ urlpatterns = [
     url(r'^removetags$', views.removeTags),
     url(r'^review/(?P<pk>\d+)$', views.review, name='review'),
     url(r'^addreview/(?P<pk>\d+)$', views.addReview),
+    url(r'^admin$', views.admin),
+    url(r'^admin/withdraw$', views.adminWithdraw),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

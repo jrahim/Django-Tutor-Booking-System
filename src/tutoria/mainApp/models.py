@@ -361,3 +361,8 @@ class Review(models.Model):
 
     )
     reviewtype = models.CharField(max_length=9, choices=TYPES)
+
+
+class Admin(models.Model):
+    user_name = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)

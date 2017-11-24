@@ -153,8 +153,8 @@ def search(request):
                 Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate) | Q(
                     instance_of=ContractedTutor))
         else:
-            min_rate = round(float(min_rate)/1.05, 2)
-            max_rate = round(float(max_rate)/1.05, 2)
+            min_rate = round(float(min_rate) / 1.05, 2)
+            max_rate = round(float(max_rate) / 1.05, 2)
             tutor_list = tutor_list.filter(
                 Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate))
     elif max_rate == "" and min_rate != "":
@@ -183,7 +183,8 @@ def search(request):
             full_slots = upcoming_bookings.count() + unavailable_slots.count()
             weekdays = getWeekdays()
             for booking in upcoming_bookings:
-                if unavailable_slots.filter(day=weekdays[booking.date.weekday()], time_start=booking.time_start).exists():
+                if unavailable_slots.filter(day=weekdays[booking.date.weekday()],
+                                            time_start=booking.time_start).exists():
                     full_slots = full_slots - 1
             # print('checking')
             # print(full_slots)
@@ -835,5 +836,22 @@ def addReview(request, pk):
     return JsonResponse({'status': 'success'})
 
 
-def test(request):
-    return render(request, 'mainApp/review.html')
+@csrf_exempt
+def admin(request):
+    if request.method == 'POST':
+        if 'login' in request.POST:
+            if Admin.objects.filter(user_name=request.POST.get('username'), password=request.POST.get('pwd')).exists():
+                w = SpecialWallet.objects.get(name='MyTutor')
+                return render(request, 'mainApp/adminwallet.html', {'wallet': w})
+            else:
+                return render(request, 'mainApp/admin.html')
+        else:
+            return render(request, 'mainApp/admin.html')
+    else:
+        return render(request, 'mainApp/admin.html')
+
+@csrf_exempt
+def adminWithdraw(request):
+    w = SpecialWallet.objects.get(name='MyTutor')
+    w.subtract_funds(float(request.POST.get('amount')))
+    return JsonResponse({'status': 'success', 'wallet': w.balance})
