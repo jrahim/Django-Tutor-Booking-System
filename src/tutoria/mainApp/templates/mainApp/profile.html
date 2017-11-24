@@ -1,218 +1,238 @@
 {% extends 'mainApp/topBarWithSearch.html' %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="/static/css/profile.css">
-    <link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/profile.css">
+<link rel="stylesheet" href="/static/css/common.css">
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid" style="margin-top:115px; width:600px !important;">
-        <div class="centerAlign">
-            <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
-            <h1>{{ user.name }} {{ user.last_name }}</h1>
-            <br>
-        </div>
-        <ul class="list-group" style="width:600px; margin-bottom: 50px;">
-            <li class="list-group-item">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Email:</h5>
-                    <a href="">
-                        <small style="color:green">change</small>
-                    </a>
-                </div>
-                <p class="mb-1">{{ user.email }}</p>
-            </li>
-            <li class="list-group-item">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Contact Number:</h5>
-                    <a href="">
-                        <small style="color:green">change</small>
-                    </a>
-                </div>
-                <p class="mb-1"></p>
-            </li>
-            {% if isTutor == '1' %}
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Short Bio:</h5>
-                        <a href="">
-                            <small style="color:green">change</small>
-                        </a>
-                    </div>
-                    <p class="mb-1">{{ tutor.shortBio }}</p>
-                </li>
-                <a class="list-group-item list-group-item-action flex-column align-items-start"
-                   href="/mainApp/manageschedule">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Manage Available Timeslots</h5>
-                    </div>
-                </a>
-                <a class="list-group-item list-group-item-action flex-column align-items-start"
-                   href="/mainApp/managecourses">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Manage Courses you Teach</h5>
-                    </div>
-                </a>
-            {% else %}
-                <a class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal"
-                   data-target="#becomeTutorModal">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Become a tutor</h5>
-                    </div>
-                </a>
-            {% endif %}
-            <a class="list-group-item list-group-item-action flex-column align-items-start" href="/mainApp/bookings">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">View My Bookings</h5>
-                </div>
-            </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Change Password</h5>
-                </div>
-            </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal"
-               data-target="#changeDetails">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Change Details</h5>
-                </div>
-            </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start"
-               href="/mainApp/transactionhistory">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">View Your Transaction History</h5>
-                </div>
-            </a>
-        </ul>
-
-        <div class="modal fade bd-example-modal-sm" id="becomeTutorModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Enter Info:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>Enter a short bio:</h6>
-                        <textarea id="bioAdd" type="text" class="form-control"
-                                  value=""
-                                  placeholder="Enter Short Bio"> </textarea>
-                        <br>
-                        <h6>Enter Your Rate per Session:</h6>
-                        <input type="number" id="rateAdd" class="form-control" value="0">
-                        <br>
-                        <fieldset class="form-group">
-                            <h6>Are You a Private Tutor or a Contracted Tutor?</h6>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"
-                                           id="optionsRadios1" value="option1" checked onclick="setYes()">
-                                    Private
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"
-                                           id="optionsRadios2" value="option2" onclick="setNo()">
-                                    Contracted
-                                </label>
-                            </div>
-                        </fieldset>
-                        <div class="alert alert-info">
-                            If you are a contracted tutor, your rate will be set to 0.
-                        </div>
-                        <div class="alert alert-success" id="makeTutorSuccess" role="alert" style="display: none;">
-                            <strong>Success</strong> You are now also a tutor! You will now be redirected to your
-                            profile page where you can manage your courses and timetable.
-                        </div>
-                        <div class="alert alert-danger" id="makeTutorFail" role="alert" style="display: none;">
-                            Failed! Please make sure that you add a short bio, and that your session rate is in
-                            multiples of 10.
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="makeTutorSubmit" onclick="addTutor()">Submit
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal fade bd-example-modal-sm" id="changeDetails">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Change Details:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input id="emailChange" type="email" class="form-control"
-                               value="{{ user.email }}">
-                        <input id="numberChange" type="number" class="form-control"
-                               value="">
-                        {% if isTutor == '1' %}
-                            <textarea id="bioChange" class="form-control"
-                                      value="{{ tutor.shortBio }}"></textarea>
-                        {% endif %}
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="process()">
-                            Submit
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<div class="container-fluid" style="margin-top:115px; width:600px !important;">
+    <div class="centerAlign">
+        <img src="/static/assets/img/{{ user.avatar }}" id="bigAvatarPic" alt="">
+        <h1>{{ user.name }} {{user.last_name}}</h1>
+        <br>
     </div>
+    <ul class="list-group" style="width:600px; margin-bottom: 50px;">
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Email:</h5>
+                <a href="">
+                    <small style="color:green">change</small>
+                </a>
+            </div>
+            <p class="mb-1">{{ user.email }}</p>
+        </li>
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Contact Number:</h5>
+                <a href="">
+                    <small style="color:green">change</small>
+                </a>
+            </div>
+            <p class="mb-1">{{user.contact}}</p>
+        </li>
+        {% if isTutor == '1' %}
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Short Bio:</h5>
+                <a href="">
+                    <small style="color:green">change</small>
+                </a>
+            </div>
+            <p class="mb-1">{{ tutor.shortBio }}</p>
+        </li>
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Manage Available Timeslots</h5>
+            </div>
+        </a>
+        <a class="list-group-item list-group-item-action flex-column align-items-start"
+           href="/mainApp/managecourses">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Manage Courses you Teach</h5>
+            </div>
+        </a>
+        <a class="list-group-item list-group-item-action flex-column align-items-start"
+           onclick="activateDeactivateTutor()">
+            <div class="d-flex w-100 justify-content-between">
+                {%if tutor.isActivated %}
+                <h5 class="mb-1">Deactivate Profile</h5>
+                {%else%}
+                <h5 class="mb-1">Activate Profile</h5>
+                {%endif%}
+            </div>
+        </a>
+        {% else %}
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal"
+           data-target="#becomeTutorModal">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Become a tutor</h5>
+            </div>
+        </a>
+        {% endif %}
+        <a class="list-group-item list-group-item-action flex-column align-items-start" href="/mainApp/bookings">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">View My Bookings</h5>
+            </div>
+        </a>
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Change Password</h5>
+            </div>
+        </a>
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal"
+           data-target="#changeDetails">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Change Details</h5>
+            </div>
+        </a>
+        <a class="list-group-item list-group-item-action flex-column align-items-start"
+           href="/mainApp/transactionhistory">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">View Your Transaction History</h5>
+            </div>
+        </a>
+    </ul>
+
+    <div class="modal fade bd-example-modal-sm" id="becomeTutorModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Info:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Enter a short bio:</h6>
+                    <textarea id="bioAdd" type="text" class="form-control"
+                              value=""
+                              placeholder="Enter Short Bio"> </textarea>
+                    <br>
+                    <h6>Enter Your Rate per Session:</h6>
+                    <input type="number" id="rateAdd" class="form-control" value="0">
+                    <br>
+                    <fieldset class="form-group">
+                        <h6>Are You a Private Tutor or a Contracted Tutor?</h6>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios"
+                                       id="optionsRadios1" value="option1" checked onclick="setYes()">
+                                Private
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios"
+                                       id="optionsRadios2" value="option2" onclick="setNo()">
+                                Contracted
+                            </label>
+                        </div>
+                    </fieldset>
+                    <div class="alert alert-info">
+                        If you are a contracted tutor, your rate will be set to 0.
+                    </div>
+                    <div class="alert alert-success" id="makeTutorSuccess" role="alert" style="display: none;">
+                        <strong>Success</strong> You are now also a tutor! You will now be redirected to your
+                        profile page where you can manage your courses and timetable.
+                    </div>
+                    <div class="alert alert-danger" id="makeTutorFail" role="alert" style="display: none;">
+                        Failed! Please make sure that you add a short bio, and that your session rate is in
+                        multiples of 10.
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="makeTutorSubmit" onclick="addTutor()">Submit
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bd-example-modal-sm" id="changeDetails">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Details:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="emailChange" type="email" class="form-control"
+                           value="{{ user.email }}">
+                    <input id="numberChange" type="number" class="form-control"
+                           value="">
+                    {% if isTutor == '1' %}
+                    <textarea id="bioChange" class="form-control"
+                              value="{{ tutor.shortBio }}"></textarea>
+                    {% endif %}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="process()">
+                        Submit
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
 
 {% block extra_script %}
-    <script type="text/javascript">
-        var isPrivate = 'yes';
+<script type="text/javascript">
+    var isPrivate = 'yes';
 
-        function setYes() {
-            isPrivate = 'yes';
-        }
+    function activateDeactivateTutor() {
+        $.post('/mainApp/activateTutor', {}, function (response) {
+            if (response.status == 'success') {
+                location.reload();
+            }
+            else {
+                alert("error");
+            }
+        });
+    }
 
-        function setNo() {
-            isPrivate = 'no';
-        }
+    function setYes() {
+        isPrivate = 'yes';
+    }
 
-        function addTutor() {
-            $('#makeTutorFail').hide();
-            if ($('#bioAdd').val() != " " && $('#rateAdd').val() != "") {
-                if ((isPrivate == 'yes' && $('#rateAdd').val() % 10 == 0) || isPrivate == 'no') {
-                    $.post('/mainApp/maketutor', {
-                        isPrivate: isPrivate,
-                        shortBio: $('#bioAdd').val(),
-                        rate: $('#rateAdd').val()
-                    }, function (response) {
-                        if (response.status == 'success') {
-                            $('#makeTutorSuccess').show();
-                            $('#makeTutorSubmit').submit();
-                            setTimeout(function () {
-                                location.reload();
-                            }, 4000);
-                        } else {
-                            $('#makeTutorFail').show();
-                        }
-                    });
-                } else {
-                    $('#makeTutorFail').show();
-                }
+    function setNo() {
+        isPrivate = 'no';
+    }
+
+    function addTutor() {
+        $('#makeTutorFail').hide();
+        if ($('#bioAdd').val() != " " && $('#rateAdd').val() != "") {
+            if ((isPrivate == 'yes' && $('#rateAdd').val() % 10 == 0) || isPrivate == 'no') {
+                $.post('/mainApp/maketutor', {
+                    isPrivate: isPrivate,
+                    shortBio: $('#bioAdd').val(),
+                    rate: $('#rateAdd').val()
+                }, function (response) {
+                    if (response.status == 'success') {
+                        $('#makeTutorSuccess').show();
+                        $('#makeTutorSubmit').submit();
+                        setTimeout(function () {
+                            location.reload();
+                        }, 4000);
+                    } else {
+                        $('#makeTutorFail').show();
+                    }
+                });
             } else {
                 $('#makeTutorFail').show();
             }
+        } else {
+            $('#makeTutorFail').show();
         }
-    </script>
+    }
+</script>
 {% endblock %}

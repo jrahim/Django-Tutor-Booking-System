@@ -1,8 +1,8 @@
-from django.db import models
-from datetime import date, time, datetime, timedelta
-from django.db.models import Q
+from datetime import date, datetime, timedelta
 
 from django.core import mail
+from django.db import models
+from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 
@@ -44,7 +44,7 @@ class Wallet(PolymorphicModel):
 
 class User(models.Model):
     name = models.CharField(max_length=200)  # given name
-    last_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=200)
@@ -145,6 +145,8 @@ class Tutor(PolymorphicModel):
     shortBio = models.CharField(max_length=300)
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
+    university = models.ManyToManyField(University, blank=True)
+    isActivated = models.BooleanField(default=True)
 
     def create_unavailable_slot(self, day, time_start):
         pass
@@ -161,6 +163,14 @@ class Tutor(PolymorphicModel):
         c = Course.objects.get(code=courseCode)
         self.course.remove(c)
         self.save()
+
+    def activate_deactivate(self):
+        if self.isActivated:
+            self.isActivated = False
+            self.save()
+        else:
+            self.isActivated = True
+            self.save()
 
     def create_booking(self, date, time_start, student):
         pass

@@ -1,15 +1,13 @@
-from datetime import datetime, timedelta, date
-
 from dateutil import parser
+from django.contrib.auth.hashers import make_password, check_password
 from django.core.validators import validate_email
+from django.db.models import Max
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ImageForm
-from .models import *
-from django.contrib.auth.hashers import make_password, check_password
 from .functions import *
 
 
@@ -31,7 +29,8 @@ def index(request):
                             'email')).exists():  # if email not already used in another account
                         user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
                                     email=request.POST.get("email"), password=make_password(
-                                request.POST.get("password")))  # make a new user with md5 hash of pwd
+                                request.POST.get("password")), contact=request.POST.get("contact"),
+                                    last_name=request.POST.get("lastName"))  # make a new user with md5 hash of pwd
                         # user.make_wallet()
                         user.wallet = user.create_wallet()
                         user.save()  # save new user in db
@@ -94,10 +93,14 @@ def search(request):
     given_name = request.POST.get('givenName', "")
     last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
-    university_name = request.POST.get('universityName', "")
-    if university_name == "0":
-        university_name = ""
+    university = request.POST.get('universityName', "")
+    availability = request.POST.get('available', "")
+
+    if university == "0":
+        university = ""
     course = request.POST.get('course', "")
+    if course == "0":
+        course = ""
     tag = request.POST.get('tag', "")
     if tag == "0":
         tag = ""
@@ -108,14 +111,12 @@ def search(request):
     sort = request.POST.get('sort', "")
 
     if tutor_type == "tutorPrivate":
-        tutor_type = True
+        tutor_type = PrivateTutor
     elif tutor_type == "tutorContracted":
-        tutor_type = False
+        tutor_type = ContractedTutor
+
     tutor_list = Tutor.objects.all()
 
-    # # if given_name == "" and tutor_type == "":
-    # #     tutor_list = Tutor.objects.all()
-    #
     if given_name != "":
         user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
@@ -125,38 +126,88 @@ def search(request):
         tutor_list = tutor_list.filter(user__in=user_list)
 
     if tutor_type != "":
-        tutor_list = tutor_list.filter(isPrivate=tutor_type)
+        tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
-    # TODO fix university check - check via courses
-    if university_name != "":
+    if university != "":
         university_list = University.objects.filter(
-            name__icontains=university_name)  # contains to allow custom input search
+            id=university)  # contains to allow custom input search
         tutor_list = tutor_list.filter(university__in=university_list)
 
     if course != "":
-        course_list = Course.objects.filter(code=course)  # course code
+        course_list = Course.objects.filter(id=course)  # course code
         tutor_list = tutor_list.filter(course__in=course_list)
 
     if tag != "":
-        tag_list = Tag.objects.filter(tag_name=tag)
+        tag_list = Tag.objects.filter(id=tag)
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
-    # TODO handle exceptions of one being entered and other not
     if max_rate != "" and min_rate != "":
-        tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate == "" and min_rate != "":
+        max_query = Tutor.objects.all().aggregate(maxvalue=Max('PrivateTutor___rate'))
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate != "" and min_rate == "":
+        tutor_list = tutor_list.filter(
+            Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
+                instance_of=ContractedTutor))
+
+    # TODO only display tutors with an available slot in the coming 7 days
+    if availability != "":
+        for tutor in tutor_list:
+            upcoming_bookings = tutor.user.get_upcoming_bookings(True, False).count()
+            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor)).count()
+            full_slots = upcoming_bookings + unavailable_slots
+            if isinstance(tutor, PrivateTutor):
+                if full_slots == 8 * 8:
+                    tutor_list = tutor_list.exclude(tutor=tutor)
+            elif isinstance(tutor, ContractedTutor):
+                if full_slots == 8 * 15:
+                    tutor_list = tutor_list.exclude(tutor=tutor)
+
+    tutor_list = tutor_list.filter(isActivated=True)
 
     if sort != "" and sort == "rateAsc":
-        tutor_list = tutor_list.order_by('rate')
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
     elif sort != "" and sort == "rateDesc":
-        tutor_list = tutor_list.order_by('-rate')
+        tutor_list = tutor_list.order_by('-PrivateTutor___rate')
+    else:
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
+
+    params = {'given_name': given_name, 'last_name': last_name, 'university': university,
+              'tutor_type': request.POST.get('tutorType', ""), 'course': course, 'tag': tag, 'sort': sort,
+              'max_rate': request.POST.get('maxRate', ""), 'min_rate': request.POST.get('minRate', "")}
 
     context = {
         'tutor_list': tutor_list,
         'user': user,
         'tag_list': tags,
-        'university_list': universities
+        'university_list': universities,
+        'params': params
     }
     return render(request, 'mainApp/search.html', context)
+
+
+@csrf_exempt
+def get_uni_courses(request):
+    university_id = request.POST.get('university')
+    course_list = Course.objects.filter(university=university_id)
+    result = {}
+    for course in course_list:
+        result[course.id] = course.title
+    print(result)
+    return JsonResponse(result)
 
 
 @csrf_exempt
@@ -219,9 +270,12 @@ def wallet(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     wallet = Wallet.objects.get(user=request.session['uid'])
+    isTutor, isStudent = checkUser('uid', request);
     context = {
         'wallet': wallet,
-        'user': user
+        'user': user,
+        'isTutor': isTutor,
+        'isStudent': isStudent
     }
     return render(request, 'mainApp/wallet.html', context)
 
@@ -538,6 +592,15 @@ def courses(request):
         'allCourses': allCourses
     }
     return render(request, 'mainApp/courses.html', context)
+
+
+@csrf_exempt
+def activate_deactivate_tutor(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    tutor = Tutor.objects.get(id=request.session['tid'])
+    tutor.activate_deactivate()
+    return JsonResponse({'status': 'success'})
 
 
 @csrf_exempt
