@@ -1,6 +1,7 @@
 from .models import *
 import math
 
+
 # functions
 
 def rateWithCommision(tutorRate):
@@ -55,6 +56,18 @@ def getContractedSlots():
     for t in slotsToRender:
         slots.append(t.split('-')[0])
     return slots, slotsToRender
+
+
+def getWeekdays():
+    return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+
+def getMonths():
+    return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+
+def getQuerySetWeekdays():
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 
 def checkIfTutorPrivate(tutor):

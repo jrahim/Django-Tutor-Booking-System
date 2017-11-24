@@ -116,10 +116,10 @@
                         $('.alert-success').show();
                         if (action == "add") {
                             $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been added to your wallet!");
-                            $('#balance').html(parseInt($('#balance').html()) + parseInt($('#amount').val()));
+                            $('#balance').html(response.balance);
                         } else {
                             $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been withdrawn from your wallet!");
-                            $('#balance').html(parseInt($('#balance').html()) - parseInt($('#amount').val()));
+                            $('#balance').html(response.balance);
                         }
 
                     });

@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^removecourses$', views.removeCourses),
     url(r'^getUniCourses$', views.get_uni_courses),
     url(r'^activateTutor', views.activate_deactivate_tutor)
+    url(r'^manageschedule$', views.manageSchedule),
+    url(r'^addunavailable$', views.addUnavailable),
+    url(r'^removeunavailable$', views.removeUnavailable),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
