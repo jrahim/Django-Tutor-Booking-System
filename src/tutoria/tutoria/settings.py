@@ -127,6 +127,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 SESSION_ENGINE = "django.contrib.sessions.backends.file"
 
 # Email backend
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'mainApp/tmp/app-messages')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+#EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'mainApp/tmp/app-messages')
