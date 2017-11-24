@@ -31,7 +31,11 @@
         </div>
 
         <div class="" id="logInForm" style="float:right;">
-            <form class="form-inline" action="/mainApp/index" method="post">
+            <button class="btn btn-success" data-toggle="modal" data-target="#pwdresetmodal"
+                    style="display: inline-block">Forgot Password?
+            </button>
+
+            <form class="form-inline" action="/mainApp/index" method="post" style="display: inline-block">
                 <span style="color:white; font-weight:bold; margin-right: 10px;">{{ loginError }}</span>
                 <input type="email" class="form-control" id="signInInputEmail" name="email" value=""
                        placeholder="Email Address">
@@ -41,6 +45,35 @@
             </form>
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="pwdresetmodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Password Reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" action="/mainApp/index" method="post" style="display: inline-block">
+                    <input type="email" class="form-control" id="pwdResetEmail" name="pwdresetemail" value=""
+                           placeholder="Email Address">
+                </form>
+                <div class="alert alert-danger" style="display: none" id="resetFail">Email address invalid or no account
+                    associated with this email address
+                </div>
+                <div class="alert alert-success" style="display: none" id="resetSuccess">An email with the link has been
+                    sent to you
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="resetpwd()">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -63,12 +96,22 @@
         <h1 class="tealHeading">Sign Up!</h1><br>
         <h4>Register as a tutor from your profile after this!</h4>
         <form class="form" id="signUpForm" action="/mainApp/index" method="post" enctype="multipart/form-data">
-            <input type="text" id="nameinput" class="form-control signUpInput" name="name" value="" placeholder="Full Name">
+            <input type="text" id="nameinput" class="form-control signUpInput" name="name" value=""
+                   placeholder="Given Name">
             <p id="nameError" style="color:red;"></p>
-            <input type="email" id="emailinput" class="form-control signUpInput" name="email" value="" placeholder="Email Address">
+            <input type="text" id="lastnameinput" class="form-control signUpInput" name="lastName" value=""
+                   placeholder="Last Name">
+            <p id="lastNameError" style="color:red;"></p>
+            <input type="email" id="emailinput" class="form-control signUpInput" name="email" value=""
+                   placeholder="Email Address">
             <p id="emailError" style="color:red;">{{ emailError }}</p>
-            <input type="password" id="pwdinput" class="form-control signUpInput" name="password" value="" placeholder="New Password">
+            <input type="password" id="pwdinput" class="form-control signUpInput" name="password" value=""
+                   placeholder="New Password">
             <p id="pwdError" style="color:red;"></p>
+            <input type="text" id="contactinput" class="form-control signUpInput" name="contact" value=""
+                   placeholder="Contact Number">
+            <p id="contactError" style="color:red;"></p>
+
             <p>{{ form.non_field_errors }}</p>
             <p>{{ form.docfile.label_tag }} </p>
             <p>
@@ -82,9 +125,7 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
         integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>
@@ -98,19 +139,46 @@
         $('#nameError').html('');
         $('#emailError').html('');
         $('#pwdError').html('');
-        if ($('#nameinput').val()=="") {
-            $('#nameError').html('Please Enter Your Name')
+        $('#contactError').html('');
+        $('#lastNameError').html('');
+
+        if ($('#nameinput').val() == "") {
+            $('#nameError').html('Please Enter Your Name');
             e.preventDefault();
         }
-        if ($('#emailinput').val()=="") {
-            $('#emailError').html('Please Enter Your Email Address')
+        if ($('#emailinput').val() == "") {
+            $('#emailError').html('Please Enter Your Email Address');
             e.preventDefault();
         }
-        if ($('#pwdinput').val()=="") {
-            $('#pwdError').html('Please Enter A Password')
+        if ($('#pwdinput').val() == "") {
+            $('#pwdError').html('Please Enter A Password');
+            e.preventDefault();
+        }
+        if ($('#contactinput').val() == "") {
+            $('#contactError').html('Please Enter A Contact Number');
+            e.preventDefault();
+        }
+        if ($('#lastnameinput').val() == "") {
+            $('#lastNameError').html('Please Enter A Last Name');
             e.preventDefault();
         }
     });
+
+    function resetpwd() {
+        if ($('#pwdResetEmail').val() != "") {
+            $('#resetFail').hide();
+            $('#resetSuccess').hide();
+            $.get('/mainApp/resetpwdtoken', {
+                email: $('#pwdResetEmail').val()
+            }, function (response) {
+                if (response.status == "success") {
+                    $('#resetSuccess').show();
+                } else {
+                    $('#resetFail').show();
+                }
+            });
+        }
+    }
 
 
 </script>

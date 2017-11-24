@@ -1,10 +1,10 @@
 from datetime import date, datetime, timedelta
 
-from django.core import mail
 from django.db import models
 from django.db.models import Avg
 from django.db.models import Q
 from polymorphic.models import PolymorphicModel
+
 
 
 # Create your models here.
@@ -28,6 +28,8 @@ class Wallet(PolymorphicModel):
             transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
                                             transaction_nature="FUNDSADDED", wallet_id=self)
             transaction.save()
+            self.save()
+            return transaction
         self.save()
 
     def subtract_funds(self, amount, isWalletManagement=False):
@@ -37,6 +39,8 @@ class Wallet(PolymorphicModel):
             transaction = WalletTransaction(user=user, amount=amount, date=date.today(), time=datetime.now().time(),
                                             transaction_nature="FUNDSWITHDRAWN", wallet_id=self)
             transaction.save()
+            self.save()
+            return transaction
         self.save()
 
     def __str__(self):
@@ -45,7 +49,7 @@ class Wallet(PolymorphicModel):
 
 class User(models.Model):
     name = models.CharField(max_length=200)  # given name
-    last_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(upload_to='avatar')
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=200)
@@ -105,21 +109,6 @@ class User(models.Model):
             a1 = BookedSlot.objects.filter(Q(tutor=tutor, status='ENDED')).order_by('date').reverse()
         return a1
 
-    def send_mail(self, mail_to, mail_from, message_body, message_subject):
-        connection = mail.get_connection()
-        connection.open()
-        email = mail.EmailMessage(
-            message_subject,
-            message_body,
-            mail_from,
-            [mail_to],
-            connection=connection,
-        )
-        email.send()  # Send the email
-        # We need to manually close the connection.
-        connection.close()
-        return
-
     def __str__(self):
         return self.name
 
@@ -146,10 +135,14 @@ class Tutor(PolymorphicModel):
     shortBio = models.CharField(max_length=300)
     rating = models.FloatField(default=0)
     subject_tags = models.ManyToManyField(Tag, blank=True)
+    # university = models.ManyToManyField(University, blank=True)
+    isActivated = models.BooleanField(default=True)
 
-    def create_unavailable_slot(self, day, time_start, duration):
-        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
-        unavailable.save()
+    def create_unavailable_slot(self, day, time_start):
+        pass
+
+    def remove_unavailable_slot(self, day, time_start):
+        UnavailableSlot.objects.get(tutor=self, day=day, time_start=time_start).delete()
 
     def add_course(self, courseCode):
         c = Course.objects.get(code=courseCode)
@@ -160,6 +153,14 @@ class Tutor(PolymorphicModel):
         c = Course.objects.get(code=courseCode)
         self.course.remove(c)
         self.save()
+
+    def activate_deactivate(self):
+        if self.isActivated:
+            self.isActivated = False
+            self.save()
+        else:
+            self.isActivated = True
+            self.save()
 
     def add_tag(self, tagName, create):
         if create:
@@ -176,8 +177,8 @@ class Tutor(PolymorphicModel):
         self.save()
 
     def update_rating(self):
-        
-        
+
+
         newRating=Review.objects.filter(tutor=self).aggregate(Avg('rating'))
         print(newRating)
         setattr(self, 'rating', newRating['rating__avg'])
@@ -195,10 +196,18 @@ class PrivateTutor(Tutor):
     def __str__(self):
         return self.user.name
 
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=1.0)
+        unavailable.save()
+
 
 class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
+
+    def create_unavailable_slot(self, day, time_start):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=0.5)
+        unavailable.save()
 
 
 class Student(models.Model):
@@ -246,7 +255,8 @@ class BookedSlot(models.Model):
                 self.student.user.wallet.add_funds(booking_transaction.amount)
                 self.create_transaction_record("SESSIONCANCELLED", True)
         elif new_status == "ENDED":
-            self.create_transaction_record("SESSIONBOOKED", False)
+            if isinstance(self.tutor, PrivateTutor):
+                self.create_transaction_record("SESSIONBOOKED", False)
         self.save()
 
     def create_transaction_record(self, transactionNature, forStudent, isCreated=False):
@@ -331,6 +341,15 @@ class SpecialWallet(Wallet):
 
     def __str__(self):
         return self.name
+
+
+class PasswordToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.user.name
+
 
 
 class Review(models.Model):

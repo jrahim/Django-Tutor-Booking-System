@@ -2,8 +2,156 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38dfc472-855c-43c9-8607-03fab9c1fabf" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171103-122301-76663440.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171103-122333-76661424.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171103-122456-73742800.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171103-122459-76989808.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171103-122514-77114800.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171109-221755-73208336.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171109-221755-73210064.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171109-222303-87199344.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171109-222314-82781232.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171109-222314-82782576.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171110-020533-18424368.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171110-020533-18427600.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-005042-67182032.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-005042-80358448.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-011622-88823024.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-011622-88824880.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-015324-78467888.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-015324-78469104.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-232629-76592144.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-232629-76592496.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171111-235039-77554704.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002748-75873200.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002748-92349456.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002758-14733968.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002758-14734672.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002811-87809872.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-002811-87809936.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-005713-83981808.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-005713-83982960.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-010818-75278352.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-010818-75279760.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-010826-67474192.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-010826-75110608.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-011529-73259344.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-011704-1508912.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-011704-1509424.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-132647-89679792.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-132647-89681200.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133411-81545040.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133411-81546032.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133608-68700304.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133608-68700432.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133617-69197296.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-133617-69197680.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140653-85932144.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140653-85933168.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140705-83306160.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140705-83308336.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140713-83425584.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140713-83426320.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140746-85185072.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140805-90481520.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-140805-90484176.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-171206-77699824.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-171206-77701104.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-171351-87928496.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-172945-79817488.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-172945-87126768.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-181805-19388624.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171112-181805-19504848.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-174453-12243952.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-174453-12245744.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-221456-50414064.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-222645-68060496.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-222841-15581328.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-222841-15584848.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171113-223234-76973392.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-000842-100300368.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-000847-76776784.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-000852-86741648.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-000852-86742000.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-131254-63708560.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-131348-74470224.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-145738-77505808.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-145806-77459248.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-193936-78739024.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-194341-78738896.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-200139-63408336.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-200148-73187856.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-200148-73188496.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-200157-73923568.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-203425-77520848.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204208-20097968.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204208-20098032.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204224-24733424.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204224-24735088.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204257-24732944.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-204551-24660048.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205055-87024432.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205055-87055568.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205059-87053520.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205059-87087376.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205104-79748848.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205111-87053008.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205111-87425424.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205119-87453104.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205427-62910416.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205452-77415920.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-205748-65400784.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171114-212830-68681680.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-024535-8034320.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-202336-64498256.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-202944-65020944.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-202944-75132528.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-203853-62985232.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-203943-73446352.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204023-82893520.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204050-62985232.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204050-67711152.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204120-67147216.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204611-62985232.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204611-75331792.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204625-75319472.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204831-12730768.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-204831-12731696.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205126-75805264.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205126-75805424.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205334-77898576.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205936-91629264.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205949-22354736.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205949-22811312.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-205955-22353744.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210226-77140784.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210235-67123952.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210258-10572976.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210305-10802448.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210750-24185968.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-210750-24186192.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-211623-65541104.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212345-73052912.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212345-73053040.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212405-75793840.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212405-75794448.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212548-76564944.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212606-77215312.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212606-77216272.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212653-77307952.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212653-81955984.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212716-76996368.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212716-81994544.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212726-77009040.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-212810-62989232.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-213412-13628304.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/tmp/app-messages/20171115-213412-13631312.log" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tutoria/db.sqlite3" afterPath="$PROJECT_DIR$/src/tutoria/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/functions.py" afterPath="$PROJECT_DIR$/src/tutoria/mainApp/functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/models.py" afterPath="$PROJECT_DIR$/src/tutoria/mainApp/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tutoria/mainApp/views.py" afterPath="$PROJECT_DIR$/src/tutoria/mainApp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tutoria/tutoria/settings.py" afterPath="$PROJECT_DIR$/src/tutoria/tutoria/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,21 +165,31 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="238" column="121" lean-forward="false" selection-start-line="238" selection-start-column="121" selection-end-line="238" selection-end-column="121" />
+            <state relative-caret-position="751">
+              <caret line="387" column="10" lean-forward="false" selection-start-line="387" selection-start-column="10" selection-end-line="387" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="functions.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="546">
+              <caret line="50" column="254" lean-forward="false" selection-start-line="50" selection-start-column="254" selection-end-line="50" selection-end-column="254" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="470">
+              <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -39,28 +197,9 @@
       <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/bookings.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="136" column="167" lean-forward="false" selection-start-line="136" selection-start-column="165" selection-end-line="136" selection-end-column="167" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#5495#5502#1" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="205">
+              <caret line="136" column="104" lean-forward="false" selection-start-line="136" selection-start-column="104" selection-end-line="136" selection-end-column="104" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,9 +217,11 @@
       <file leaf-file-name="book.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/book.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="103" column="54" lean-forward="true" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
-              <folding />
+            <state relative-caret-position="2604">
+              <caret line="124" column="54" lean-forward="false" selection-start-line="124" selection-start-column="54" selection-end-line="124" selection-end-column="54" />
+              <folding>
+                <marker date="1511156532371" expanded="true" signature="7419:7459" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,8 +229,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+            <state relative-caret-position="126">
+              <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -103,73 +244,7 @@
             <state relative-caret-position="294">
               <caret line="14" column="14" lean-forward="false" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
               <folding>
-                <marker date="1509611453576" expanded="false" signature="534:567" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="568:3602" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="609:942" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="676:871" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="757:848" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="797:808" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="983:1309" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1050:1254" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1140:1231" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="1180:1191" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1390:1763" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1461:1680" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1554:1653" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="1598:1609" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1860:2052" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="1931:2031" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2149:2339" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2220:2318" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2479:2710" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2601:2689" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2843:3009" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="2910:2992" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3102:3267" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3169:3250" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3380:3588" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3491:3571" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3678:6576" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3733:6561" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3777:6542" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3824:4119" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="3990:4092" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="4045:4052" ph="×" />
-                <marker date="1509611453576" expanded="true" signature="4164:6184" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="4296:4415" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="4679:5653" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="4794:5184" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="4859:5149" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="4962:5068" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="5237:5617" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="5302:5582" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="5405:5502" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="5754:5768" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="5769:5976" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="6074:6088" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6089:6156" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6231:6519" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6344:6384" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6650:8089" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6705:8074" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6749:8055" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6796:7095" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="6966:7068" ph="..." />
-                <marker date="1509611453576" expanded="false" signature="7021:7028" ph="×" />
-                <marker date="1509611453576" expanded="true" signature="7140:7669" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="7223:7279" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="7364:7404" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="7527:7605" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="7716:8032" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="7828:7897" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="8178:8980" ph="..." />
-                <marker date="1509611453576" expanded="true" signature="8238:8280" ph="{...}" />
-                <marker date="1509611453576" expanded="true" signature="8307:8348" ph="{...}" />
-                <marker date="1509611453576" expanded="true" signature="8378:8967" ph="{...}" />
-                <marker date="1509611453576" expanded="true" signature="8461:8602" ph="{&quot;isPrivate&quot;: isPrivate...}" />
-                <marker date="1509611453576" expanded="true" signature="8623:8955" ph="{...}" />
-                <marker date="1509611453576" expanded="true" signature="8675:8868" ph="{...}" />
-                <marker date="1509611453576" expanded="true" signature="8874:8941" ph="{...}" />
+                <marker date="1511156532377" expanded="true" signature="10202:10225" ph="..." />
               </folding>
             </state>
           </provider>
@@ -182,7 +257,13 @@
       <find>confirmation</find>
       <find>update</find>
       <find>hi</find>
+      <find>booking</find>
+      <find>wallet</find>
+      <find>hour</find>
     </findStrings>
+    <replaceStrings>
+      <replace>minute</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -204,6 +285,7 @@
         <option value="$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/bookings.html" />
         <option value="$PROJECT_DIR$/src/tutoria/mainApp/models.py" />
         <option value="$PROJECT_DIR$/src/tutoria/mainApp/views.py" />
+        <option value="$PROJECT_DIR$/src/tutoria/mainApp/functions.py" />
       </list>
     </option>
   </component>
@@ -214,7 +296,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+    <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
@@ -233,10 +315,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,6 +370,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -412,6 +494,7 @@
       <workItem from="1508501059385" duration="4334000" />
       <workItem from="1509430971408" duration="17422000" />
       <workItem from="1509612071396" duration="6048000" />
+      <workItem from="1511157289822" duration="12147000" />
     </task>
     <task id="LOCAL-00001" summary="Added wallet to database. Wallet is created with as a user is created. Need to work on adding ajax too funds now.">
       <created>1508505218833</created>
@@ -431,7 +514,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42663000" />
+    <option name="totallyTimeSpent" value="54810000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -444,19 +527,19 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17057101" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07195301" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -483,6 +566,44 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/book.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2163">
+          <caret line="103" column="54" lean-forward="true" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
+          <folding>
+            <marker date="1511156532371" expanded="true" signature="7419:7459" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="14" lean-forward="false" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+          <folding>
+            <marker date="1511156532377" expanded="true" signature="10202:10225" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1890">
+          <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1911">
@@ -495,9 +616,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1239">
           <caret line="59" column="19" lean-forward="true" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -516,73 +635,7 @@
         <state relative-caret-position="294">
           <caret line="14" column="14" lean-forward="false" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding>
-            <marker date="1509611453576" expanded="false" signature="534:567" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="568:3602" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="609:942" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="676:871" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="757:848" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="797:808" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="983:1309" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1050:1254" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1140:1231" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="1180:1191" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1390:1763" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1461:1680" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1554:1653" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="1598:1609" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1860:2052" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1931:2031" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2149:2339" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2220:2318" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2479:2710" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2601:2689" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2843:3009" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2910:2992" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3102:3267" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3169:3250" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3380:3588" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3491:3571" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3678:6576" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3733:6561" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3777:6542" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3824:4119" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3990:4092" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="4045:4052" ph="×" />
-            <marker date="1509611453576" expanded="true" signature="4164:6184" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4296:4415" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4679:5653" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4794:5184" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4859:5149" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4962:5068" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5237:5617" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5302:5582" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5405:5502" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="5754:5768" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5769:5976" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="6074:6088" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6089:6156" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6231:6519" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6344:6384" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6650:8089" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6705:8074" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6749:8055" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6796:7095" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6966:7068" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="7021:7028" ph="×" />
-            <marker date="1509611453576" expanded="true" signature="7140:7669" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7223:7279" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7364:7404" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7527:7605" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7716:8032" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7828:7897" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="8178:8980" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="8238:8280" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8307:8348" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8378:8967" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8461:8602" ph="{&quot;isPrivate&quot;: isPrivate...}" />
-            <marker date="1509611453576" expanded="true" signature="8623:8955" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8675:8868" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8874:8941" ph="{...}" />
+            <marker date="1511156532377" expanded="true" signature="10202:10225" ph="..." />
           </folding>
         </state>
       </provider>
@@ -591,26 +644,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
           <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#5495#5502#1" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -657,9 +691,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1326">
           <caret line="78" column="0" lean-forward="true" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -692,9 +724,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="901">
           <caret line="53" column="35" lean-forward="false" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -731,9 +761,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="48" lean-forward="false" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -772,9 +800,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
           <caret line="53" column="35" lean-forward="false" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -829,9 +855,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="48" lean-forward="false" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -892,83 +916,27 @@
         <state relative-caret-position="294">
           <caret line="14" column="14" lean-forward="false" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding>
-            <marker date="1509611453576" expanded="false" signature="534:567" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="568:3602" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="609:942" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="676:871" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="757:848" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="797:808" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="983:1309" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1050:1254" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1140:1231" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="1180:1191" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1390:1763" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1461:1680" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1554:1653" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="1598:1609" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1860:2052" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="1931:2031" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2149:2339" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2220:2318" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2479:2710" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2601:2689" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2843:3009" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="2910:2992" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3102:3267" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3169:3250" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3380:3588" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3491:3571" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3678:6576" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3733:6561" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3777:6542" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3824:4119" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="3990:4092" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="4045:4052" ph="×" />
-            <marker date="1509611453576" expanded="true" signature="4164:6184" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4296:4415" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4679:5653" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4794:5184" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4859:5149" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="4962:5068" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5237:5617" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5302:5582" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5405:5502" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="5754:5768" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="5769:5976" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="6074:6088" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6089:6156" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6231:6519" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6344:6384" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6650:8089" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6705:8074" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6749:8055" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6796:7095" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="6966:7068" ph="..." />
-            <marker date="1509611453576" expanded="false" signature="7021:7028" ph="×" />
-            <marker date="1509611453576" expanded="true" signature="7140:7669" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7223:7279" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7364:7404" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7527:7605" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7716:8032" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="7828:7897" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="8178:8980" ph="..." />
-            <marker date="1509611453576" expanded="true" signature="8238:8280" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8307:8348" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8378:8967" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8461:8602" ph="{&quot;isPrivate&quot;: isPrivate...}" />
-            <marker date="1509611453576" expanded="true" signature="8623:8955" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8675:8868" ph="{...}" />
-            <marker date="1509611453576" expanded="true" signature="8874:8941" ph="{...}" />
+            <marker date="1511156532377" expanded="true" signature="10202:10225" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        <state relative-caret-position="126">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/book.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2604">
+          <caret line="124" column="54" lean-forward="false" selection-start-line="124" selection-start-column="54" selection-end-line="124" selection-end-column="54" />
+          <folding>
+            <marker date="1511156532371" expanded="true" signature="7419:7459" ph="..." />
           </folding>
         </state>
       </provider>
@@ -981,55 +949,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/book.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="103" column="54" lean-forward="true" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/templates/mainApp/bookings.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="136" column="167" lean-forward="false" selection-start-line="136" selection-start-column="165" selection-end-line="136" selection-end-column="167" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#small#0;n#a#0;n#div#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#a#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#1;n#li#0;n#ul#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#5495#5502#1" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="238" column="121" lean-forward="false" selection-start-line="238" selection-start-column="121" selection-end-line="238" selection-end-column="121" />
+        <state relative-caret-position="205">
+          <caret line="136" column="104" lean-forward="false" selection-start-line="136" selection-start-column="104" selection-end-line="136" selection-end-column="104" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+        <state relative-caret-position="470">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="751">
+          <caret line="387" column="10" lean-forward="false" selection-start-line="387" selection-start-column="10" selection-end-line="387" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tutoria/mainApp/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="50" column="254" lean-forward="false" selection-start-line="50" selection-start-column="254" selection-end-line="50" selection-end-column="254" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

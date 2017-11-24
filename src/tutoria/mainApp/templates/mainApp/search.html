@@ -36,10 +36,19 @@
                             <div class="col-6">
                                 <fieldset class="form-group">
                                     <legend>Search By Name</legend>
-                                    <label for="familyName">Family Name</label>
-                                    <input type="text" name="familyName" id="familyName" class="form-control">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" name="lastName" id="lastName" class="form-control">
                                     <label for="givenName">Given Name</label>
                                     <input type="text" name="givenName" id="givenName" class="form-control">
+                                </fieldset>
+
+                                <fieldset class="form-group form-inline">
+                                    <legend>Search by price range</legend>
+                                    <input type="text" name="minRate" id="minRate" class="form-control"
+                                           placeholder="Minimum">
+                                    <span style="margin-left: 15px; margin-right: 15px">to</span>
+                                    <input type="text" name="maxRate" id="maxRate" class="form-control"
+                                           placeholder="Maximum">
                                 </fieldset>
 
                                 <fieldset class="form-group">
@@ -62,47 +71,44 @@
                                     </div>
                                 </fieldset>
 
-
-                                <div class="form-group">
-                                    <legend>Search by price range</legend>
-                                    <label for="minRate">Minimum</label>
-                                    <input type="text" name="minRate" id="minRate" class="form-control">
-                                    to
-                                    <br>
-                                    <label for="maxRate">Maximum</label>
-                                    <input type="text" name="maxRate" id="maxRate" class="form-control">
-                                </div>
                             </div>
 
                             <div class="col-6">
                                 <div class="form-group">
-                                    <legend>Search by University</legend>
+                                    <legend>Search by University Or Course</legend>
                                     <label for="universityName">University Name</label>
                                     <select class="form-control" name="universityName" id="universityName">
                                         <option value="0">---------</option>
                                         {% for university in university_list %}
-                                            <option value="{{ university.name }}">{{ university.name }}</option>
+                                            <option value="{{ university.id }}">{{ university.name }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
 
-                                <div class="form-group">
-                                    <legend for="course">Search by Course</legend>
                                     <label for="course">Course Name</label>
                                     <select class="form-control" name="course" id="course">
-                                        <!--TODO Populate list through ajax-->
+                                        <option value="0">---------</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <legend for="tag">Search by Tag</legend>
-                                    <label for="tag">Tag Name</label>
                                     <select class="form-control" name="tag" id="tag">
                                         <option value="0">---------</option>
                                         {% for tag in tag_list %}
-                                            <option value="{{ tag.tag_name }}">{{ tag.tag_name }}</option>
+                                            <option value="{{ tag.id }}">{{ tag.tag_name }}</option>
                                         {% endfor %}
                                     </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <legend for="available">Search by Availability</legend>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" id="available" type="checkbox"
+                                                   value="available" name="available">
+                                            Only Tutors with an available slot in the next seven days.
+                                        </label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -112,7 +118,7 @@
                             <legend for="sort">Sort</legend>
                             <label for="sort">Sorting order</label>
                             <select class="form-control" name="sort" id="sort">
-                                <option>Select</option>
+                                <option value="">Select</option>
                                 <option value="rateAsc">Cheap to Expensive</option>
                                 <option value="rateDesc">Expensive to Cheap</option>
                             </select>
@@ -146,7 +152,7 @@
                 </div>
                 <div class="col-2" style="padding: 0px;">
                     <a href="profile/tutor/{{ tutor.id }}"
-                       style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }}
+                       style="color:black; font-size:140%; font-weight:bold; position:relative; top:0px;">{{ tutor.user.name }} {{ tutor.user.last_name }}
                     </a>
                     <br>
                     (
@@ -191,5 +197,48 @@
     <!--<a href="" style="color:black; font-size:140%; font-weight:bold; position:relative; left:35px; top: -7px;">{{tutor_list.name}}</a>-->
 
 
+{% endblock %}
 
+{% block extra_script %}
+    <script type="text/javascript">
+        document.getElementById('givenName').value = "{{params.given_name}}";
+        document.getElementById('lastName').value = "{{params.last_name}}";
+        document.getElementById('universityName').value = "{{params.university}}";
+        if ("{{params.tutor_type}}" == "tutorPrivate") {
+            document.getElementById('tutorTypePrivate').checked = true;
+        } else if ("{{params.tutor_type}}" == "tutorContracted") {
+            document.getElementById('tutorTypeContracted').checked = true;
+        }
+        document.getElementById('sort').value = "{{params.sort}}";
+        document.getElementById('tag').value = "{{params.tag}}";
+        document.getElementById('minRate').value = "{{params.min_rate}}";
+        document.getElementById('maxRate').value = "{{params.max_rate}}";
+        // TODO fix this course doesnt work
+        document.getElementById('course').value = "{{params.course}}";
+
+        $(document).on("click", '#universityName', function (e) {
+            var university = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                data: {university: university},
+                url: '/mainApp/getUniCourses',
+                dataType: 'json',
+                success: function (json) {
+
+                    var $el = $("#course");
+                    $el.empty(); // remove old options
+                    $el.append($("<option></option>")
+                        .attr("value", '0').text('---------'));
+                    $.each(json, function (value, key) {
+                        $el.append($("<option></option>")
+                            .attr("value", value).text(key));
+                    });
+
+
+                }
+            });
+
+        });
+    </script>
 {% endblock %}
