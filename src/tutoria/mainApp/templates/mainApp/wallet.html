@@ -29,19 +29,39 @@
             </div>
             <span id="balance">{{ wallet.balance }} </span> <span>HKD</span>
         </li>
-        <a data-toggle="modal" data-target=".bd-example-modal-sm"
-           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Add Funds</h5>
-            </div>
-        </a>
-
+        {%if isTutor and isStudent %}
         <a data-toggle="modal" data-target=".bd-example-modal-sm"
            class="list-group-item list-group-item-action flex-column align-items-start" onclick="sub()">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Withdraw Funds</h5>
             </div>
         </a>
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
+        {%if not isTutor and isStudent %}
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
+        {%if isTutor and not isStudent %}
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
     </ul>
 
 </div>
@@ -96,10 +116,10 @@
                         $('.alert-success').show();
                         if (action == "add") {
                             $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been added to your wallet!");
-                            $('#balance').html(parseInt($('#balance').html()) + parseInt($('#amount').val()));
+                            $('#balance').html(response.balance);
                         } else {
                             $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been withdrawn from your wallet!");
-                            $('#balance').html(parseInt($('#balance').html()) - parseInt($('#amount').val()));
+                            $('#balance').html(response.balance);
                         }
 
                     });

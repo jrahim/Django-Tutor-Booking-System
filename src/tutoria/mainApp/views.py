@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, date
 
 from dateutil import parser
 from django.core.validators import validate_email
+from django.db.models import Max
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -31,7 +32,8 @@ def index(request):
                             'email')).exists():  # if email not already used in another account
                         user = User(name=request.POST.get('name'), avatar=request.FILES['docfile'],
                                     email=request.POST.get("email"), password=make_password(
-                                request.POST.get("password")))  # make a new user with md5 hash of pwd
+                                request.POST.get("password")), contact=request.POST.get("contact"),
+                                    last_name=request.POST.get("lastName"))  # make a new user with md5 hash of pwd
                         # user.make_wallet()
                         user.wallet = user.create_wallet()
                         user.save()  # save new user in db
@@ -94,10 +96,14 @@ def search(request):
     given_name = request.POST.get('givenName', "")
     last_name = request.POST.get('lastName', "")
     tutor_type = request.POST.get('tutorType', "")
-    university_name = request.POST.get('universityName', "")
-    if university_name == "0":
-        university_name = ""
+    university = request.POST.get('universityName', "")
+    availability = request.POST.get('available', "")
+
+    if university == "0":
+        university = ""
     course = request.POST.get('course', "")
+    if course == "0":
+        course = ""
     tag = request.POST.get('tag', "")
     if tag == "0":
         tag = ""
@@ -108,14 +114,12 @@ def search(request):
     sort = request.POST.get('sort', "")
 
     if tutor_type == "tutorPrivate":
-        tutor_type = True
+        tutor_type = PrivateTutor
     elif tutor_type == "tutorContracted":
-        tutor_type = False
+        tutor_type = ContractedTutor
+
     tutor_list = Tutor.objects.all()
 
-    # # if given_name == "" and tutor_type == "":
-    # #     tutor_list = Tutor.objects.all()
-    #
     if given_name != "":
         user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
@@ -125,38 +129,92 @@ def search(request):
         tutor_list = tutor_list.filter(user__in=user_list)
 
     if tutor_type != "":
-        tutor_list = tutor_list.filter(isPrivate=tutor_type)
+        tutor_list = tutor_list.filter(Q(instance_of=tutor_type))
 
-    # TODO fix university check - check via courses
-    if university_name != "":
-        university_list = University.objects.filter(
-            name__icontains=university_name)  # contains to allow custom input search
-        tutor_list = tutor_list.filter(university__in=university_list)
+    if university != "":
+        # university_list = University.objects.filter(
+        #     id=university)  # contains to allow custom input search
+        # tutor_list = tutor_list.filter(university__in=university_list)
+        courses = Course.objects.filter(university=university)
+        tutor_list= tutor_list.filter(course__in=courses)
 
     if course != "":
-        course_list = Course.objects.filter(code=course)  # course code
+        course_list = Course.objects.filter(id=course)  # course code
         tutor_list = tutor_list.filter(course__in=course_list)
 
     if tag != "":
-        tag_list = Tag.objects.filter(tag_name=tag)
+        tag_list = Tag.objects.filter(id=tag)
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
-    # TODO handle exceptions of one being entered and other not
     if max_rate != "" and min_rate != "":
-        tutor_list = tutor_list.filter(rate__lte=max_rate).filter(rate__gte=min_rate)
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate == "" and min_rate != "":
+        max_query = Tutor.objects.all().aggregate(maxvalue=Max('PrivateTutor___rate'))
+        if min_rate == "0":
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate) | Q(
+                    instance_of=ContractedTutor))
+        else:
+            tutor_list = tutor_list.filter(
+                Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate))
+    elif max_rate != "" and min_rate == "":
+        tutor_list = tutor_list.filter(
+            Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
+                instance_of=ContractedTutor))
+
+    # TODO only display tutors with an available slot in the coming 7 days
+    if availability != "":
+        for tutor in tutor_list:
+            upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED').count()
+            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor)).count()
+            full_slots = upcoming_bookings + unavailable_slots
+            print('checking')
+            print(full_slots)
+            if isinstance(tutor, PrivateTutor):
+                if full_slots >= 7 * 8:
+                    tutor_list = tutor_list.exclude(id=tutor.id)
+            elif isinstance(tutor, ContractedTutor):
+                if full_slots >= 7 * 15:
+                    tutor_list = tutor_list.exclude(id=tutor.id)
+
+    tutor_list = tutor_list.filter(isActivated=True)
 
     if sort != "" and sort == "rateAsc":
-        tutor_list = tutor_list.order_by('rate')
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
     elif sort != "" and sort == "rateDesc":
-        tutor_list = tutor_list.order_by('-rate')
+        tutor_list = tutor_list.order_by('-PrivateTutor___rate')
+    else:
+        tutor_list = tutor_list.order_by('PrivateTutor___rate')
+
+    params = {'given_name': given_name, 'last_name': last_name, 'university': university,
+              'tutor_type': request.POST.get('tutorType', ""), 'course': course, 'tag': tag, 'sort': sort,
+              'max_rate': request.POST.get('maxRate', ""), 'min_rate': request.POST.get('minRate', "")}
 
     context = {
         'tutor_list': tutor_list,
         'user': user,
         'tag_list': tags,
-        'university_list': universities
+        'university_list': universities,
+        'params': params
     }
     return render(request, 'mainApp/search.html', context)
+
+
+@csrf_exempt
+def get_uni_courses(request):
+    university_id = request.POST.get('university')
+    course_list = Course.objects.filter(university=university_id)
+    result = {}
+    for course in course_list:
+        result[course.id] = course.title
+    print(result)
+    return JsonResponse(result)
 
 
 @csrf_exempt
@@ -219,9 +277,12 @@ def wallet(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     wallet = Wallet.objects.get(user=request.session['uid'])
+    isTutor, isStudent = checkUser('uid', request);
     context = {
         'wallet': wallet,
-        'user': user
+        'user': user,
+        'isTutor': isTutor,
+        'isStudent': isStudent
     }
     return render(request, 'mainApp/wallet.html', context)
 
@@ -248,8 +309,8 @@ def book(request, pk):
         slots, slotsToRender = getPrivateSlots()
     else:
         slots, slotsToRender = getContractedSlots()
-    weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    weekDays = getWeekdays()
+    months = getMonths()
     BookableDates = []
     for i in range(1, 9):
         nextDay = today + timedelta(days=i)
@@ -318,7 +379,7 @@ def manageWallet(request):
         wallet_mail_subtract(user, int(request.GET.get('amount', None)),w, transaction)
 
 
-    data = {'status': 'success'}
+    data = {'status': 'success', 'balance':w.balance}
     return JsonResponse(data)
 
 
@@ -504,3 +565,111 @@ def courses(request):
         'allCourses': allCourses
     }
     return render(request, 'mainApp/courses.html', context)
+
+
+@csrf_exempt
+def activate_deactivate_tutor(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    tutor = Tutor.objects.get(id=request.session['tid'])
+    tutor.activate_deactivate()
+    return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def manageSchedule(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+    weekdays = getQuerySetWeekdays()
+    isPrivate = checkIfTutorPrivate(tutor)
+    slots = []
+    slotsToRender = []
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
+    else:
+        slots, slotsToRender = getContractedSlots()
+    upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    schedule = []
+    for idx, day in enumerate(weekdays):
+        row = ""
+        for slot in slots:
+            slot_time = datetime.strptime(slot, '%H:%M').time()
+            booked = upcoming_bookings.filter(date__week_day=idx + 1, time_start=slot_time).exists()
+            unavailable = unavailable_slots.filter(day=day, time_start=slot_time).exists()
+            if booked and unavailable:
+                row = row + "<td class='bookedunavailable' id='" + day + "_" + slot + "'></td>"
+            elif booked:
+                row = row + "<td class='booked' id='" + day + "_" + slot + "'></td>"
+            elif unavailable:
+                row = row + "<td class='unavailable' id='" + day + "_" + slot + "'></td>"
+            else:
+                row = row + "<td class='available' id='" + day + "_" + slot + "'></td>"
+        schedule.append({'weekday': day, 'row': row})
+    return render(request, 'mainApp/managetimes.html',
+                  {'user': user, 'tutor': tutor, 'schedule': schedule, 'slotsToRender': slotsToRender})
+
+@csrf_exempt
+def addUnavailable(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+    weekdays = getQuerySetWeekdays()
+    isPrivate = checkIfTutorPrivate(tutor)
+    slots = []
+    slotsToRender = []
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
+    else:
+        slots, slotsToRender = getContractedSlots()
+    addTime = request.POST.get('time')
+    addDay = request.POST.get('day')
+    if addTime not in slots:
+        return JsonResponse({'status': 'fail'})
+    if addDay not in weekdays:
+        return JsonResponse({'status': 'fail'})
+    # upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    # upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    slot_time = datetime.strptime(addTime, '%H:%M').time()
+    # booked = upcoming_bookings.filter(date__week_day=weekdays.index(addDay)+1, time_start=slot_time).exists()
+    unavailable = unavailable_slots.filter(day=addDay, time_start=slot_time).exists()
+    if unavailable:
+        return JsonResponse({'status': 'fail'})
+    tutor.create_unavailable_slot(addDay, addTime)
+    return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def removeUnavailable(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+    weekdays = getQuerySetWeekdays()
+    isPrivate = checkIfTutorPrivate(tutor)
+    slots = []
+    slotsToRender = []
+    if isPrivate:
+        slots, slotsToRender = getPrivateSlots()
+    else:
+        slots, slotsToRender = getContractedSlots()
+    addTime = request.POST.get('time')
+    addDay = request.POST.get('day')
+    if addTime not in slots:
+        return JsonResponse({'status': 'fail'})
+    if addDay not in weekdays:
+        return JsonResponse({'status': 'fail'})
+    # upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    # upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    slot_time = datetime.strptime(addTime, '%H:%M').time()
+    # booked = upcoming_bookings.filter(date__week_day=weekdays.index(addDay)+1, time_start=slot_time).exists()
+    unavailable = unavailable_slots.filter(day=addDay, time_start=slot_time).exists()
+    if not unavailable:
+        return JsonResponse({'status': 'fail'})
+    tutor.remove_unavailable_slot(addDay, slot_time)
+    return JsonResponse({'status': 'success'})
