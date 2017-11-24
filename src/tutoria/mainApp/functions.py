@@ -2,20 +2,24 @@ from .models import *
 from django.core import mail
 from datetime import time
 import math
+import string
+import random
+from django.contrib.auth.hashers import make_password, check_password
 
 
 # functions
 
 
 def contracted_mail_book(student, tutor, bookingDay, bookingTime, bookingEnd):
-
     message_subject1 = "New Booking"
-    message_body1 = "You have been booked by: " + student.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
+    message_body1 = "You have been booked by: " + student.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
     mail_from1 = "My Tutors"
     mail_to1 = [str(tutor.user.email)]
 
     message_subject2 = "Booking Confirmation"
-    message_body2 = "Confirmation of booking with: " + tutor.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
+    message_body2 = "Confirmation of booking with: " + tutor.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
     mail_from2 = "My Tutors"
     mail_to2 = [str(student.user.email)]
 
@@ -28,33 +32,34 @@ def contracted_mail_book(student, tutor, bookingDay, bookingTime, bookingEnd):
             message_subject2, message_body2, mail_from2, [mail_to2],
             connection=connection,
         ).send()
-
 
     return
 
 
-def private_mail_book (student, tutor, bookingDay, bookingTime, bookingEnd, transaction):
-
+def private_mail_book(student, tutor, bookingDay, bookingTime, bookingEnd, transaction):
     hour = transaction.time.hour
-    if hour<10:
-        hour = "0"+str(hour)
+    if hour < 10:
+        hour = "0" + str(hour)
     else:
         hour = str(hour)
         minute = transaction.time.minute
-    if minute<10:
-        minute = "0"+str(minute)
+    if minute < 10:
+        minute = "0" + str(minute)
     else:
         minute = str(minute)
 
-
-
     message_subject1 = "New Booking"
-    message_body1 = "You have been booked by: " + student.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd) + "\nFunds that will be added to your wallet after session end: " + str(transaction.amount)
+    message_body1 = "You have been booked by: " + student.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(
+        bookingEnd) + "\nFunds that will be added to your wallet after session end: " + str(transaction.amount)
     mail_from1 = "My Tutors"
     mail_to1 = [str(tutor.user.email)]
 
     message_subject2 = "Booking Confirmation"
-    message_body2 = "Confirmation of booking with: " + tutor.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd) + "\nFunds subtracted from your wallet: " + str(transaction.amount) + "\nTransaction ID: " + str(transaction.id)  + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
+    message_body2 = "Confirmation of booking with: " + tutor.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(
+        bookingEnd) + "\nFunds subtracted from your wallet: " + str(transaction.amount) + "\nTransaction ID: " + str(
+        transaction.id) + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
     mail_from2 = "My Tutors"
     mail_to2 = [str(student.user.email)]
 
@@ -67,20 +72,20 @@ def private_mail_book (student, tutor, bookingDay, bookingTime, bookingEnd, tran
             message_subject2, message_body2, mail_from2, [mail_to2],
             connection=connection,
         ).send()
-
 
     return
 
 
 def contracted_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd):
-
     message_subject1 = "Booking Cancelled"
-    message_body1 = "Your booking have been cancelled by: " + student.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
+    message_body1 = "Your booking have been cancelled by: " + student.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
     mail_from1 = "My Tutors"
     mail_to1 = [str(tutor.user.email)]
 
     message_subject2 = "Cancellation Confirmation"
-    message_body2 = "Confirmation of cancellation with: " + tutor.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
+    message_body2 = "Confirmation of cancellation with: " + tutor.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
     mail_from2 = "My Tutors"
     mail_to2 = [str(student.user.email)]
 
@@ -93,33 +98,33 @@ def contracted_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd):
             message_subject2, message_body2, mail_from2, [mail_to2],
             connection=connection,
         ).send()
-
 
     return
 
 
 def private_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd, transaction):
-
     message_subject1 = "Booking Cancelled"
-    message_body1 = "Your booking have been cancelled by: " + student.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
+    message_body1 = "Your booking have been cancelled by: " + student.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd)
     mail_from1 = "My Tutors"
     mail_to1 = [str(tutor.user.email)]
 
-
     hour = transaction.time.hour
-    if hour<10:
-        hour = "0"+str(hour)
+    if hour < 10:
+        hour = "0" + str(hour)
     else:
         hour = str(hour)
         minute = transaction.time.minute
-    if minute<10:
-        minute = "0"+str(minute)
+    if minute < 10:
+        minute = "0" + str(minute)
     else:
         minute = str(minute)
 
-
     message_subject2 = "Cancellation Confirmation"
-    message_body2 = "Confirmation of cancellation with: " + tutor.user.name + "\nSession Date: " + str(bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(bookingEnd) + "\nFunds added back to your wallet: " + str(transaction.amount) + "\nTransaction ID: " + str(transaction.id)  + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
+    message_body2 = "Confirmation of cancellation with: " + tutor.user.name + "\nSession Date: " + str(
+        bookingDay) + "\nTime: " + str(bookingTime) + "-" + str(
+        bookingEnd) + "\nFunds added back to your wallet: " + str(transaction.amount) + "\nTransaction ID: " + str(
+        transaction.id) + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
     mail_from2 = "My Tutors"
     mail_to2 = [str(student.user.email)]
 
@@ -133,32 +138,27 @@ def private_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd, tra
             connection=connection,
         ).send()
 
-
     return
-
-
-
-
 
 
 def wallet_mail_add(user, amount, wallet, transaction):
-
     hour = transaction.time.hour
-    if hour<10:
-        hour = "0"+str(hour)
+    if hour < 10:
+        hour = "0" + str(hour)
     else:
         hour = str(hour)
         minute = transaction.time.minute
-    if minute<10:
-        minute = "0"+str(minute)
+    if minute < 10:
+        minute = "0" + str(minute)
     else:
         minute = str(minute)
 
     message_subject = "Wallet Update"
     mail_from = "My Tutors"
-    message_body = "Funds added to wallet: " + str(amount) + "\nNew Balance: " + str(wallet.balance) + "\nTransactionID: " + str(transaction.id) + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
+    message_body = "Funds added to wallet: " + str(amount) + "\nNew Balance: " + str(
+        wallet.balance) + "\nTransactionID: " + str(transaction.id) + "\nTransaction Date: " + str(
+        transaction.date) + "\nTransaction Time: " + hour + ":" + minute
     mail_to = [str(user.email)]
-
 
     with mail.get_connection() as connection:
         mail.EmailMessage(
@@ -168,24 +168,25 @@ def wallet_mail_add(user, amount, wallet, transaction):
 
     return
 
-def wallet_mail_subtract(user, amount, wallet, transaction):
 
+def wallet_mail_subtract(user, amount, wallet, transaction):
     message_subject = "Wallet Update"
     mail_from = "My Tutors"
     hour = transaction.time.hour
-    if hour<10:
-        hour = "0"+str(hour)
+    if hour < 10:
+        hour = "0" + str(hour)
     else:
         hour = str(hour)
     minute = transaction.time.minute
-    if minute<10:
-        minute = "0"+str(minute)
+    if minute < 10:
+        minute = "0" + str(minute)
     else:
         minute = str(minute)
-    message_body = "Funds subtracted from wallet: " + str(amount) + "\nNew Balance: " + str(wallet.balance) + "\nTransactionID: " + str(transaction.id) + "\nTransaction Date: " + str(transaction.date) + "\nTransaction Time: " + hour + ":" + minute
+    message_body = "Funds subtracted from wallet: " + str(amount) + "\nNew Balance: " + str(
+        wallet.balance) + "\nTransactionID: " + str(transaction.id) + "\nTransaction Date: " + str(
+        transaction.date) + "\nTransaction Time: " + hour + ":" + minute
     mail_to = [str(user.email)]
 
-
     with mail.get_connection() as connection:
         mail.EmailMessage(
             message_subject, message_body, mail_from, [mail_to],
@@ -193,15 +194,15 @@ def wallet_mail_subtract(user, amount, wallet, transaction):
         ).send()
 
     return
+
 
 def review_email(booking):
-
-    link = "http://localhost:8000/mainApp/review/"+str(booking.id)
+    link = "http://localhost:8000/mainApp/review/" + str(booking.id)
     message_subject = "Submit Review Invitation"
     mail_from = "My Tutors"
-    message_body = "This is an invitation to submit a review of the learning session with: " + booking.tutor.user.name + "\nDate: " + str(booking.date) + "\nPlease click on the link to submit the review: " + link
+    message_body = "This is an invitation to submit a review of the learning session with: " + booking.tutor.user.name + "\nDate: " + str(
+        booking.date) + "\nPlease click on the link to submit the review: " + link
     mail_to = [str(booking.student.user.email)]
-
 
     with mail.get_connection() as connection:
         mail.EmailMessage(
@@ -210,7 +211,6 @@ def review_email(booking):
         ).send()
 
     return
-
 
 
 def rateWithCommision(tutorRate):
@@ -281,3 +281,24 @@ def getQuerySetWeekdays():
 
 def checkIfTutorPrivate(tutor):
     return isinstance(tutor, PrivateTutor)
+
+def makeToken(email_address):
+    not_hashed = None
+    if User.objects.filter(email=email_address).exists():
+        user = User.objects.get(email=email_address)
+        while True:
+            not_hashed = ""
+            for i in range(8):
+                not_hashed = not_hashed + random.SystemRandom().choice(string.ascii_uppercase + string.digits)
+            if not PasswordToken.objects.filter(token=make_password(not_hashed)).exists():
+                new_token = PasswordToken(user=user, token=make_password(not_hashed))
+                new_token.save()
+                break
+    return not_hashed
+
+def checkToken(token):
+    if not PasswordToken.objects.filter(token=make_password(token)).exists():
+        return None, None
+    else:
+        pwdtkn = PasswordToken.objects.get(token=make_password(token))
+        return User.objects.get(id=pwdtkn.user.id), pwdtkn

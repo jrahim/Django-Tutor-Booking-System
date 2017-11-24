@@ -26,4 +26,7 @@ urlpatterns = [
     url(r'^manageschedule$', views.manageSchedule),
     url(r'^addunavailable$', views.addUnavailable),
     url(r'^removeunavailable$', views.removeUnavailable),
+    url(r'^resetpwdtoken$', views.getResetPwdToken),
+    url(r'^resetpwd$', views.resetPwd),
+    url(r'^setNewPwd$', views.setNewPwd),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
