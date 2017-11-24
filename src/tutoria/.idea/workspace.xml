@@ -2,70 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="903759ad-ba52-4a31-855a-f51f9e0f5e8b" name="Default" comment="Merge branch 'master' into Zain&#10;&#10;# Conflicts:&#10;#&#9;src/tutoria/mainApp/management/commands/endSessions.py&#10;#&#9;src/tutoria/mainApp/views.py">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/iHu6zxF_vZN4WGP.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/assets/img/avatar/photograph_ebinWuN.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/19787145_10154915143327746_1727708068138826797_o_nA70G8K.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/WhatsApp_Image_2017-04-27_at_10.56.03_AM_7a5GZ53.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/millennium_falcon_wallpaper_by_theadamtaylor-d9spn6b_32qiGO1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/millennium_falcon_wallpaper_by_theadamtaylor-d9spn6b_OY9ZIxD.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/millennium_falcon_wallpaper_by_theadamtaylor-d9spn6b_zR8KiHj.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/photograph_bxsCHPU.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/photograph_e75Id4i.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/assets/img/avatar/photograph_ebinWuN.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0034_tutor_university.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0035_tutor_isactivated.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0036_auto_20171122_1824.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/migrations/0037_auto_20171124_1823.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/static/css/managetimes.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/managetimes.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/resetpwd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171116-164214-65545200.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171116-164832-4108848.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171116-164832-4111696.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171117-014316-3867024.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171117-014340-3860272.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-011107-67119664.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-033355-62989328.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-134955-16603280.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-134955-67048400.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-152438-75360592.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155334-19879824.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155334-19880048.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155341-19891792.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155341-19892496.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155421-20253552.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155421-20254224.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155428-20288240.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155428-20288720.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155516-20068048.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155533-73846320.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155533-73929936.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155600-90887376.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155815-64099536.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155936-80264496.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-155936-80264848.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-164831-72927472.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mainApp/tmp/app-messages/20171123-164839-72534544.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/managetimes.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/admin.py" afterPath="$PROJECT_DIR$/mainApp/admin.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/functions.py" afterPath="$PROJECT_DIR$/mainApp/functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" afterPath="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/management/commands/lockSessions.py" afterPath="$PROJECT_DIR$/mainApp/management/commands/lockSessions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/models.py" afterPath="$PROJECT_DIR$/mainApp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/index.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/landing.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/landing.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/courses.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/courses.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/resetpwd.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/resetpwd.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/review.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/review.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" afterPath="$PROJECT_DIR$/mainApp/templates/mainApp/wallet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" afterPath="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/urls.py" afterPath="$PROJECT_DIR$/mainApp/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mainApp/views.py" afterPath="$PROJECT_DIR$/mainApp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tutoria/settings.py" afterPath="$PROJECT_DIR$/tutoria/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -90,11 +38,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="book.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="32" column="97" lean-forward="false" selection-start-line="32" selection-start-column="97" selection-end-line="32" selection-end-column="97" />
+              <folding>
+                <element signature="n#style#0;n#table#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="427">
+              <caret line="218" column="41" lean-forward="false" selection-start-line="218" selection-start-column="41" selection-end-line="218" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="book.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="15" column="36" lean-forward="true" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainApp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4919">
-              <caret line="591" column="0" lean-forward="true" selection-start-line="591" selection-start-column="0" selection-end-line="591" selection-end-column="0" />
+            <state relative-caret-position="487">
+              <caret line="494" column="81" lean-forward="false" selection-start-line="494" selection-start-column="81" selection-end-line="494" selection-end-column="81" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -102,80 +82,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/functions.py">
+      <file leaf-file-name="review.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/review.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6506">
-              <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="81" column="158" lean-forward="false" selection-start-line="81" selection-start-column="158" selection-end-line="81" selection-end-column="158" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
-              <folding>
-                <marker date="1511538766902" expanded="true" signature="146:1035" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tutorProfile.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="106" column="27" lean-forward="false" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
-              <folding>
-                <marker date="1511537765626" expanded="false" signature="571:583" ph="..." />
-                <marker date="1511537765626" expanded="false" signature="1652:1664" ph="..." />
-                <marker date="1511537765626" expanded="false" signature="4638:4696" ph="..." />
-                <marker date="1511537765626" expanded="false" signature="4757:4795" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-405">
-              <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-              <folding>
-                <marker date="1511537765204" expanded="true" signature="5262:6267" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="5341:6256" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="5381:6241" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="5424:5723" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="5606:5700" ph="..." />
-                <marker date="1511537765204" expanded="false" signature="5657:5664" ph="×" />
-                <marker date="1511537765204" expanded="true" signature="5764:5949" ph="..." />
-                <marker date="1511537765204" expanded="false" signature="5902:5919" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="5992:6222" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="6285:7102" ph="{% block extra_script ... %}" />
-                <marker date="1511537765204" expanded="true" signature="6344:7086" ph="..." />
-                <marker date="1511537765204" expanded="true" signature="6410:6498" ph="{...}" />
-                <marker date="1511537765204" expanded="true" signature="6535:7072" ph="{...}" />
-                <marker date="1511537765204" expanded="true" signature="6586:7060" ph="{...}" />
-                <marker date="1511537765204" expanded="true" signature="6635:6759" ph="{...}" />
-                <marker date="1511537765204" expanded="true" signature="6781:7046" ph="{...}" />
-                <marker date="1511537765204" expanded="true" signature="6955:7020" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4536">
-              <caret line="248" column="11" lean-forward="false" selection-start-line="248" selection-start-column="11" selection-end-line="248" selection-end-column="11" />
-              <folding>
-                <marker date="1511538441784" expanded="true" signature="48:54" ph="import ..." />
+                <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -184,32 +97,42 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="22" column="40" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+            <state relative-caret-position="540">
+              <caret line="24" column="33" lean-forward="false" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/index.html">
+      <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+            <state relative-caret-position="-4622">
+              <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
               <folding>
-                <marker date="1511537765204" expanded="true" signature="7428:7439" ph="..." />
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="endSessions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mainApp/management/commands/endSessions.py">
+      <file leaf-file-name="tutorProfile.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="256">
+              <caret line="116" column="83" lean-forward="false" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2543">
+              <caret line="245" column="11" lean-forward="false" selection-start-line="245" selection-start-column="11" selection-end-line="245" selection-end-column="11" />
               <folding>
-                <element signature="e#0#51#0" expanded="true" />
+                <marker date="1511547533275" expanded="true" signature="48:54" ph="import ..." />
               </folding>
             </state>
           </provider>
@@ -218,18 +141,11 @@
       <file leaf-file-name="courses.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/courses.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="70" column="52" lean-forward="false" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
+            <state relative-caret-position="156">
+              <caret line="22" column="86" lean-forward="false" selection-start-line="22" selection-start-column="86" selection-end-line="22" selection-end-column="86" />
               <folding>
-                <marker date="1511537599413" expanded="true" signature="2331:3190" ph="..." />
-                <marker date="1511537599413" expanded="true" signature="2331:3206" ph="{% block extra_script ... %}" />
-                <marker date="1511537599413" expanded="true" signature="2521:2778" ph="{...}" />
-                <marker date="1511537599413" expanded="true" signature="2573:2764" ph="{...}" />
-                <marker date="1511537599413" expanded="true" signature="2626:2746" ph="{...}" />
-                <marker date="1511537599413" expanded="true" signature="2825:2868" ph="{&quot;listCourses&quot;: listCourses...}" />
-                <marker date="1511537599413" expanded="true" signature="2890:3163" ph="{...}" />
-                <marker date="1511537599413" expanded="true" signature="2942:3056" ph="{...}" />
-                <marker date="1511537599413" expanded="true" signature="3079:3149" ph="{...}" />
+                <element signature="e#1091#1117#0#HTML" expanded="true" />
+                <element signature="e#1249#1287#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -258,8 +174,10 @@
       <find>timedelta</find>
       <find>rateWith</find>
       <find>set</find>
-      <find>ons</find>
       <find>error.html</find>
+      <find>ons</find>
+      <find>.wee</find>
+      <find>tutorprofile</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -298,10 +216,7 @@
         <option value="$PROJECT_DIR$/mainApp/management/commands/ploymorphic migrations.py" />
         <option value="$PROJECT_DIR$/mainApp/management/commands/polyMig.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/topBarWithSearch.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/courses.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/transactionHistory.html" />
         <option value="$PROJECT_DIR$/mainApp/static/css/managetimes.css" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/managetimes.html" />
@@ -310,14 +225,18 @@
         <option value="$PROJECT_DIR$/mainApp/templatetags/custom_tags.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/bookings.html" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/profile.html" />
-        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
         <option value="$PROJECT_DIR$/mainApp/management/commands/endSessions.py" />
-        <option value="$PROJECT_DIR$/mainApp/admin.py" />
-        <option value="$PROJECT_DIR$/mainApp/models.py" />
         <option value="$PROJECT_DIR$/mainApp/urls.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/index.html" />
-        <option value="$PROJECT_DIR$/mainApp/functions.py" />
         <option value="$PROJECT_DIR$/mainApp/templates/mainApp/resetpwd.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/courses.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html" />
+        <option value="$PROJECT_DIR$/mainApp/functions.py" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/book.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/search.html" />
+        <option value="$PROJECT_DIR$/mainApp/templates/mainApp/review.html" />
+        <option value="$PROJECT_DIR$/mainApp/admin.py" />
+        <option value="$PROJECT_DIR$/mainApp/models.py" />
         <option value="$PROJECT_DIR$/mainApp/views.py" />
       </list>
     </option>
@@ -592,13 +511,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -748,34 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="106" column="27" lean-forward="false" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
-          <folding>
-            <marker date="1511537765626" expanded="false" signature="571:583" ph="..." />
-            <marker date="1511537765626" expanded="false" signature="1652:1664" ph="..." />
-            <marker date="1511537765626" expanded="false" signature="4638:4696" ph="..." />
-            <marker date="1511537765626" expanded="false" signature="4757:4795" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="15" column="36" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2997">
-          <caret line="140" column="17" lean-forward="true" selection-start-line="140" selection-start-column="17" selection-end-line="140" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/confirmation.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="526">
@@ -837,7 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -845,17 +728,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="688">
           <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="216" column="33" lean-forward="false" selection-start-line="216" selection-start-column="33" selection-end-line="216" selection-end-column="33" />
-          <folding>
-            <element signature="e#2317#2362#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -863,7 +735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -872,16 +743,8 @@
         <state relative-caret-position="108">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="22" column="40" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -919,44 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4536">
-          <caret line="248" column="11" lean-forward="false" selection-start-line="248" selection-start-column="11" selection-end-line="248" selection-end-column="11" />
-          <folding>
-            <marker date="1511538441784" expanded="true" signature="48:54" ph="import ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/courses.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="70" column="52" lean-forward="false" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
-          <folding>
-            <marker date="1511537599413" expanded="true" signature="2331:3190" ph="..." />
-            <marker date="1511537599413" expanded="true" signature="2331:3206" ph="{% block extra_script ... %}" />
-            <marker date="1511537599413" expanded="true" signature="2521:2778" ph="{...}" />
-            <marker date="1511537599413" expanded="true" signature="2573:2764" ph="{...}" />
-            <marker date="1511537599413" expanded="true" signature="2626:2746" ph="{...}" />
-            <marker date="1511537599413" expanded="true" signature="2825:2868" ph="{&quot;listCourses&quot;: listCourses...}" />
-            <marker date="1511537599413" expanded="true" signature="2890:3163" ph="{...}" />
-            <marker date="1511537599413" expanded="true" signature="2942:3056" ph="{...}" />
-            <marker date="1511537599413" expanded="true" signature="3079:3149" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
-          <folding>
-            <marker date="1511538766902" expanded="true" signature="146:1035" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -967,27 +792,109 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="634">
+          <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/resetpwd.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="52" column="64" lean-forward="false" selection-start-line="52" selection-start-column="64" selection-end-line="52" selection-end-column="64" />
+        <state relative-caret-position="157">
+          <caret line="41" column="53" lean-forward="false" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/courses.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="22" column="86" lean-forward="false" selection-start-line="22" selection-start-column="86" selection-end-line="22" selection-end-column="86" />
+          <folding>
+            <element signature="e#1091#1117#0#HTML" expanded="true" />
+            <element signature="e#1249#1287#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/static/css/book.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="15" column="36" lean-forward="true" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6506">
-          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+        <state relative-caret-position="-4622">
+          <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/tutorProfile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="116" column="83" lean-forward="false" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="218" column="41" lean-forward="false" selection-start-line="218" selection-start-column="41" selection-end-line="218" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="24" column="33" lean-forward="false" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/book.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="32" column="97" lean-forward="false" selection-start-line="32" selection-start-column="97" selection-end-line="32" selection-end-column="97" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/templates/mainApp/review.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="81" column="158" lean-forward="false" selection-start-line="81" selection-start-column="158" selection-end-line="81" selection-end-column="158" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2543">
+          <caret line="245" column="11" lean-forward="false" selection-start-line="245" selection-start-column="11" selection-end-line="245" selection-end-column="11" />
+          <folding>
+            <marker date="1511547533275" expanded="true" signature="48:54" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mainApp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4919">
-          <caret line="591" column="0" lean-forward="true" selection-start-line="591" selection-start-column="0" selection-end-line="591" selection-end-column="0" />
+        <state relative-caret-position="487">
+          <caret line="494" column="81" lean-forward="false" selection-start-line="494" selection-start-column="81" selection-end-line="494" selection-end-column="81" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>

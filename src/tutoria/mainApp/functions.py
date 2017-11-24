@@ -42,7 +42,7 @@ def private_mail_book(student, tutor, bookingDay, bookingTime, bookingEnd, trans
         hour = "0" + str(hour)
     else:
         hour = str(hour)
-        minute = transaction.time.minute
+    minute = transaction.time.minute
     if minute < 10:
         minute = "0" + str(minute)
     else:
@@ -114,7 +114,7 @@ def private_mail_cancel(student, tutor, bookingDay, bookingTime, bookingEnd, tra
         hour = "0" + str(hour)
     else:
         hour = str(hour)
-        minute = transaction.time.minute
+    minute = transaction.time.minute
     if minute < 10:
         minute = "0" + str(minute)
     else:
@@ -147,7 +147,7 @@ def wallet_mail_add(user, amount, wallet, transaction):
         hour = "0" + str(hour)
     else:
         hour = str(hour)
-        minute = transaction.time.minute
+    minute = transaction.time.minute
     if minute < 10:
         minute = "0" + str(minute)
     else:
@@ -207,6 +207,22 @@ def review_email(booking):
     with mail.get_connection() as connection:
         mail.EmailMessage(
             message_subject, message_body, mail_from, [mail_to],
+            connection=connection,
+        ).send()
+
+    return
+
+
+def pwd_reset_mail(user, token):
+    message_subject1 = "Password Reset Request"
+    message_body1 = "Hello! \n You recently requested a password reset for Tutoria. Please visit the link below to reset your password\n"
+    message_body1 = message_body1 + "http://localhost:8000/mainApp/resetpwd?token=" + token
+    mail_from1 = "My Tutors"
+    mail_to1 = [str(user.email)]
+
+    with mail.get_connection() as connection:
+        mail.EmailMessage(
+            message_subject1, message_body1, mail_from1, [mail_to1],
             connection=connection,
         ).send()
 
@@ -285,6 +301,7 @@ def checkIfTutorPrivate(tutor):
 
 def makeToken(email_address):
     not_hashed = None
+    user = None
     if User.objects.filter(email=email_address).exists():
         user = User.objects.get(email=email_address)
         while True:
@@ -296,7 +313,7 @@ def makeToken(email_address):
                 new_token = PasswordToken(user=user, token=hashed)
             new_token.save()
             break
-    return not_hashed
+    return not_hashed, user
 
 
 def checkToken(token):

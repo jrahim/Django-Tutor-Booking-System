@@ -6,7 +6,6 @@ from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 
-
 # Create your models here.
 
 class University(models.Model):
@@ -178,13 +177,11 @@ class Tutor(PolymorphicModel):
 
     def update_rating(self):
 
-
-        newRating=Review.objects.filter(tutor=self).aggregate(Avg('rating'))
+        newRating = Review.objects.filter(tutor=self).aggregate(Avg('rating'))
         print(newRating)
         setattr(self, 'rating', newRating['rating__avg'])
 
         self.save()
-
 
     def __str__(self):
         return self.user.name
@@ -349,7 +346,6 @@ class PasswordToken(models.Model):
 
     def __str__(self):
         return self.user.name
-
 
 
 class Review(models.Model):

@@ -136,7 +136,7 @@ def search(request):
         #     id=university)  # contains to allow custom input search
         # tutor_list = tutor_list.filter(university__in=university_list)
         courses = Course.objects.filter(university=university)
-        tutor_list = tutor_list.filter(course__in=courses)
+        tutor_list = tutor_list.filter(course__in=courses).distinct()
 
     if course != "":
         course_list = Course.objects.filter(id=course)  # course code
@@ -148,10 +148,13 @@ def search(request):
 
     if max_rate != "" and min_rate != "":
         if min_rate == "0":
+            max_rate = round(float(max_rate) / 1.05, 2)
             tutor_list = tutor_list.filter(
                 Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate) | Q(
                     instance_of=ContractedTutor))
         else:
+            min_rate = round(float(min_rate)/1.05, 2)
+            max_rate = round(float(max_rate)/1.05, 2)
             tutor_list = tutor_list.filter(
                 Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=min_rate))
     elif max_rate == "" and min_rate != "":
@@ -161,26 +164,35 @@ def search(request):
                 Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate) | Q(
                     instance_of=ContractedTutor))
         else:
+            min_rate = round(float(min_rate) / 1.05, 2)
             tutor_list = tutor_list.filter(
                 Q(PrivateTutor___rate__lte=max_query['maxvalue']) & Q(PrivateTutor___rate__gte=min_rate))
     elif max_rate != "" and min_rate == "":
+        max_rate = round(float(max_rate) / 1.05, 2)
         tutor_list = tutor_list.filter(
             Q(PrivateTutor___rate__lte=max_rate) & Q(PrivateTutor___rate__gte=0) | Q(
                 instance_of=ContractedTutor))
 
     # TODO only display tutors with an available slot in the coming 7 days
     if availability != "":
+        privateslots, _ = getPrivateSlots()
+        contractedslots, _ = getContractedSlots()
         for tutor in tutor_list:
-            upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED').count()
-            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor)).count()
-            full_slots = upcoming_bookings + unavailable_slots
-            print('checking')
-            print(full_slots)
+            upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED')
+            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor))
+            full_slots = upcoming_bookings.count() + unavailable_slots.count()
+            weekdays = getWeekdays()
+            for booking in upcoming_bookings:
+                if unavailable_slots.filter(day=weekdays[booking.date.weekday()], time_start=booking.time_start).exists():
+                    full_slots = full_slots - 1
+            # print('checking')
+            # print(full_slots)
             if isinstance(tutor, PrivateTutor):
-                if full_slots >= 7 * 8:
+                if full_slots >= 7 * len(privateslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
             elif isinstance(tutor, ContractedTutor):
-                if full_slots >= 7 * 15:
+                print(len(contractedslots))
+                if full_slots >= 7 * len(contractedslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
 
     tutor_list = tutor_list.filter(isActivated=True)
@@ -191,10 +203,11 @@ def search(request):
         tutor_list = tutor_list.order_by('-PrivateTutor___rate')
     else:
         tutor_list = tutor_list.order_by('PrivateTutor___rate')
-
+    print(availability)
     params = {'given_name': given_name, 'last_name': last_name, 'university': university,
               'tutor_type': request.POST.get('tutorType', ""), 'course': course, 'tag': tag, 'sort': sort,
-              'max_rate': request.POST.get('maxRate', ""), 'min_rate': request.POST.get('minRate', "")}
+              'max_rate': request.POST.get('maxRate', ""), 'min_rate': request.POST.get('minRate', ""),
+              'available': availability}
 
     context = {
         'tutor_list': tutor_list,
@@ -231,6 +244,7 @@ def profile(request):
         isTutor = '0'
     return render(request, 'mainApp/profile.html', {'user': user, 'isTutor': isTutor, 'tutor': tutor})
 
+
 @csrf_exempt
 def review(request, pk):
     if not isAuthenticated(request):
@@ -241,12 +255,13 @@ def review(request, pk):
         return render(request, 'mainApp/error.html', {'user': user, 'error': 'This link is invalid!'})
     else:
         booking = booking[0]
-    student = Student.objects.get(id=booking.student.id);
+    student = Student.objects.get(id=booking.student.id)
     if not student.user == user:
         return render(request, 'mainApp/error.html', {'user': user, 'error': 'You can only review your bookings!'})
     review = Review.objects.filter(booking=booking)
     if review.exists():
-        return render(request, 'mainApp/error.html', {'user': user, 'error': 'You have already submitted a review for this session!'})
+        return render(request, 'mainApp/error.html',
+                      {'user': user, 'error': 'You have already submitted a review for this session!'})
 
     return render(request, 'mainApp/review.html', {'user': user, 'bookingID': pk})
 
@@ -296,7 +311,7 @@ def wallet(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     wallet = Wallet.objects.get(user=request.session['uid'])
-    isTutor, isStudent = checkUser('uid', request);
+    isTutor, isStudent = checkUser('uid', request)
     context = {
         'wallet': wallet,
         'user': user,
@@ -457,10 +472,10 @@ def confirmBooking(request):
         try:
             if checkIfTutorPrivate(tutor):
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
-                private_mail_book(student, tutor, dt, slot, booking.time_end, transaction);
+                private_mail_book(student, tutor, dt, slot, booking.time_end, transaction)
             else:
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
-                contracted_mail_book(student, tutor, dt, slot, booking.time_end);
+                contracted_mail_book(student, tutor, dt, slot, booking.time_end)
 
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
@@ -476,12 +491,15 @@ def tutorProfile(request, pk):
     tutor = Tutor.objects.get(id=pk)
     user = User.objects.get(id=request.session['uid'])
     courses = tutor.course.all()
-    reviews = Review.objects.filter(tutor=tutor)
-    if reviews.count()>=3:
-        avgRating= tutor.rating
+    tags = tutor.subject_tags.all()
+    reviews = Review.objects.filter(tutor=tutor).order_by('rating').reverse()[:10]
+    if reviews.count() >= 3:
+        avgRating = tutor.rating
     else:
-        avgRating= -1
-    return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses, 'reviews' : reviews, 'rating' : avgRating })
+        avgRating = -1
+    return render(request, 'mainApp/tutorProfile.html',
+                  {'tutor': tutor, 'user': user, 'courses': courses, 'reviews': reviews, 'rating': avgRating,
+                   'tags': tags})
 
 
 @csrf_exempt
@@ -702,11 +720,12 @@ def removeUnavailable(request):
 
 
 def getResetPwdToken(request):
-    token = makeToken(request.GET.get('email'))
+    token, user = makeToken(request.GET.get('email'))
     print(token)
     if token is None:
         return JsonResponse({'status': 'fail'})
     else:
+        pwd_reset_mail(user, token)
         return JsonResponse({'status': 'success'})
 
 
@@ -721,6 +740,7 @@ def resetPwd(request):
         else:
             return render(request, 'mainApp/resetpwd.html', {'invalid': 1})
 
+
 @csrf_exempt
 def setNewPwd(request):
     user, pwdtkn = checkToken(request.POST.get('token'))
@@ -731,6 +751,8 @@ def setNewPwd(request):
         user.save()
         pwdtkn.delete()
         return JsonResponse({'status': 'success'})
+
+
 @csrf_exempt
 def tags(request):
     if not isAuthenticated(request):
@@ -750,6 +772,7 @@ def tags(request):
     }
     return render(request, 'mainApp/tags.html', context)
 
+
 @csrf_exempt
 def addTag(request):
     if not isAuthenticated(request):
@@ -762,10 +785,10 @@ def addTag(request):
 
     create = request.POST.get('create')
 
-    if create=="true":
-        create=True
+    if create == "true":
+        create = True
     else:
-        create=False
+        create = False
 
     tutor.add_tag(tagRequestedName, create)
     message_body = "You added " + str(tagRequestedName) + " to your list of tags."
@@ -787,9 +810,6 @@ def removeTags(request):
     return JsonResponse({'status': 'success'})
 
 
-
-
-
 @csrf_exempt
 def addReview(request, pk):
     if not isAuthenticated(request):
@@ -800,18 +820,20 @@ def addReview(request, pk):
         return JsonResponse({'status': 'fail2'})
     else:
         booking = booking[0]
-    student = Student.objects.get(id=booking.student.id);
+    student = Student.objects.get(id=booking.student.id)
     if not student.user == user:
         return JsonResponse({'status': 'fail3'})
     review = Review.objects.filter(booking=booking)
     if review.exists():
         return JsonResponse({'status': 'fail4'})
-    print (request.GET.get('rating'));
-    review = Review(tutor=booking.tutor, student=booking.student, rating=request.GET.get('rating'), content=request.GET.get('content'), reviewtype=request.GET.get('type'), booking=booking)
+    print(request.GET.get('rating'))
+    review = Review(tutor=booking.tutor, student=booking.student, rating=request.GET.get('rating'),
+                    content=request.GET.get('content'), reviewtype=request.GET.get('type'), booking=booking)
     review.save()
 
     booking.tutor.update_rating()
     return JsonResponse({'status': 'success'})
+
 
 def test(request):
     return render(request, 'mainApp/review.html')

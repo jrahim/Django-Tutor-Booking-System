@@ -215,6 +215,13 @@
         document.getElementById('maxRate').value = "{{params.max_rate}}";
         // TODO fix this course doesnt work
         document.getElementById('course').value = "{{params.course}}";
+{#        alert("{{ params.available }}")#}
+        if ("{{params.available}}" != "") {
+            document.getElementById('available').checked = true;
+        } else {
+            document.getElementById('available').checked = false;
+        }
+
 
         $(document).on("click", '#universityName', function (e) {
             var university = $(this).val();
@@ -240,5 +247,20 @@
             });
 
         });
+
+        var allRadios = document.getElementsByName('tutorType');
+        var booRadio;
+        var x = 0;
+        for(x = 0; x < allRadios.length; x++){
+
+            allRadios[x].onclick = function() {
+                if(booRadio == this){
+                    this.checked = false;
+                    booRadio = null;
+                }else{
+                    booRadio = this;
+                }
+            };
+        }
     </script>
 {% endblock %}

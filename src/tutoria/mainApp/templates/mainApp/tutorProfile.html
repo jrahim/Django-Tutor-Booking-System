@@ -114,7 +114,7 @@
                 </div>
                 <p>
                     {% for course in courses %}
-                        {{ course.code }}: {{ course.title }}
+                        {{ course.code }}: {{ course.title }}: {{ course.university }}
                         <br>
                     {% endfor %}
                 </p>
@@ -123,7 +123,12 @@
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Subject Tags:</h5>
                 </div>
-                <p class="mb-1">Subject tags Here</p>
+                <p class="mb-1">
+                    {% for tag in tags %}
+                        {{ tag.tag_name }}
+                        <br>
+                    {% endfor %}
+                </p>
             </li>
         </ul>
 
