@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from mainApp.models import *
 from django.db.models import Q
 from datetime import timedelta
-from mainApp.functions import checkIfTutorPrivate, review_email
+from mainApp.functions import checkIfTutorPrivate, review_email, wallet_mail_add
 
 
 class Command(BaseCommand):
@@ -23,3 +23,4 @@ class Command(BaseCommand):
                     pass
             booking.update_booking('ENDED')
             review_email(booking)
+            wallet_mail_add(booking.tutor.user, transaction.tutorCharges,booking.tutor.user.wallet, transaction)
