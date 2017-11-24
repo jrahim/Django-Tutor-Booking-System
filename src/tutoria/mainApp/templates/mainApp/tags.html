@@ -1,0 +1,182 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="margin-top:115px; width:800px;">
+
+        <h2 class="centerAlign">Your current subject tags:</h2>
+        <br></br>
+
+        {% if presentTags %}
+
+
+
+            <ul class="list-group" style="width:800px; margin-bottom: 50px;">
+                {% for tag in presentTags.all %}
+                    <li class="list-group-item">
+
+
+                        <p>{{ tag.tag_name }}
+                            <input type="checkbox" value="{{ tag.tag_name }}">
+                        </p>
+                    </li>
+                {% endfor %}
+                <input id="removeButton" type="button" class="btn btn-primary" value="Remove selected tags" onclick=removeTag()></input>
+                <div>
+
+
+                </div>
+
+            </ul>
+
+
+        {% else %}
+            <div style="text-align: center"><h3>You do not have any subject tags added yet.</h3></div>
+
+        {% endif %}
+
+    </div>
+
+    <div style="width: 900px" class="container-fluid" style="margin-top:115px; width:800px;">
+
+        <h2 class="centerAlign">Add Subject Tags:</h2>
+
+        <br></br>
+        <div style="float : left">
+        <form name="addTagForm" id="addTagForm" method="post">
+            Existing tags: 
+            <select name="tagName" id="tagName">
+                {% for tag in allTags %}
+                    <option value="{{ tag.tag_name }}">{{ tag.tag_name }}</option>
+
+                {% endfor %}
+            </select>
+
+
+            <input type="submit" class="btn btn-primary" value="Add selected tag">
+        </form>
+    </div>
+
+        <div style="float: right">
+            
+         <form name="customTagForm" id="customTagForm" class="form-inline" method="post" >
+            <span style="margin-right:5px; margin-left:5px">Custom tag:</span> 
+            <input type="text" name="customTagName" id="customTagName">
+            
+ 
+  <input style="margin-left:5px" type="submit" class="btn btn-primary" value="Submit">
+           
+     
+        </form>
+
+    </div>
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+
+
+        document.getElementById("addTagForm").onsubmit = function () {
+
+            
+        var created='false';
+          
+            $.post('/mainApp/addtag', {
+                tagName: $('#tagName').val() ,
+                create: created 
+                
+            }, function (response) {
+
+                if (response.status == 'success') {
+
+                    window.location.reload()
+                }
+
+                else {
+
+
+                }
+            });
+
+            return true;
+
+
+        }
+
+        document.getElementById("customTagForm").onsubmit = function () {
+
+            
+            var created='true';
+
+            $.post('/mainApp/addtag', {
+                tagName: $('#customTagName').val() ,
+                create: created
+            }, function (response) {
+
+                if (response.status == 'success') {
+                   
+                    window.location.reload()
+                }
+
+                else {
+
+
+                }
+            });
+
+            return true;
+
+
+        }
+
+        function removeTag () {
+
+            
+
+            var inputs = document.getElementsByTagName("input");
+
+            
+            var listTags = new Array();
+            var k = 0;
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type == "checkbox") {
+                    if (inputs[i].checked == true) {
+
+
+                        listTags.push(inputs[i].value);
+
+                        k = k + 1;
+                    }
+                }
+            }
+
+
+            $.get('/mainApp/removetags', {
+                listTags
+            }, function (response) {
+                if (response.status == 'success') {
+
+                    window.location.reload()
+
+                    $('#removeTagSuccess').show();
+
+                }
+
+                else {
+                    $('#removeTagFail').show();
+                }
+            });
+        }
+
+
+    </script>
+{% endblock %}

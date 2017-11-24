@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^managecourses$', views.courses, name='courses'),
     url(r'^addcourse$', views.addCourse),
     url(r'^removecourses$', views.removeCourses),
+    url(r'^managetags$', views.tags, name='tags'),
+    url(r'^addtag$', views.addTag),
+    url(r'^removetags$', views.removeTags),
     url(r'^review/(?P<pk>\d+)$', views.review, name='review'),
     url(r'^addreview/(?P<pk>\d+)$', views.addReview),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

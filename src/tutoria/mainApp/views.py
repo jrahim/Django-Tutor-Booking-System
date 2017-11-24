@@ -438,18 +438,22 @@ def tutorProfile(request, pk):
     user = User.objects.get(id=request.session['uid'])
     courses = tutor.course.all()
     reviews = Review.objects.filter(tutor=tutor)
-    total=float(0)
+    #total=float(0)
     
-    if (reviews.count()>0):
+    #if (reviews.count()>0):
         
         
-        for r in reviews:
-            total=total + r.rating
+     #   for r in reviews:
+      #      total=total + r.rating
             
-        avgRating=total / reviews.count()
+       # avgRating=total / reviews.count()
     
+   # else:
+    #    avgRating=float(-1.0)
+    if reviews.count()>=3:
+        avgRating= tutor.rating
     else:
-        avgRating=float(-1.0)
+        avgRating= -1
     return render(request, 'mainApp/tutorProfile.html', {'tutor': tutor, 'user': user, 'courses': courses, 'reviews' : reviews, 'rating' : avgRating })
 
 
@@ -571,24 +575,85 @@ def courses(request):
     return render(request, 'mainApp/courses.html', context)
 
 @csrf_exempt
-def addReview(request, pk):
+def tags(request):
+    if not isAuthenticated(request):
+        return redirect('/mainApp/index')
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=request.session['uid'])
+
+    presentTags = tutor.subject_tags.all()
+    print("the present tags are", presentTags)
+    allTags = Tag.objects.exclude(id__in=presentTags)
+    print("all tags: ", allTags)
+    context = {
+        'user': user,
+        'tutor': tutor,
+        'presentTags': presentTags,
+        'allTags': allTags
+    }
+    return render(request, 'mainApp/tags.html', context)
+
+@csrf_exempt
+def addTag(request):
     if not isAuthenticated(request):
         return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+
+    tagRequestedName = request.POST.get('tagName')
+
+    create = request.POST.get('create')
+
+    if create=="true":
+        create=True
+    else:
+        create=False
+
+    tutor.add_tag(tagRequestedName, create)
+    message_body = "You added " + str(tagRequestedName) + " to your list of tags."
+    print(message_body)
+    return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def removeTags(request):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail'})
+
+    user = User.objects.get(id=request.session['uid'])
+    tutor = Tutor.objects.get(user=user)
+    listTags = request.GET.getlist('listTags[]')
+    for tagName in listTags:
+        tutor.remove_tag(tagName)
+
+    return JsonResponse({'status': 'success'})
+
+
+
+
+
+@csrf_exempt
+def addReview(request, pk):
+    if not isAuthenticated(request):
+        return JsonResponse({'status': 'fail1'})
     user = User.objects.get(id=request.session['uid'])
     booking = BookedSlot.objects.filter(id=pk, status='ENDED')
     if not booking.exists():
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail2'})
     else:
         booking = booking[0]
     student = Student.objects.get(id=booking.student.id);
     if not student.user == user:
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail3'})
     review = Review.objects.filter(booking=booking)
     if review.exists():
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail4'})
     print (request.GET.get('rating'));
     review = Review(tutor=booking.tutor, student=booking.student, rating=request.GET.get('rating'), content=request.GET.get('content'), reviewtype=request.GET.get('type'), booking=booking)
     review.save()
+
+    booking.tutor.update_rating()
     return JsonResponse({'status': 'success'})
 
 def test(request):

@@ -1,8 +1,9 @@
-from django.db import models
-from datetime import date, time, datetime, timedelta
-from django.db.models import Q
+from datetime import date, datetime, timedelta
 
 from django.core import mail
+from django.db import models
+from django.db.models import Avg
+from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 
@@ -139,50 +140,65 @@ class Tag(models.Model):
         return self.tag_name
 
 
-
-
-
 class Tutor(PolymorphicModel):
-	user = models.OneToOneField(User)
-	course = models.ManyToManyField(Course, blank=True)
-	shortBio = models.CharField(max_length=300)
-	rating = models.FloatField(default=0)
-	subject_tags = models.ManyToManyField(Tag, blank=True)
-	
-	def create_unavailable_slot(self, day, time_start, duration):
-		unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
-		unavailable.save()
+    user = models.OneToOneField(User)
+    course = models.ManyToManyField(Course, blank=True)
+    shortBio = models.CharField(max_length=300)
+    rating = models.FloatField(default=0)
+    subject_tags = models.ManyToManyField(Tag, blank=True)
 
-	def add_course(self, courseCode):
-		c = Course.objects.get(code=courseCode)
-		self.course.add(c)
-		self.save()
+    def create_unavailable_slot(self, day, time_start, duration):
+        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=duration)
+        unavailable.save()
 
-	def remove_course(self, courseCode):
-		c = Course.objects.get(code=courseCode)
-		self.course.remove(c)
-		self.save()
+    def add_course(self, courseCode):
+        c = Course.objects.get(code=courseCode)
+        self.course.add(c)
+        self.save()
 
-	def __str__(self):
-		return self.user.name
+    def remove_course(self, courseCode):
+        c = Course.objects.get(code=courseCode)
+        self.course.remove(c)
+        self.save()
+
+    def add_tag(self, tagName, create):
+        if create:
+            t = Tag(tag_name=tagName)
+            t.save()
+
+        t2 = Tag.objects.get(tag_name=tagName)
+        self.subject_tags.add(t2)
+        self.save()
+
+    def remove_tag(self, tagName):
+        t = Tag.objects.get(tag_name=tagName)
+        self.subject_tags.remove(t)
+        self.save()
+
+    def update_rating(self):
+        
+        
+        newRating=Review.objects.filter(tutor=self).aggregate(Avg('rating'))
+        print(newRating)
+        setattr(self, 'rating', newRating['rating__avg'])
+
+        self.save()
+
+
+    def __str__(self):
+        return self.user.name
 
 
 class PrivateTutor(Tutor):
-	rate = models.PositiveIntegerField()
+    rate = models.PositiveIntegerField()
 
-
-	def __str__(self):
-		return self.user.name
+    def __str__(self):
+        return self.user.name
 
 
 class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
-
-
-
-
-
 
 
 class Student(models.Model):
@@ -316,17 +332,17 @@ class SpecialWallet(Wallet):
     def __str__(self):
         return self.name
 
-class Review(models.Model):
-	tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-	content = models.CharField(max_length=400)
-	rating = models.PositiveIntegerField()
-	student = models.ForeignKey(Student, on_delete=models.CASCADE)
-	booking = models.OneToOneField(BookedSlot, on_delete=models.CASCADE)
 
-	TYPES = (
+class Review(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    content = models.CharField(max_length=400)
+    rating = models.PositiveIntegerField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    booking = models.OneToOneField(BookedSlot, on_delete=models.CASCADE)
+
+    TYPES = (
         ('ANONYMOUS', 'anonymous'),
         ('NONANONYMOUS', 'nonanonymous'),
-        
-     
+
     )
-	reviewtype = models.CharField(max_length=9, choices=TYPES)
+    reviewtype = models.CharField(max_length=9, choices=TYPES)
