@@ -6,6 +6,7 @@ from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 
+
 # Create your models here.
 
 class University(models.Model):
@@ -316,3 +317,12 @@ class SpecialWallet(Wallet):
 
     def __str__(self):
         return self.name
+
+
+class PasswordToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.user.name
+

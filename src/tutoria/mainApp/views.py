@@ -136,7 +136,7 @@ def search(request):
         #     id=university)  # contains to allow custom input search
         # tutor_list = tutor_list.filter(university__in=university_list)
         courses = Course.objects.filter(university=university)
-        tutor_list= tutor_list.filter(course__in=courses)
+        tutor_list = tutor_list.filter(course__in=courses)
 
     if course != "":
         course_list = Course.objects.filter(id=course)  # course code
@@ -373,13 +373,12 @@ def manageWallet(request):
     user = User.objects.get(id=request.session['uid'])
     if request.GET.get('action', None) == "add":
         transaction = w.add_funds(int(request.GET.get('amount', None)), True)
-        wallet_mail_add(user, int(request.GET.get('amount', None)),w, transaction)
+        wallet_mail_add(user, int(request.GET.get('amount', None)), w, transaction)
     else:
         transaction = w.subtract_funds(int(request.GET.get('amount', None)), True)
-        wallet_mail_subtract(user, int(request.GET.get('amount', None)),w, transaction)
+        wallet_mail_subtract(user, int(request.GET.get('amount', None)), w, transaction)
 
-
-    data = {'status': 'success', 'balance':w.balance}
+    data = {'status': 'success', 'balance': w.balance}
     return JsonResponse(data)
 
 
@@ -439,10 +438,10 @@ def confirmBooking(request):
         try:
             if checkIfTutorPrivate(tutor):
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 1.0, tutor)
-                private_mail_book(student,tutor,dt,slot,booking.time_end,transaction);
+                private_mail_book(student, tutor, dt, slot, booking.time_end, transaction);
             else:
                 booking, transaction = student.create_booking(parser.parse(request.GET.get('date')), slot, 0.5, tutor)
-                contracted_mail_book(student,tutor,dt,slot,booking.time_end);
+                contracted_mail_book(student, tutor, dt, slot, booking.time_end);
 
             return JsonResponse({'status': 'success', 'booking': booking.id})
         except:
@@ -486,9 +485,10 @@ def cancel(request, pk):
                                  'message': "The booking you are trying to cancel is within the next 24 hours and cannot be cancelled"})
     try:
         booking.update_booking('CANCELLED')
-        if(checkIfTutorPrivate(booking.tutor)):
-            transaction = SessionTransaction.objects.get(booking_id = booking, transaction_nature='SESSIONCANCELLED')
-            private_mail_cancel(booking.student, booking.tutor, booking.date, booking.time_start, booking.time_end, transaction)
+        if (checkIfTutorPrivate(booking.tutor)):
+            transaction = SessionTransaction.objects.get(booking_id=booking, transaction_nature='SESSIONCANCELLED')
+            private_mail_cancel(booking.student, booking.tutor, booking.date, booking.time_start, booking.time_end,
+                                transaction)
         else:
             contracted_mail_cancel(booking.student, booking.tutor, booking.date, booking.time_start, booking.time_end)
 
@@ -612,6 +612,7 @@ def manageSchedule(request):
     return render(request, 'mainApp/managetimes.html',
                   {'user': user, 'tutor': tutor, 'schedule': schedule, 'slotsToRender': slotsToRender})
 
+
 @csrf_exempt
 def addUnavailable(request):
     if not isAuthenticated(request):
@@ -643,6 +644,7 @@ def addUnavailable(request):
     tutor.create_unavailable_slot(addDay, addTime)
     return JsonResponse({'status': 'success'})
 
+
 @csrf_exempt
 def removeUnavailable(request):
     if not isAuthenticated(request):
@@ -673,3 +675,33 @@ def removeUnavailable(request):
         return JsonResponse({'status': 'fail'})
     tutor.remove_unavailable_slot(addDay, slot_time)
     return JsonResponse({'status': 'success'})
+
+
+def getResetPwdToken(request):
+    token = PasswordToken.makeToken(request.POST.get('email'))
+    if token is None:
+        return JsonResponse({'status': 'fail'})
+    else:
+        return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def resetPwd(request):
+    if 'token' not in request.GET:
+        return render(request, 'mainApp/resetpwd.html', {'invalid': 1})
+    else:
+        user, _ = checkToken(request.GET.get('token'))
+        if user is not None:
+            return render(request, 'mainApp/resetpwd.html', {'invalid': 0, 'token': request.GET.get('token')})
+        else:
+            return render(request, 'mainApp/resetpwd.html', {'invalid': 1})
+
+def setNewPwd(request):
+    user, pwdtkn = checkToken(request.GET.get('token'))
+    if user is not None:
+        return JsonResponse({'status': 'fail'})
+    else:
+        setattr(user, 'password', make_password(request.GET.get('newpwd')))
+        user.save()
+        pwdtkn.delete()
+        return JsonResponse({'status': 'success'})
