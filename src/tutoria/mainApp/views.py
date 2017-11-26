@@ -189,7 +189,6 @@ def search(request):
                                                                               last_date - timedelta(days=1))) |
                                                                Q(date=last_date, time_start__lt=time_now)))
             full_slots = upcoming_bookings.count() + unavailable_slots.count()
-            print(str(unavailable_slots.count()) + "jamal")
             weekdays = getWeekdays()
             for booking in upcoming_bookings:
                 if unavailable_slots.filter(date=booking.date,
@@ -198,11 +197,9 @@ def search(request):
             # print('checking')
             # print(full_slots)
             if isinstance(tutor, PrivateTutor):
-                print(len(privateslots))
                 if full_slots >= 7 * len(privateslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
             elif isinstance(tutor, ContractedTutor):
-                print(len(contractedslots))
                 if full_slots >= 7 * len(contractedslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
 
