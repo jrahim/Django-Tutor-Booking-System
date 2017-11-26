@@ -47,7 +47,7 @@
                         {#                        <div class="col-5" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.weekday }},</div>#}
                         {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.day }}</div>#}
                         {#                        <div class="col-2" style="display: inline-block; margin-left: 0px; margin-right: 0px; padding: 0px">{{ date.month }} </div>#}
-                        {{ day.weekday }}
+                        {{ day.weekday }}, {{ day.day }} {{ day.month }}
                     </th>
                     {{ day.row | safe }}
                 </tr>
@@ -57,10 +57,10 @@
         </table>
 
         <div class="booked" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
-        <span style="position: relative; top: -8px">= booked and available for next week</span>
-
-        <div class="bookedunavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
-        <span style="position: relative; top: -8px">= booked and not available for next week</span>
+        <span style="position: relative; top: -8px">= booked</span>
+{##}
+{#        <div class="bookedunavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>#}
+{#        <span style="position: relative; top: -8px">= booked and not available for next week</span>#}
 
         <div class="unavailable" style="width: 40px; height: 30px; display: inline-block; border: 1px solid black"></div>
         <span style="position: relative; top: -8px">= unavailable</span>
@@ -87,8 +87,8 @@
                 $('.alert-danger').hide();
                 $('.alert-info').hide();
                 $('.alert-success').hide();
-                selectedDay = $(this).attr('id').slice(0, 3);
-                selectedSlot = $(this).attr('id').slice(4,);
+                selectedDay = $(this).attr('id').slice(0, 6);
+                selectedSlot = $(this).attr('id').slice(7,);
                 $('.alert-info').show();
                 var element = this;
                 $.post('/mainApp/addunavailable', {
@@ -109,30 +109,13 @@
                 $('.alert-danger').hide();
                 $('.alert-info').hide();
                 $('.alert-success').hide();
-                selectedDay = $(this).attr('id').slice(0, 3);
-                selectedSlot = $(this).attr('id').slice(4,);
-                $('.alert-info').show();
-                var element = this;
-                $.post('/mainApp/addunavailable', {
-                    time: selectedSlot,
-                    day: selectedDay,
-                }, function (response) {
-                    if (response.status == 'success') {
-                        $('.alert-info').hide();
-                        $('.alert-success').show();
-                        $(element).removeClass("booked");
-                        $(element).addClass("bookedunavailable");
-                    } else {
-                        $('.alert-info').hide();
-                        $('.alert-danger').show();
-                    }
-                });
+                alert("Can not make booked slots unavailable!")
             } else if ($(this).attr('class') == "unavailable") {
                 $('.alert-danger').hide();
                 $('.alert-info').hide();
                 $('.alert-success').hide();
-                selectedDay = $(this).attr('id').slice(0, 3);
-                selectedSlot = $(this).attr('id').slice(4,);
+                selectedDay = $(this).attr('id').slice(0, 6);
+                selectedSlot = $(this).attr('id').slice(7,);
                 $('.alert-info').show();
                 var element = this;
                 $.post('/mainApp/removeunavailable', {
@@ -144,28 +127,6 @@
                         $('.alert-success').show();
                         $(element).removeClass("unavailable");
                         $(element).addClass("available");
-                    } else {
-                        $('.alert-info').hide();
-                        $('.alert-danger').show();
-                    }
-                });
-            } else if ($(this).attr('class') == "bookedunavailable") {
-                $('.alert-danger').hide();
-                $('.alert-info').hide();
-                $('.alert-success').hide();
-                selectedDay = $(this).attr('id').slice(0, 3);
-                selectedSlot = $(this).attr('id').slice(4,);
-                $('.alert-info').show();
-                var element = this;
-                $.post('/mainApp/removeunavailable', {
-                    time: selectedSlot,
-                    day: selectedDay,
-                }, function (response) {
-                    if (response.status == 'success') {
-                        $('.alert-info').hide();
-                        $('.alert-success').show();
-                        $(element).removeClass("bookedunavailable");
-                        $(element).addClass("booked");
                     } else {
                         $('.alert-info').hide();
                         $('.alert-danger').show();

@@ -179,13 +179,21 @@ def search(request):
     if availability != "":
         privateslots, _ = getPrivateSlots()
         contractedslots, _ = getContractedSlots()
+        today = date.today()
+        tomorrow = today + timedelta(days=1)
+        last_date = today + timedelta(days=8)
+        time_now = datetime.now().time()
         for tutor in tutor_list:
             upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED')
-            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor))
+            unavailable_slots = UnavailableSlot.objects.filter(Q(tutor=tutor) &
+                                                               (Q(date=tomorrow, time_start__gte=time_now) |
+                                                               Q(date__range=(tomorrow + timedelta(days=1),
+                                                                              last_date - timedelta(days=1))) |
+                                                               Q(date=last_date, time_start__lt=time_now)))
             full_slots = upcoming_bookings.count() + unavailable_slots.count()
             weekdays = getWeekdays()
             for booking in upcoming_bookings:
-                if unavailable_slots.filter(day=weekdays[booking.date.weekday()],
+                if unavailable_slots.filter(date=booking.date,
                                             time_start=booking.time_start).exists():
                     full_slots = full_slots - 1
             # print('checking')
@@ -194,7 +202,6 @@ def search(request):
                 if full_slots >= 7 * len(privateslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
             elif isinstance(tutor, ContractedTutor):
-                print(len(contractedslots))
                 if full_slots >= 7 * len(contractedslots):
                     tutor_list = tutor_list.exclude(id=tutor.id)
 
@@ -373,7 +380,7 @@ def book(request, pk):
                     isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
-                if tutorUnavailable.filter(day=weekday, time_start=datetime.strptime(slot, '%H:%M').time()):
+                if tutorUnavailable.filter(date=dt, time_start=datetime.strptime(slot, '%H:%M').time()):
                     isUnavailable = True
                     d['row'] = d['row'] + "<td class='unavailable' id=''></td>"
             if not isUnavailable:
@@ -446,7 +453,6 @@ def confirmBooking(request):
         tutorBookings = BookedSlot.objects.filter(tutor=tutor, status='BOOKED')
         tutorUnavailable = UnavailableSlot.objects.filter(tutor=tutor)
         dt = parser.parse(request.GET.get('date')).date()
-        print(request.GET.get('time'))
         slot = datetime.strptime(request.GET.get('time'), '%H:%M').time()
         today = date.today()
         if checkIfTutorPrivate(tutor):
@@ -466,7 +472,7 @@ def confirmBooking(request):
         if tutorBookings.filter(date=dt, time_start=slot).exists():
             return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
         weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        if tutorUnavailable.filter(day=weekDays[dt.weekday()], time_start=slot):
+        if tutorUnavailable.filter(date=dt, time_start=slot):
             return JsonResponse({'status': 'fail', 'message': "Please select an available timeslot"})
         if tutorBookings.filter(student=student, tutor=tutor, date=dt).exists():
             return JsonResponse({'status': 'fail', 'message': "Can not book two slots for tutor on same day!"})
@@ -627,7 +633,8 @@ def manageSchedule(request):
         return redirect('/mainApp/index')
     user = User.objects.get(id=request.session['uid'])
     tutor = Tutor.objects.get(user=request.session['uid'])
-    weekdays = getQuerySetWeekdays()
+    weekDays = getWeekdays()
+    months = getMonths()
     isPrivate = checkIfTutorPrivate(tutor)
     slots = []
     slotsToRender = []
@@ -636,24 +643,60 @@ def manageSchedule(request):
     else:
         slots, slotsToRender = getContractedSlots()
     upcoming_booking_statuses = ['BOOKED', 'LOCKED']
-    upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
-    unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
+    tutorBookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    tutorUnavailable = UnavailableSlot.objects.filter(tutor=tutor)
     schedule = []
-    for idx, day in enumerate(weekdays):
-        row = ""
+    # for idx, day in enumerate(weekdays):
+    #     row = ""
+    #     for slot in slots:
+    #         slot_time = datetime.strptime(slot, '%H:%M').time()
+    #         booked = upcoming_bookings.filter(date__week_day=idx + 1, time_start=slot_time).exists()
+    #         unavailable = unavailable_slots.filter(day=day, time_start=slot_time).exists()
+    #         if booked and unavailable:
+    #             row = row + "<td class='bookedunavailable' id='" + day + "_" + slot + "'></td>"
+    #         elif booked:
+    #             row = row + "<td class='booked' id='" + day + "_" + slot + "'></td>"
+    #         elif unavailable:
+    #             row = row + "<td class='unavailable' id='" + day + "_" + slot + "'></td>"
+    #         else:
+    #             row = row + "<td class='available' id='" + day + "_" + slot + "'></td>"
+    #     schedule.append({'weekday': day, 'row': row})
+    today = date.today()
+    for i in range(0, 14):
+        nextDay = today + timedelta(days=i)
+        schedule.append(
+            {'dt': nextDay, 'weekday': weekDays[nextDay.weekday()], 'day': nextDay.day,
+             'month': months[nextDay.month - 1], 'row': "", 'id': ""})
+    for d in schedule:
+        dt = d['dt']
+        weekday = d['weekday']
         for slot in slots:
-            slot_time = datetime.strptime(slot, '%H:%M').time()
-            booked = upcoming_bookings.filter(date__week_day=idx + 1, time_start=slot_time).exists()
-            unavailable = unavailable_slots.filter(day=day, time_start=slot_time).exists()
-            if booked and unavailable:
-                row = row + "<td class='bookedunavailable' id='" + day + "_" + slot + "'></td>"
-            elif booked:
-                row = row + "<td class='booked' id='" + day + "_" + slot + "'></td>"
-            elif unavailable:
-                row = row + "<td class='unavailable' id='" + day + "_" + slot + "'></td>"
-            else:
-                row = row + "<td class='available' id='" + day + "_" + slot + "'></td>"
-        schedule.append({'weekday': day, 'row': row})
+            isUnavailable = False
+            if not isUnavailable:
+                if tutorBookings.filter(date=dt, time_start=datetime.strptime(slot, '%H:%M').time()).exists():
+                    isUnavailable = True
+                    d['row'] = d['row'] + "<td class='booked' id=''></td>"
+            if not isUnavailable:
+                if tutorUnavailable.filter(date=dt, time_start=datetime.strptime(slot, '%H:%M').time()):
+                    isUnavailable = True
+                    day = d['day']
+                    month = d['month']
+                    if day < 10:
+                        day = "0" + str(day)
+                    else:
+                        day = str(day)
+                    tdid = month + "-" + day + "_" + slot
+                    d['row'] = d['row'] + "<td class='unavailable' id='" + tdid + "'></td>"
+            if not isUnavailable:
+                day = d['day']
+                month = d['month']
+                if day < 10:
+                    day = "0" + str(day)
+                else:
+                    day = str(day)
+                tdid = month + "-" + day + "_" + slot
+                d['row'] = d['row'] + "<td class='available' id='" + tdid + "'></td>"
+
     return render(request, 'mainApp/managetimes.html',
                   {'user': user, 'tutor': tutor, 'schedule': schedule, 'slotsToRender': slotsToRender})
 
@@ -673,18 +716,18 @@ def addUnavailable(request):
     else:
         slots, slotsToRender = getContractedSlots()
     addTime = request.POST.get('time')
-    addDay = request.POST.get('day')
+    addDay = parser.parse(request.POST.get('day')).date()
     if addTime not in slots:
         return JsonResponse({'status': 'fail'})
-    if addDay not in weekdays:
-        return JsonResponse({'status': 'fail'})
-    # upcoming_booking_statuses = ['BOOKED', 'LOCKED']
-    # upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
+    upcoming_booking_statuses = ['BOOKED', 'LOCKED']
+    upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
     unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
     slot_time = datetime.strptime(addTime, '%H:%M').time()
-    # booked = upcoming_bookings.filter(date__week_day=weekdays.index(addDay)+1, time_start=slot_time).exists()
-    unavailable = unavailable_slots.filter(day=addDay, time_start=slot_time).exists()
+    booked = upcoming_bookings.filter(date=addDay, time_start=slot_time).exists()
+    unavailable = unavailable_slots.filter(date=addDay, time_start=slot_time).exists()
     if unavailable:
+        return JsonResponse({'status': 'fail'})
+    if booked:
         return JsonResponse({'status': 'fail'})
     tutor.create_unavailable_slot(addDay, addTime)
     return JsonResponse({'status': 'success'})
@@ -705,17 +748,15 @@ def removeUnavailable(request):
     else:
         slots, slotsToRender = getContractedSlots()
     addTime = request.POST.get('time')
-    addDay = request.POST.get('day')
+    addDay = parser.parse(request.POST.get('day')).date()
     if addTime not in slots:
-        return JsonResponse({'status': 'fail'})
-    if addDay not in weekdays:
         return JsonResponse({'status': 'fail'})
     # upcoming_booking_statuses = ['BOOKED', 'LOCKED']
     # upcoming_bookings = BookedSlot.objects.filter(tutor=tutor, status__in=upcoming_booking_statuses)
     unavailable_slots = UnavailableSlot.objects.filter(tutor=tutor)
     slot_time = datetime.strptime(addTime, '%H:%M').time()
     # booked = upcoming_bookings.filter(date__week_day=weekdays.index(addDay)+1, time_start=slot_time).exists()
-    unavailable = unavailable_slots.filter(day=addDay, time_start=slot_time).exists()
+    unavailable = unavailable_slots.filter(date=addDay, time_start=slot_time).exists()
     if not unavailable:
         return JsonResponse({'status': 'fail'})
     tutor.remove_unavailable_slot(addDay, slot_time)
@@ -863,8 +904,10 @@ def admin(request):
     else:
         return render(request, 'mainApp/admin.html')
 
+
 @csrf_exempt
 def adminWithdraw(request):
     w = SpecialWallet.objects.get(name='MyTutor')
     w.subtract_funds(float(request.POST.get('amount')))
+    admin_withdraw_mail(request.POST.get('amount'), w.balance)
     return JsonResponse({'status': 'success', 'wallet': w.balance})
