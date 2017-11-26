@@ -91,13 +91,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <legend for="tag">Search by Tag</legend>
-                                    <select class="form-control" name="tag" id="tag">
-                                        <option value="0">---------</option>
-                                        {% for tag in tag_list %}
-                                            <option value="{{ tag.id }}">{{ tag.tag_name }}</option>
-                                        {% endfor %}
-                                    </select>
+                                   
+                                    <fieldset class="form-group">
+                                    <legend>Search By Tag</legend>
+                                   
+                                    <input type="text" name="tagName" id="tagName" class="form-control">
+                                   
+                                    </fieldset>
+
+                                   
                                 </div>
 
                                 <div class="form-group">
@@ -210,7 +212,7 @@
             document.getElementById('tutorTypeContracted').checked = true;
         }
         document.getElementById('sort').value = "{{params.sort}}";
-        document.getElementById('tag').value = "{{params.tag}}";
+        document.getElementById('tagName').value = "{{params.tag}}";
         document.getElementById('minRate').value = "{{params.min_rate}}";
         document.getElementById('maxRate').value = "{{params.max_rate}}";
         // TODO fix this course doesnt work
