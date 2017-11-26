@@ -105,7 +105,7 @@ def search(request):
     if course == "0":
         course = ""
     tag = request.POST.get('tagName', "")
-    print('requested tag is', tag)
+    
     
     max_rate = request.POST.get('maxRate', "")
     min_rate = request.POST.get('minRate', "")
@@ -120,7 +120,7 @@ def search(request):
 
     tutor_list = Tutor.objects.all()
     tag_list=Tag.objects.all()
-    print('the tag list is ', tag_list)
+  
     if given_name != "":
         user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
@@ -145,7 +145,7 @@ def search(request):
 
     if tag != "":
         tag_list = Tag.objects.filter(tag_name__iexact=tag)
-        print('the tag list after considering search is', tag_list)
+       
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
     if max_rate != "" and min_rate != "":
