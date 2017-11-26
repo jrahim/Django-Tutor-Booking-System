@@ -137,11 +137,11 @@ class Tutor(PolymorphicModel):
     # university = models.ManyToManyField(University, blank=True)
     isActivated = models.BooleanField(default=True)
 
-    def create_unavailable_slot(self, day, time_start):
+    def create_unavailable_slot(self, date, time_start):
         pass
 
-    def remove_unavailable_slot(self, day, time_start):
-        UnavailableSlot.objects.get(tutor=self, day=day, time_start=time_start).delete()
+    def remove_unavailable_slot(self, date, time_start):
+        UnavailableSlot.objects.get(tutor=self, date=date, time_start=time_start).delete()
 
     def add_course(self, courseCode):
         c = Course.objects.get(code=courseCode)
@@ -193,8 +193,8 @@ class PrivateTutor(Tutor):
     def __str__(self):
         return self.user.name
 
-    def create_unavailable_slot(self, day, time_start):
-        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=1.0)
+    def create_unavailable_slot(self, date, time_start):
+        unavailable = UnavailableSlot(tutor=self, date=date, time_start=time_start, duration=1.0)
         unavailable.save()
 
 
@@ -202,8 +202,8 @@ class ContractedTutor(Tutor):
     def __str__(self):
         return self.user.name
 
-    def create_unavailable_slot(self, day, time_start):
-        unavailable = UnavailableSlot(tutor=self, day=day, time_start=time_start, duration=0.5)
+    def create_unavailable_slot(self, date, time_start):
+        unavailable = UnavailableSlot(tutor=self, date=date, time_start=time_start, duration=0.5)
         unavailable.save()
 
 
@@ -300,7 +300,8 @@ class BookedSlot(models.Model):
 
 class UnavailableSlot(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    day = models.CharField(max_length=3)
+    # day = models.CharField(max_length=3)
+    date = models.DateField()
     time_start = models.TimeField()
     duration = models.FloatField()
 

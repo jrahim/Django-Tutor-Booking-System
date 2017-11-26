@@ -229,6 +229,21 @@ def pwd_reset_mail(user, token):
     return
 
 
+def admin_withdraw_mail(amount, bal):
+    message_subject1 = "Money withdrawn from your wallet"
+    message_body1 = str(amount) + "HKD were withrawn from MyTutor's wallet. The new balance is " + str(bal)
+    mail_from1 = "My Tutors"
+    mail_to1 = ["admin@mytutor.com"]
+
+    with mail.get_connection() as connection:
+        mail.EmailMessage(
+            message_subject1, message_body1, mail_from1, [mail_to1],
+            connection=connection,
+        ).send()
+
+    return
+
+
 def rateWithCommision(tutorRate):
     return round(tutorRate * 1.05, 2)
 
@@ -267,7 +282,8 @@ def getStudent(uid):
 def getPrivateSlots():
     slots = []
     slotsToRender = ["07:00-08:00", "08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00",
-                     "13:00-14:00", "14:00-15:00"]
+                     "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00", "17:00-18:00", "18:00-19:00",
+                     "19:00-20:00"]
     for t in slotsToRender:
         slots.append(t.split('-')[0])
     return slots, slotsToRender
@@ -277,7 +293,8 @@ def getContractedSlots():
     slots = []
     slotsToRender = ["07:00-07:30", "07:30-08:00", "08:00-08:30", "08:30-09:00", "09:00-09:30", "09:30-10:00",
                      "10:00-10:30", "10:30-11:00", "11:00-11:30", "11:30-12:00", "12:00-12:30", "12:30-13:00",
-                     "13:00-13:30", "13:30-14:00", "14:30-15:00"]
+                     "13:00-13:30", "13:30-14:00", "14:30-15:00", "15:00-15:30", "15:30-16:00", "16:00-16:30",
+                     "16:30-17:00", "17:00-17:30", "17:30-18:00", "18:00-18:30", "18:30-19:00"]
     for t in slotsToRender:
         slots.append(t.split('-')[0])
     return slots, slotsToRender
