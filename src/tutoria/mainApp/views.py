@@ -104,9 +104,9 @@ def search(request):
     course = request.POST.get('course', "")
     if course == "0":
         course = ""
-    tag = request.POST.get('tag', "")
-    if tag == "0":
-        tag = ""
+    tag = request.POST.get('tagName', "")
+    
+    
     max_rate = request.POST.get('maxRate', "")
     min_rate = request.POST.get('minRate', "")
 
@@ -119,7 +119,8 @@ def search(request):
         tutor_type = ContractedTutor
 
     tutor_list = Tutor.objects.all()
-
+    tag_list=Tag.objects.all()
+  
     if given_name != "":
         user_list = User.objects.filter(name__istartswith=given_name)  # case insensitive matching - exact matching
         tutor_list = tutor_list.filter(user__in=user_list)
@@ -143,7 +144,8 @@ def search(request):
         tutor_list = tutor_list.filter(course__in=course_list)
 
     if tag != "":
-        tag_list = Tag.objects.filter(id=tag)
+        tag_list = Tag.objects.filter(tag_name__iexact=tag)
+       
         tutor_list = tutor_list.filter(subject_tags__in=tag_list)
 
     if max_rate != "" and min_rate != "":
@@ -219,8 +221,8 @@ def search(request):
 
     context = {
         'tutor_list': tutor_list,
+        'tag_list': tag_list,
         'user': user,
-        'tag_list': tags,
         'university_list': universities,
         'params': params
     }
@@ -818,17 +820,28 @@ def tags(request):
 @csrf_exempt
 def addTag(request):
     if not isAuthenticated(request):
-        return JsonResponse({'status': 'fail'})
+        return JsonResponse({'status': 'fail1'})
 
     user = User.objects.get(id=request.session['uid'])
     tutor = Tutor.objects.get(user=user)
 
     tagRequestedName = request.POST.get('tagName')
 
+    
+
+
     create = request.POST.get('create')
 
     if create == "true":
         create = True
+        
+
+        if tutor.subject_tags.filter(tag_name__iexact=tagRequestedName).exists():
+            return JsonResponse({'status': 'fail3'})
+
+        elif Tag.objects.filter(tag_name__iexact=tagRequestedName).exists():
+            return JsonResponse({'status': 'fail2'})
+
     else:
         create = False
 

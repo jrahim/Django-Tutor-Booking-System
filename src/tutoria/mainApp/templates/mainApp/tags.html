@@ -127,6 +127,18 @@
                     window.location.reload()
                 }
 
+                
+                else if (response.status == 'fail1') {
+                    $('#removeTagFail').show();
+                    alert('Authentication failure!')
+                }
+                else if (response.status == 'fail2') {
+                    alert('Error: this tag already exists in the list of available tags.')
+                }
+                else if (response.status == 'fail3') {
+                    alert('Error: this tag already exists in your list of tags.')
+                }
+
                 else {
 
 
@@ -143,6 +155,7 @@
             
 
             var inputs = document.getElementsByTagName("input");
+
 
             
             var listTags = new Array();
@@ -164,6 +177,7 @@
                 listTags
             }, function (response) {
                 if (response.status == 'success') {
+                  
 
                     window.location.reload()
 
@@ -172,7 +186,7 @@
                 }
 
                 else {
-                    $('#removeTagFail').show();
+                    
                 }
             });
         }
